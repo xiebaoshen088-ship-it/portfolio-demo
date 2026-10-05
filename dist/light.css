@@ -2,25 +2,26 @@
 :root{color-scheme:light;--bg:#f2f5f6;--ink:#25343c;--muted:#60717b;--line:rgba(67,93,108,.17);--accent:#2b647d}
 body{background:linear-gradient(135deg,#f7f8f8 0%,#eff4f5 55%,#f4f7f8 100%);background-attachment:fixed}
 body::before{z-index:-1;background:radial-gradient(ellipse at 88% 7%,#b7dde53d,transparent 43%),radial-gradient(ellipse at 5% 40%,#d3e6eb33,transparent 40%)}
-.glass{color:#304a58;border:1px solid #ffffffb8;background:linear-gradient(165deg,#ffffff40 0%,#ffffff12 48%,#d8e8ee21 100%);box-shadow:inset 0 1px 1px #fffffff2,inset 1px 0 2px #ffffff9c,inset -1px 0 2px #95b1bf38,inset 0 -2px 3px #7c9ba530,0 2px 4px #4b67781a,0 8px 22px #63839812;backdrop-filter:var(--glass-optics,blur(5px) saturate(135%));-webkit-backdrop-filter:blur(5px) saturate(135%)}
+.glass{--glass-shadow:inset 0 1px 0 #ffffff70,inset 0 -1px 0 #627f9226,0 2px 3px #4863750a,0 7px 20px #6383980d;color:#304a58;border:1px solid #ffffff75;border-bottom-color:#809aa52c;background:linear-gradient(135deg,#ffffff1a,#c3d7e11a 50%,#ffffff08);box-shadow:var(--glass-shadow);backdrop-filter:var(--glass-optics,blur(3px) saturate(120%));-webkit-backdrop-filter:blur(3px) saturate(120%)}
 /* A quiet reflection follows the pointer; brightness stays almost constant. */
-.glass::before{background:radial-gradient(ellipse at var(--gx,30%) var(--gy,0%),#ffffffa6,transparent 65%);opacity:.08;transition:opacity .45s}
-.glass:hover::before{opacity:.14}
-.glass::after{content:"";position:absolute;inset:1px;border-radius:inherit;pointer-events:none;border:1px solid transparent;border-top-color:#ffffffe6;border-bottom-color:#7195a52b;box-shadow:inset 0 2px 3px #ffffff59,inset 0 -3px 4px #8cadbe1f;background:linear-gradient(125deg,#ffffff33,transparent 25%,transparent 75%,#ffffff24)}
+.glass::before{background:radial-gradient(ellipse at var(--gx,30%) var(--gy,0%),#ffffff80,transparent 65%);opacity:.06;transition:opacity .45s}
+.glass:hover::before{opacity:.1}
+/* Thin specular rim: the surface takes its colour from the content behind it. */
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;border:1px solid transparent;background:linear-gradient(120deg,#ffffffb3 0%,#ffffff24 25%,#7899ab14 50%,#ffffff1a 76%,#ffffff7a 100%) border-box;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask-composite:exclude;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor}
 .button,.column-chip,.icon-button{transition:transform .55s cubic-bezier(.22,1.4,.32,1),box-shadow .4s,color .3s,background-color .4s}
-.button:hover{color:#1d4e65;background-color:#ffffff0a;box-shadow:inset 0 1px 1px #fffffff2,inset 1px 0 2px #ffffff9c,inset -1px 0 2px #95b1bf38,inset 0 -2px 3px #7c9ba530,0 2px 4px #4b67781a,0 9px 24px #63839818;transform:translateY(-1px) scale(1.012)}
+.button:hover{color:#1d4e65;background-color:#ffffff06;box-shadow:var(--glass-shadow);transform:translateY(-1px) scale(1.008)}
 .button:active,.column-chip:active,.icon-button:active{transform:translateY(1px) scaleX(1.015) scaleY(.94);transition:transform .14s ease-out}
 .icon-button:hover{background-color:#ffffff14}.glass:focus-visible{outline-color:#38718b}
-.button.primary{color:#2c5062}.button-dot{background:#568aa0;box-shadow:0 0 12px #80b8ce4d}
-.navigation a{color:#566a76}.navigation a.active{color:#274957;background:#ffffff45;box-shadow:inset 0 1px 1px #ffffffa8,0 1px 3px #5271810d}.navigation a:hover{color:#244454;background-color:#ffffff20}.navigation a:active{transform:scale(.97)}
+.button.primary{color:#2c5062}.button-dot{background:#568aa0;box-shadow:none}
+.navigation a{color:#566a76}.navigation a.active{color:#274957;background:#ffffff30;box-shadow:inset 0 1px 0 #ffffff59}.navigation a:hover{color:#244454;background-color:#ffffff14}.navigation a:active{transform:scale(.97)}
 .edition{color:#657a87}.hero h1 span{color:#647e8d}.hero-affiliation{color:#60737f}
 .stage-halo{background:radial-gradient(ellipse at 48% 54%,#b8dce86b,transparent 68%)}.stage-index{color:#627a88}
 .hero-paper{background:#ffffffdc;color:#425865;border:1px solid #fff;box-shadow:0 20px 45px #36596c29,0 2px 8px #36596c12}.hero-paper:hover{box-shadow:0 27px 60px #36596c38}
-.stage-label{background-color:#e2eef32b}.stage-label small{color:#5b7381}.label-spark{color:#6b9bae}
+.stage-label{background-color:transparent;bottom:30px}.stage-label small{color:#5b7381}.label-spark{color:#6b9bae}
 .hero-bottom{color:#637986}.scroll-cue i{border-color:#8da4b1}.scroll-cue i::after{background:#5c8296}
 .work-line{color:#456577}.work-line i{background:#9eb9c7}.practice-note .scope-note{color:#687f8d}
 .account-top{color:#637b89}.account-stat>span:first-child{color:#5b7381}.account-stat small{color:#648494}.stat-rule{background:linear-gradient(90deg,#739ead8a,#a9c6d43d)}.stat-rule::before{background:#7d9fab}.account-foot p{color:#637b89}
-.scope-note{color:#637c8c}.platform-tabs button{color:#617988}.platform-tabs button[aria-selected=true]{background:#ffffff45;color:#2f5367;box-shadow:inset 0 1px 1px #ffffffa8,0 1px 3px #486c810d}
+.scope-note{color:#637c8c}.platform-tabs button{color:#617988}.platform-tabs button[aria-selected=true]{background:#ffffff30;color:#2f5367;box-shadow:inset 0 1px 0 #ffffff59}
 .platform-preview button{background:#e9eff2;border:1px solid #fff;box-shadow:inset 0 1px #fff}.platform-preview img{opacity:1}
 .platform-preview button>span{background:#eff7f9de;color:#365565;border:1px solid #ffffffbd;backdrop-filter:blur(12px);box-shadow:0 2px 12px #4c72891a}
 .platform-preview .empty-evidence{border-color:#8ca9b366;color:#657e8d;background:#ffffff28}
@@ -31,7 +32,7 @@ body::before{z-index:-1;background:radial-gradient(ellipse at 88% 7%,#b7dde53d,t
 .video-position{color:#527081}.video-position small{color:#6b8595}.play-icon{color:#59879c;border-color:#8fb1c263}
 .hot-art{background:radial-gradient(ellipse at 70% 45%,#dfd8cc52,transparent 65%),#eaf0f2}
 .topic-sheet{background:#fffffff0;border:1px solid #fff;box-shadow:0 20px 45px #4861752b}.topic-sheet>span{color:#526d7d}
-.floating-note{background-color:#f2f8fa5e}.floating-note small{color:#5e798b}
+.floating-note{background-color:transparent}.floating-note small{color:#5e798b}
 .topic-title{color:#536d7b}.topic-result>span{color:#63808f}.topic-support{color:#638293}.topic-support b{color:#35596c}
 .column-chip:hover{background-color:#ffffff0a;transform:translateY(-1px)}.column-chip>span{color:#698da2}.pending-chip{color:#687f8e}
 .review-lines button:hover{background:#e2edf24d}.review-lines button>span:first-child{color:#446679}.review-lines button>span>small{color:#647f8f}.line-tail{color:#5f7f91}

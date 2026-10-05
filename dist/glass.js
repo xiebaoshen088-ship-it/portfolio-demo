@@ -21,12 +21,10 @@
     if (node && node.w === w && node.h === h && node.radius === radius) return;
     if (!node) {
       const id = 'glass-lens-' + serial++;
-      const filter = make('filter', {id, x:0, y:0, width:'100%', height:'100%', filterUnits:'userSpaceOnUse', colorInterpolationFilters:'sRGB'});
-      // Attributes containing hyphens cannot use their DOM property spelling.
+      const filter = make('filter', {id, x:0, y:0, width:'100%', height:'100%', filterUnits:'userSpaceOnUse'});
       filter.setAttribute('color-interpolation-filters', 'sRGB');
-      filter.removeAttribute('colorInterpolationFilters');
       const map = make('feImage', {x:0, y:0, preserveAspectRatio:'none', result:'rim'});
-      const lens = make('feDisplacementMap', {in:'SourceGraphic', in2:'rim', scale:14, xChannelSelector:'R', yChannelSelector:'G'});
+      const lens = make('feDisplacementMap', {in:'SourceGraphic', in2:'rim', scale:24, xChannelSelector:'R', yChannelSelector:'G'});
       filter.append(map, lens); defs.append(filter);
       node = {id, filter, map}; nodes.set(el, node);
     }
@@ -35,21 +33,42 @@
     node.map.setAttribute('width', w); node.map.setAttribute('height', h);
     const canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext('2d'); if (!ctx) return;
-    const pixels = ctx.createImageData(w, h), cx = w / 2, cy = h / 2, rim = Math.min(10, h * .22);
+    const pixels = ctx.createImageData(w, h), cx = w / 2, cy = h / 2, rim = Math.min(12, h * .24);
     for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
       const dx = x + .5 - cx, dy = y + .5 - cy;
       const qx = Math.max(Math.abs(dx) - (cx - radius), 0), qy = Math.max(Math.abs(dy) - (cy - radius), 0);
       const distance = Math.hypot(qx, qy), depth = radius - distance;
-      const strength = distance > 0 && depth > 0 && depth < rim ? Math.sin(Math.PI * depth / rim) * .72 : 0;
+      const strength = distance > 0 && depth > 0 && depth < rim ? Math.sin(Math.PI * depth / rim) : 0;
+      // Gently magnify the middle; curve the backdrop only near the rim.
+      const inside = Math.max(0, Math.min(depth / rim, 1));
+      const nx = distance ? qx / distance * Math.sign(dx) : 0;
+      const ny = distance ? qy / distance * Math.sign(dy) : 0;
+      const ox = Math.max(-11.5, Math.min(11.5, nx * strength * 8 - dx * inside * .018));
+      const oy = Math.max(-11.5, Math.min(11.5, ny * strength * 8 - dy * inside * .018));
       const i = (y * w + x) * 4;
-      pixels.data[i] = 128 + (distance ? qx / distance * Math.sign(dx) : 0) * strength * 127;
-      pixels.data[i + 1] = 128 + (distance ? qy / distance * Math.sign(dy) : 0) * strength * 127;
+      pixels.data[i] = 128 + ox / 24 * 255;
+      pixels.data[i + 1] = 128 + oy / 24 * 255;
       pixels.data[i + 2] = 128; pixels.data[i + 3] = 255;
     }
     ctx.putImageData(pixels, 0, 0);
     node.map.setAttribute('href', canvas.toDataURL());
-    el.style.setProperty('--glass-optics', 'url("#' + node.id + '") blur(2px) saturate(135%)');
+    el.style.setProperty('--glass-optics', 'url("#' + node.id + '") blur(1.2px) saturate(120%)');
   }
   const observer = new ResizeObserver(entries => entries.forEach(({target}) => update(target, target.offsetWidth, target.offsetHeight)));
   document.querySelectorAll('.glass').forEach(el => observer.observe(el));
+  // Detail views add controls on demand; they use the same optical material.
+  new MutationObserver(records => records.forEach(record => {
+    record.addedNodes.forEach(node => {
+      if (node.nodeType !== 1) return;
+      if (node.matches('.glass')) observer.observe(node);
+      node.querySelectorAll('.glass').forEach(el => observer.observe(el));
+    });
+    record.removedNodes.forEach(node => {
+      if (node.nodeType !== 1) return;
+      [node, ...node.querySelectorAll('.glass')].forEach(el => {
+        const optical = nodes.get(el);
+        if (optical) { observer.unobserve(el); optical.filter.remove(); nodes.delete(el); }
+      });
+    });
+  })).observe(document.body, {childList:true, subtree:true});
 })();
