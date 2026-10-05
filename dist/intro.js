@@ -13,7 +13,9 @@
   if(userPaused||(reduced.matches&&!userRequestedPlayback)||!isVisible||document.hidden)video.pause();else play();
   syncButton();
  }
- video.muted=true;video.autoplay=!reduced.matches;video.src=video.dataset.src;
+ // Choose once at startup so resizing does not restart a playing animation.
+ const compact=matchMedia('(max-width: 760px)').matches||navigator.connection?.saveData;
+ video.muted=true;video.autoplay=!reduced.matches;video.src=(compact&&video.dataset.srcMobile)||video.dataset.src;
  video.addEventListener('loadeddata',()=>{video.parentElement.classList.add('is-ready');reconcile();});
  video.addEventListener('play',syncButton);video.addEventListener('pause',syncButton);
  video.addEventListener('error',()=>{failed=true;video.parentElement.classList.add('is-unavailable');toggle.hidden=true;});
