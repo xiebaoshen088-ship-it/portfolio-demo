@@ -1,6 +1,9 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { contact, columns, shots } from './data.js';
 import { Icon } from './App.jsx';
+import EvidenceStack from './EvidenceStack.jsx';
+import { GLASS } from './glassConfig.js';
+import SegmentedControl from './SegmentedControl.jsx';
 
 function sourceTransform(source, target) {
   return `translate(${source.left - target.left}px, ${source.top - target.top}px) scale(${source.width / target.width}, ${source.height / target.height})`;
@@ -25,7 +28,7 @@ function Modal({ entry, title, onClose, children, className = '' }) {
       const animation = dialog.animate([
         { transform: sourceTransform(entry.rect, target), borderRadius: '32px' },
         { transform: 'translate(0,0) scale(1,1)', borderRadius: '28px' },
-      ], { duration: 560, easing: 'cubic-bezier(.2,.85,.2,1)', fill: 'both' });
+      ], { duration: GLASS.motion.open, easing: GLASS.motion.easing, fill: 'both' });
       transition.current = animation;
       animationTimer.current = setTimeout(() => dialog.classList.remove('is-materializing'), 110);
       animation.finished.then(() => { animation.cancel(); transition.current = null; }).catch(() => {});
@@ -55,7 +58,7 @@ function Modal({ entry, title, onClose, children, className = '' }) {
       const animation = dialog.animate([
         { transform: current === 'none' ? 'translate(0,0) scale(1,1)' : current, borderRadius: '28px' },
         { transform: sourceTransform(source, target), borderRadius: getComputedStyle(trigger).borderRadius },
-      ], { duration: 380, easing: 'cubic-bezier(.45,0,.22,1)', fill: 'both' });
+      ], { duration: GLASS.motion.close, easing: GLASS.motion.easing, fill: 'both' });
       transition.current = animation;
       try { await animation.finished; } catch {}
     }
@@ -90,9 +93,7 @@ function PlatformEvidence({ onShot }) {
   return <>
     <p className="dialog-lead">账号运营，让内容持续被看见。</p>
     <p>我在凰家评测独立运营微博，并参与抖音、小红书、视频号与微信公众号的内容发布、互动和数据观察。</p>
-    <div className="platform-tabs" role="tablist" aria-label="选择平台">{[['weibo','微博'],['red','小红书']].map(([id,label]) => <button key={id} role="tab" id={`tab-${id}`} aria-selected={platform === id} aria-controls="platform-panel" tabIndex={platform === id ? 0 : -1} onClick={() => setPlatform(id)} onKeyDown={e => {
-      if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) { e.preventDefault(); const next = e.key === 'Home' ? 'weibo' : e.key === 'End' ? 'red' : red ? 'weibo' : 'red'; setPlatform(next); document.getElementById(`tab-${next}`)?.focus(); }
-    }}>{label}</button>)}</div>
+    <SegmentedControl tabs className="platform-tabs" label="选择平台" value={platform} onChange={setPlatform} options={[{value:'weibo',label:'微博'},{value:'red',label:'小红书'}]} />
     <div id="platform-panel" role="tabpanel" aria-labelledby={`tab-${platform}`}>
       <Metrics items={red ? [['30万+','观看量'],['约1500','收藏'],['约400','净涨粉']] : [['570万+','累计阅读'],['600万+','视频播放']]} />
       <p className="evidence-note">{red ? '7月20日—8月18日，年份未说明。包含付费投流，当前尚未拆分自然流量与付费效果。' : '微博近30日账号整体数据，完整统计起止未说明。阅读量和播放量为不同指标。'}</p>
@@ -123,7 +124,7 @@ export function DetailDialog({ entry, onClose, onShot }) {
       </>}
       {id === 'topics' && <>
         <p className="dialog-lead">让日常内容，沉淀成账号自己的栏目。</p><p>实习期间主动搭建5个原创话题，用稳定的栏目名称组织科技讨论与日常表达，为持续运营提供可复用的内容场景。</p>
-        <div className="column-grid">{columns.map(item => <button className="column-card" key={item.shot} onClick={e => onShot(item.shot, e.currentTarget)}><img src={`/assets/${shots[item.shot].file}`} alt={item.title} /><h3>{item.title}</h3><p>{item.metric}</p></button>)}</div>
+        <EvidenceStack onShot={onShot} />
         <p className="evidence-note">这里展示已有原图的3个话题，均为话题累计口径，统计起止未说明。小凰鸡数码讲堂的完整记录与第5个话题的名称和截图待补充。</p>
       </>}
       {id === 'bambu' && <><p className="dialog-lead">从产品，走向用户关心的内容。</p><div className="bambu-identity"><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div><p>先通过成品查看项目表达，再结合选题、发布与反馈材料完善这个案例。</p><div className="dialog-actions"><a className="button glass" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</a></div><p className="evidence-note">项目截图、策划过程、个人分工和效果证据待补充，当前不添加未核实的成果数据。</p></>}

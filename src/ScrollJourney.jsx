@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
 
-export default function ScrollJourney() {
+export default function ScrollJourney({ onActiveChange }) {
   const ref = useRef(null);
   useEffect(() => {
     const el = ref.current;
     let frame = null;
+    let lastActive = null;
     function textSize() { document.documentElement.classList.toggle('large-type', parseFloat(getComputedStyle(document.documentElement).fontSize) >= 24); }
     textSize();
     function update() {
@@ -16,13 +17,13 @@ export default function ScrollJourney() {
       const sections = ['experience', 'projects', 'strengths', 'contact'];
       let active = '';
       for (const id of sections) if (document.getElementById(id).getBoundingClientRect().top < innerHeight * .45) active = id;
-      document.querySelectorAll('.nav-glass a').forEach(a => { if (a.getAttribute('href') === `#${active}`) a.setAttribute('aria-current','location'); else a.removeAttribute('aria-current'); });
+      if(active!==lastActive){lastActive=active;onActiveChange?.(active);}
     }
     const schedule = () => { textSize(); if (!frame) frame = requestAnimationFrame(update); };
     const resize = new ResizeObserver(schedule); resize.observe(document.body);
     addEventListener('scroll', schedule, { passive: true }); addEventListener('resize', schedule);
     update();
     return () => { removeEventListener('scroll', schedule); removeEventListener('resize', schedule); resize.disconnect(); if (frame) cancelAnimationFrame(frame); };
-  }, []);
+  }, [onActiveChange]);
   return <div className="scroll-journey" aria-hidden="true" ref={ref}><span className="journey-track" /><span className="journey-ink" /><span className="journey-lens glass" /></div>;
 }
