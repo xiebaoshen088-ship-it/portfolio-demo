@@ -1,0 +1,15 @@
+/* Content is visible by default; GSAP sets entrance states before paint. */
+.motion-mask{display:block;overflow:hidden;overflow:clip}
+.motion-title,.opening-label,.opening-description{display:block;transform-origin:0 100%}
+.hero h1>.motion-mask{padding:.09em .035em .12em;margin:-.09em -.035em -.12em}
+.hero h1 .hero-title-line{font-size:inherit;letter-spacing:inherit}
+.hero .hero-eyebrow.motion-mask{margin-bottom:34px}
+.hero-action-mask{display:inline-block;padding:10px 12px;overflow:hidden;overflow:clip;margin-top:24px}
+.hero-action-mask .hero-cta{margin-top:0}
+.section-heading h2.motion-mask{padding:.07em .08em .1em;margin-right:-.08em;margin-left:-.08em;margin-bottom:-.1em}
+.section-heading .motion-title{transform-origin:0 85%}
+.metric-mask{padding-top:8px;padding-bottom:8px}
+.metric-mask strong{display:block;transform-origin:0 100%}
+.project-paper .motion-media{transform-origin:center center}
+.motion-promoted{will-change:transform,clip-path}
+@media(prefers-reduced-motion:reduce){.motion-promoted{will-change:auto}.motion-title,.opening-label,.opening-description,.motion-media{transform:none!important;clip-path:none!important}}

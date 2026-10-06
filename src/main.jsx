@@ -4,6 +4,7 @@ import App from './App.jsx';
 import './styles.css';
 import './liquid-glass.css';
 import './portfolio.css';
+import './motion.css';
 import { applyAppearance } from './glassConfig.js';
 
 applyAppearance();

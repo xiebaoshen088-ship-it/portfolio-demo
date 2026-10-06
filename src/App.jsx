@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import HeroVideo from './HeroVideo.jsx';
 import { contact, projects } from './data.js';
 import { DetailDialog, EvidenceDialog } from './Dialog.jsx';
 import useGlass from './useGlass.js';
 import SectionNavigation from './SectionNavigation.jsx';
 import SegmentedControl from './SegmentedControl.jsx';
+import usePortfolioMotion from './usePortfolioMotion.js';
 
 export function Icon({ name = 'mail', ...props }) {
   const paths = {
@@ -19,12 +20,14 @@ export function Icon({ name = 'mail', ...props }) {
 }
 
 export default function App() {
+  const pageRef = useRef(null);
   const [copied, setCopied] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [detail, setDetail] = useState(null);
   const [shot, setShot] = useState(null);
   const [activeSection,setActiveSection] = useState('');
   useGlass();
+  usePortfolioMotion(pageRef);
   const openDetail = (id, trigger) => setDetail({ kind: 'case', id, trigger, rect: trigger?.getBoundingClientRect() });
   const openShot = (id, trigger) => setShot({ kind: 'shot', id, trigger, rect: trigger?.getBoundingClientRect() });
   async function copyEmail() {
@@ -32,7 +35,7 @@ export default function App() {
     catch { setCopied(false); setFeedback(`请手动复制邮箱：${contact.email}`); }
   }
 
-  return <>
+  return <div className="portfolio-page" ref={pageRef}>
     <a href="#profile" className="skip-link">跳到个人介绍</a>
     <header className="site-header shell glass" data-expanded="true">
       <a className="wordmark" href="#top" aria-label="解宝珅，返回首页">xiebaoshen<span className="wordmark-dot" /></a>
@@ -44,15 +47,15 @@ export default function App() {
       <div className="hero" id="top" aria-labelledby="hero-title">
         <HeroVideo />
         <div className="hero-content shell">
-          <p className="eyebrow hero-eyebrow">运营作品集</p>
-          <h1 id="hero-title"><span className="serif">content sense,</span><span>growth mindset.</span></h1>
-          <p className="hero-description">内容判断与跨平台运营</p>
-          <a className="button glass hero-cta" href="#profile">了解个人背景<Icon name="down" /></a>
+          <p className="eyebrow hero-eyebrow motion-mask"><span className="opening-label">运营作品集</span></p>
+          <h1 id="hero-title"><span className="serif motion-mask"><span className="hero-title-line motion-title">content sense,</span></span><span className="motion-mask"><span className="hero-title-line motion-title">growth mindset.</span></span></h1>
+          <p className="hero-description motion-mask"><span className="opening-description">内容判断与跨平台运营</span></p>
+          <div className="hero-action-mask"><a className="button glass hero-cta" href="#profile">了解个人背景<Icon name="down" /></a></div>
         </div>
       </div>
 
       <div className="profile section shell" id="profile">
-        <div className="section-heading"><h2 id="profile-title">个人介绍</h2><span className="section-index">01 / 03</span></div>
+        <div className="section-heading"><h2 id="profile-title" className="motion-mask"><span className="motion-title">个人介绍</span></h2><span className="section-index">01 / 03</span></div>
         <div className="experience-grid">
           <div className="portrait-placeholder" aria-label="个人头像位置，等待补充照片">
             <span className="portrait-initial">解</span>
@@ -69,12 +72,12 @@ export default function App() {
       </section>
 
       <section className="tech-case section shell" id="tech" aria-labelledby="tech-title">
-        <div className="section-heading"><div><p className="eyebrow">科技数码类账号运营</p><h2 id="tech-title">凰家评测</h2></div><span className="section-index">02 / 03</span></div>
+        <div className="section-heading"><div><p className="eyebrow">科技数码类账号运营</p><h2 id="tech-title" className="motion-mask"><span className="motion-title">凰家评测</span></h2></div><span className="section-index">02 / 03</span></div>
         <div className="account-context"><div><h3>凤凰网 · 新媒体运营实习</h3><span>2026.06 — 2026.09</span></div><p>独立运营微博，参与抖音、小红书、视频号与微信公众号内容发布、互动和数据复盘。</p></div>
         <div className="account-evidence">
           <div className="account-label"><h3>账号运营数据</h3><span>微博 · 近30日</span><button className="text-link" onClick={e => openDetail('platforms', e.currentTarget)}>查看后台截图</button></div>
-          <div className="account-stat"><strong>570<span>万+</span></strong><p>账号累计阅读</p></div>
-          <div className="account-stat"><strong>600<span>万+</span></strong><p>账号视频播放</p></div>
+          <div className="account-stat"><div className="motion-mask metric-mask"><strong>570<span>万+</span></strong></div><p>账号累计阅读</p></div>
+          <div className="account-stat"><div className="motion-mask metric-mask"><strong>600<span>万+</span></strong></div><p>账号视频播放</p></div>
           <p className="metric-note">账号整体数据，完整统计起止未说明。</p>
         </div>
         <h3 className="case-subheading">内容与传播实践</h3>
@@ -82,7 +85,7 @@ export default function App() {
           {projects.map((project, i) => <article className={`project-card project-${project.tone}`} key={project.id}>
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}项目详情`}>
               <span className="visual-number">0{i + 1}</span>
-              <div className="project-paper"><img src={`/assets/${project.image}`} alt={project.alt} loading="lazy" /></div>
+              <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} loading="lazy" /></div>
               <span className="visual-tag glass">{project.tag}</span>
               <span className="project-open glass"><Icon name="plus" /></span>
             </button>
@@ -97,7 +100,7 @@ export default function App() {
       </section>
 
       <section className="douyin-case section shell" id="douyin" aria-labelledby="douyin-title">
-        <div className="section-heading"><div><p className="eyebrow">个人抖音</p><h2 id="douyin-title">爆款视频策划</h2></div><span className="section-index">03 / 03</span></div>
+        <div className="section-heading"><div><p className="eyebrow">个人抖音</p><h2 id="douyin-title" className="motion-mask"><span className="motion-title">爆款视频策划</span></h2></div><span className="section-index">03 / 03</span></div>
         <div className="douyin-grid">{[1,2].map(i => <article className="douyin-work" key={i}>
           <div className="video-placeholder" aria-label={`代表视频${i}，资料待补充`}><span className="video-placeholder-number">0{i}</span><span>视频资料待补充</span></div>
           <h3>代表视频 0{i}</h3>
@@ -113,5 +116,5 @@ export default function App() {
     <SectionNavigation onActiveChange={setActiveSection} />
     {detail && <DetailDialog key={detail.id} entry={detail} onClose={() => setDetail(null)} onShot={openShot} />}
     {shot && <EvidenceDialog key={shot.id} entry={shot} onClose={() => setShot(null)} />}
-  </>;
+  </div>;
 }
