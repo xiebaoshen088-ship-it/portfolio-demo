@@ -1,0 +1,81 @@
+/* Portfolio overrides live separately from the exact React Bits registry CSS. */
+.glass.glass-control {
+  position: relative;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgb(var(--glass-shadow) / .09);
+  box-shadow: 0 2px 8px rgb(var(--glass-shadow) / .045);
+  overflow: visible;
+}
+.glass.glass-control::before,.glass.glass-control::after { display: none; }
+.glass-control-material {
+  position: absolute !important;
+  inset: 0;
+  z-index: 0 !important;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.glass-control-material .portfolio-control-surface {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit !important;
+  color-scheme: light;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  pointer-events: none;
+}
+.portfolio-control-surface.glass-surface--svg {
+  backdrop-filter: var(--filter-id) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: var(--filter-id) saturate(var(--glass-saturation));
+}
+.portfolio-control-surface .glass-surface__content { padding: 0; }
+.portfolio-control-surface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at var(--light-x,28%) var(--light-y,16%),#ffffff26,transparent 65%);
+  opacity: .3;
+  transition: opacity 160ms;
+}
+.glass-control-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: inherit;
+  pointer-events: none;
+  filter: none;
+}
+.portfolio-control-surface.glass-surface--fallback {
+  background: rgb(255 255 255 / .07);
+  backdrop-filter: blur(.7px) saturate(115%);
+  -webkit-backdrop-filter: blur(.7px) saturate(115%);
+}
+.dock-control .dock-lens-material {
+  border: 1px solid rgb(var(--glass-shadow) / .09);
+  border-radius: inherit;
+  background: none;
+  box-shadow: 0 1px 5px rgb(var(--glass-shadow) / .035);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.dock-control[data-lens-pressed=true] .dock-lens-material { background: none; }
+.glass-control:hover .portfolio-control-surface::after { opacity: .4; }
+.glass-control.is-pressed .portfolio-control-surface::after { opacity: .48; }
+@media(prefers-reduced-motion:reduce) {
+  .glass-control,.portfolio-control-surface,.portfolio-control-surface::after { transition: none !important; }
+}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more) {
+  .glass-control-material .portfolio-control-surface {
+    background: rgb(var(--panel-rgb));
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .portfolio-control-surface::after { display: none; }
+  .glass.glass-control,.dock-control .dock-lens-material { border-color: var(--muted); }
+}

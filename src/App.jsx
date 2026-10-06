@@ -1,3 +1,4 @@
+import GlassButton from './GlassButton.jsx';
 import { useRef, useState } from 'react';
 import HeroVideo from './HeroVideo.jsx';
 import { contact, projects } from './data.js';
@@ -40,7 +41,7 @@ export default function App() {
     <header className="site-header shell glass" data-expanded="true">
       <a className="wordmark" href="#top" aria-label="解宝珅，返回首页">xiebaoshen<span className="wordmark-dot" /></a>
       <nav aria-label="主导航"><SegmentedControl navigation className="nav-glass" label="主导航" value={activeSection} onChange={setActiveSection} options={[{value:'about',label:'个人介绍'},{value:'tech',label:'凰家评测'},{value:'douyin',label:'个人抖音'}]} /></nav>
-      <div className="header-actions"><a className="button glass header-contact" href="#contact"><Icon />联系我</a></div>
+      <div className="header-actions"><GlassButton as="a" className="button header-contact" href="#contact"><Icon />联系我</GlassButton></div>
     </header>
     <main>
       <section id="about" aria-labelledby="profile-title">
@@ -50,7 +51,7 @@ export default function App() {
           <p className="eyebrow hero-eyebrow motion-mask"><span className="opening-label">运营作品集</span></p>
           <h1 id="hero-title"><span className="serif motion-mask"><span className="hero-title-line motion-title">content sense,</span></span><span className="motion-mask"><span className="hero-title-line motion-title">growth mindset.</span></span></h1>
           <p className="hero-description motion-mask"><span className="opening-description">内容判断与跨平台运营</span></p>
-          <div className="hero-action-mask"><a className="button glass hero-cta" href="#profile">了解个人背景<Icon name="down" /></a></div>
+          <div className="hero-action-mask"><GlassButton as="a" className="button hero-cta" href="#profile">了解个人背景<Icon name="down" /></GlassButton></div>
         </div>
       </div>
 
@@ -65,7 +66,7 @@ export default function App() {
             <p className="intro-name">解宝珅</p>
             <p className="intro-text">大连艺术学院</p>
             <div className="education"><span>播音与主持艺术 · 本科在读</span></div>
-            <div className="about-actions"><button className="button glass" onClick={e => openDetail('resume', e.currentTarget)}>查看简历</button><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
+            <div className="about-actions"><GlassButton as="button" className="button" onClick={e => openDetail('resume', e.currentTarget)}>查看简历</GlassButton><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
           </div>
         </div>
       </div>
@@ -87,15 +88,15 @@ export default function App() {
               <span className="visual-number">0{i + 1}</span>
               <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} loading="lazy" /></div>
               <span className="visual-tag glass">{project.tag}</span>
-              <span className="project-open glass"><Icon name="plus" /></span>
+              <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
             <div className="project-copy"><p className="eyebrow">{project.category}</p><h3>{project.title}</h3><p>{project.subtitle}</p><button className="text-link" onClick={e => openDetail(project.id, e.currentTarget)}>查看项目</button></div>
           </article>)}
         </div>
         <div className="additional-projects">
-          <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>5个原创话题 · 小凰鸡系列</strong><small>账号栏目与话题运营</small></span><span className="glass row-control"><Icon name="plus" /></span></button>
-          <button className="project-row" onClick={e => openDetail('bambu', e.currentTarget)}><span className="row-mark row-bambu">B</span><span><strong>拓竹 · 产品传播项目</strong><small>查看项目与视频</small></span><span className="glass row-control"><Icon name="plus" /></span></button>
-          <button className="project-row" onClick={e => openDetail('review', e.currentTarget)}><span className="row-mark row-review">↗</span><span><strong>小红书 · 数据复盘</strong><small>观看、互动与关注表现</small></span><span className="glass row-control"><Icon name="plus" /></span></button>
+          <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>5个原创话题 · 小凰鸡系列</strong><small>账号栏目与话题运营</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
+          <button className="project-row" onClick={e => openDetail('bambu', e.currentTarget)}><span className="row-mark row-bambu">B</span><span><strong>拓竹 · 产品传播项目</strong><small>查看项目与视频</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
+          <button className="project-row" onClick={e => openDetail('review', e.currentTarget)}><span className="row-mark row-review">↗</span><span><strong>小红书 · 数据复盘</strong><small>观看、互动与关注表现</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
         </div>
       </section>
 
@@ -109,7 +110,7 @@ export default function App() {
     </main>
     <footer className="site-footer shell" id="contact" aria-label="联系方式">
       <div className="footer-contact"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><span className="contact-phone">{contact.phone}</span></div>
-      <div className="contact-actions"><a className="button glass" href={`mailto:${contact.email}`}><Icon />发送邮件</a><button className="button glass" onClick={copyEmail}><Icon name="copy" />{copied ? '已复制邮箱' : '复制邮箱'}</button><a className="button glass" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</a></div>
+      <div className="contact-actions"><GlassButton as="a" className="button" href={`mailto:${contact.email}`}><Icon />发送邮件</GlassButton><GlassButton as="button" className="button" onClick={copyEmail}><Icon name="copy" />{copied ? '已复制邮箱' : '复制邮箱'}</GlassButton><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div>
       <p className="copy-feedback" role="status">{feedback}</p>
       <div className="footer-meta"><span>© 2026 解宝珅 · 运营作品集</span><a href="#top">回到首页</a><a className="font-credit" href="https://www.onlinewebfonts.com/" target="_blank" rel="noreferrer">Fonts by OnlineWebFonts</a></div>
     </footer>

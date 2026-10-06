@@ -5,6 +5,7 @@ import './styles.css';
 import './liquid-glass.css';
 import './portfolio.css';
 import './motion.css';
+import './glass-buttons.css';
 import { applyAppearance } from './glassConfig.js';
 
 applyAppearance();

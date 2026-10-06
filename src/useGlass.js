@@ -12,6 +12,7 @@ export default function useGlass() {
     const nodes = new WeakMap(); let serial = 0;
     const make = (tag, attrs) => { const el = document.createElementNS(ns, tag); Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, String(value))); return el; };
     function update(el) {
+      if (el.matches('.glass-control')) { el.style.removeProperty('--glass-optics'); return; }
       const dockLens=el.matches('.dock-lens-material');
       if((el.closest('.site-header,.hero')&&!dockLens)||el.matches('.segment-indicator,.scene-lens')){el.style.removeProperty('--glass-optics');return;}
       const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);

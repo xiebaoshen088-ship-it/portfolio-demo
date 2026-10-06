@@ -32,6 +32,8 @@ npm run preview
 - `src/data.js`：项目、截图、联系方式及统计口径。
 - `src/portfolio.css`：三部分排版；`styles.css` 保留基础排版。
 - `src/liquid-glass.css` 与 `src/glassConfig.js`：材质、边缘位移、光源及动画参数。
+- `src/GlassSurface.jsx` 与 `src/GlassSurface.css`：React Bits JS-CSS 注册表的完整原始组件，未改写源码；注册表没有额外依赖。
+- `src/GlassButton.jsx` 与 `src/glass-buttons.css`：按钮材质适配与清透样式。统一使用提供的 `displace=15`、`distortionScale=-150`、RGB 偏移 `5/15/25`、`brightness=60`、`opacity=0.8`、`mixBlendMode=screen`；尺寸跟随实际按钮。
 - `src/SectionNavigation.jsx`：无可见进度条；缓存章节位置，滚动更新导航选中状态及首页长条的展开与收拢。
 - `src/usePortfolioMotion.js`：完整开场、模块标题遮罩进场、卡片 stagger、图片 reveal 和局部视差；GSAP matchMedia 自动回收动画与 ScrollTrigger。
 - `src/motionConfig.js` 与 `src/motion.css`：统一管理节奏、位移、错峰和遮罩结构。
@@ -45,7 +47,11 @@ npm run preview
 
 固定浅色、清透、100% 透光参数，无外观按钮、滑块或模式切换。按钮使用细窄边缘和轻微投影，移除厚白亮边、多层内阴影、悬停鼓起与标签放大。按下仅轻微等比缩小；切换选中块持续平移，保持安静。
 
-实际背后内容通过 `backdrop-filter` 透射和轻微模糊。小面积静态控件在 Chromium 中使用 SVG 背景位移增强，仅窄边缘轻微位移，中央保持稳定，文字在独立前景层。大面积导航和视频上的控件使用稳定 CSS 近似；不支持 SVG 背景位移的浏览器也使用 CSS 近似。任意 HTML 的完整物理折射并未实现。
+首页、页脚、项目加号、简历和截图弹窗的液态按钮，以及导航与平台切换的选中块，使用 [React Bits GlassSurface](https://reactbits.dev/components/glass-surface)。组件来源是 [JS-CSS 官方注册表](https://reactbits.dev/r/GlassSurface-JS-CSS.json)。安装命令已尝试，shadcn 工具在当前运行环境中因自身 `ajv` 依赖错误退出，因此直接安装注册表的两份准确源码；项目依赖和锁文件无需变动。
+
+Chromium/Edge 中通过 SVG 位移、分色重组与 `backdrop-filter` 处理真实背后内容；移动控件时不复制背景图片，保持浏览器实时背景采样。文字、图标和原生点击目标在独立清晰层，未施加模糊或扭曲。`opacity=0.8` 是位移图内部参数，不是给按钮叠加80%的白色蒙层；实际背景底色 `backgroundOpacity=0`，保留固定浅色、清透和100%透光设置。单独覆盖组件默认的多层内阴影，避免厚重质感。
+
+Safari/Firefox 按组件能力检测使用 CSS 近似，只保留透光、柔和模糊、细边和轻微投影；不把它描述为真实折射。大面积导航外壳和阅读区域继续使用原有稳定材质。已迁移的按钮排除旧 SVG 折射，避免重复处理。此效果为屏幕背景位移，不是完整物理光线追踪。
 
 阅读详情保留必要底色。`prefers-reduced-motion` 关闭动效；高对比与减少透明度设置优先保障可读性。旧 `GlassStudio.jsx` 和 `OpticalScene.jsx` 未导入运行页面，不产生 WebGL 开销。
 

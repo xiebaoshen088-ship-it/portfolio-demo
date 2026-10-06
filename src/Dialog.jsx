@@ -1,3 +1,4 @@
+import GlassButton from './GlassButton.jsx';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { contact, columns, shots } from './data.js';
 import { Icon } from './App.jsx';
@@ -74,13 +75,13 @@ function Modal({ entry, title, onClose, children, className = '' }) {
     const rect = e.currentTarget.getBoundingClientRect();
     if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) close();
   }}>
-    <header className="dialog-header"><h2 id={`dialog-${entry.kind}-${entry.id}`}>{title}</h2><button className="glass icon-button" onClick={close} aria-label="关闭详情" autoFocus><Icon name="close" /></button></header>
+    <header className="dialog-header"><h2 id={`dialog-${entry.kind}-${entry.id}`}>{title}</h2><GlassButton as="button" className="icon-button" onClick={close} aria-label="关闭详情" autoFocus><Icon name="close" /></GlassButton></header>
     {children}
   </dialog>;
 }
 
 function EvidenceButton({ id, onShot, children }) {
-  return <button className="button glass" onClick={e => onShot(id, e.currentTarget)}><Icon name="zoom" />{children || shots[id].title}</button>;
+  return <GlassButton as="button" className="button" onClick={e => onShot(id, e.currentTarget)}><Icon name="zoom" />{children || shots[id].title}</GlassButton>;
 }
 
 function Metrics({ items }) {
@@ -113,7 +114,7 @@ export function DetailDialog({ entry, onClose, onShot }) {
         <Metrics items={[[ '370万+', '话题阅读'],['约6000', '话题互动'],['15家', '发布媒体']]} />
         <div className="case-process"><div><span>01</span><h3>设计讨论入口</h3><p>从用户熟悉的电视使用问题出发，把议题提炼成明确的热搜词条。</p></div><div><span>02</span><h3>联系 KOL 协同</h3><p>主动联系 KOL 参与传播，围绕同一话题推进讨论。</p></div><div><span>03</span><h3>观察传播结果</h3><p>结合话题数据与榜单快照，观察用户反馈和媒体参与。</p></div></div>
         <p className="evidence-note">以上为话题整体结果。「发布媒体15家」与我对接的KOL人数分开统计。视频内容制作由其他成员负责，未计入我的个人分工。</p>
-        <div className="dialog-actions"><a className="button glass" href="https://weibo.com/2707058873/RepP90jXb" target="_blank" rel="noreferrer">查看主帖与视频</a><EvidenceButton id="topic" onShot={onShot}>话题原图</EvidenceButton><EvidenceButton id="rank" onShot={onShot}>科技榜记录</EvidenceButton></div>
+        <div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RepP90jXb" target="_blank" rel="noreferrer">查看主帖与视频</GlassButton><EvidenceButton id="topic" onShot={onShot}>话题原图</EvidenceButton><EvidenceButton id="rank" onShot={onShot}>科技榜记录</EvidenceButton></div>
         <p className="evidence-note">话题页为「全部」口径，拍摄时间未说明。另有科技榜最高第8位的快照；完整传播时序与对接记录待补充。</p>
       </>}
       {id === 'poll' && <>
@@ -127,7 +128,7 @@ export function DetailDialog({ entry, onClose, onShot }) {
         <EvidenceStack onShot={onShot} />
         <p className="evidence-note">这里展示已有原图的3个话题，均为话题累计口径，统计起止未说明。小凰鸡数码讲堂的完整记录与第5个话题的名称和截图待补充。</p>
       </>}
-      {id === 'bambu' && <><p className="dialog-lead">从产品，走向用户关心的内容。</p><div className="bambu-identity"><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div><p>先通过成品查看项目表达，再结合选题、发布与反馈材料完善这个案例。</p><div className="dialog-actions"><a className="button glass" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</a></div><p className="evidence-note">项目截图、策划过程、个人分工和效果证据待补充，当前不添加未核实的成果数据。</p></>}
+      {id === 'bambu' && <><p className="dialog-lead">从产品，走向用户关心的内容。</p><div className="bambu-identity"><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div><p>先通过成品查看项目表达，再结合选题、发布与反馈材料完善这个案例。</p><div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</GlassButton></div><p className="evidence-note">项目截图、策划过程、个人分工和效果证据待补充，当前不添加未核实的成果数据。</p></>}
       {id === 'platforms' && <PlatformEvidence onShot={onShot} />}
       {id === 'review' && <>
         <p className="dialog-lead">观看上升之后，继续看互动与关注。</p><p>同一统计周期，观看增长，收藏与净涨粉下降。不同指标提示了不同的问题，需要进一步核对内容表现与流量来源。</p>
@@ -135,8 +136,8 @@ export function DetailDialog({ entry, onClose, onShot }) {
         <div className="review-table"><div><span>观看量</span><strong>+18%</strong><span>后台环比</span></div><div><span>收藏</span><strong>−43%</strong><span>后台环比</span></div><div><span>净涨粉</span><strong>−25%</strong><span>后台环比</span></div></div>
         <p className="evidence-note">7月20日—8月18日，年份未说明，包含付费投流。环比直接引用后台，上一周期基数未显示；不能据此认定某项策略导致变化。后台关注口径存在差异，原图保留。</p><div className="dialog-actions"><EvidenceButton id="views" onShot={onShot}>观看记录</EvidenceButton><EvidenceButton id="interactions" onShot={onShot}>互动记录</EvidenceButton><EvidenceButton id="followers" onShot={onShot}>关注记录</EvidenceButton></div>
       </>}
-      {id === 'resume' && <><p className="dialog-lead">判断内容，也经营反馈。</p><p>凤凰网 · 凰家评测运营实习<br />大连艺术学院 · 播音与主持艺术</p><div className="dialog-actions"><a className="button glass" href="/assets/resume.pdf" target="_blank" rel="noreferrer">查看完整简历</a><a className="button glass" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</a></div></>}
-      {id === 'contact' && <><p className="dialog-lead">聊聊内容，也聊聊机会。</p><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><div className="dialog-actions"><a className="button glass" href={`mailto:${contact.email}`}>发送邮件</a></div></>}
+      {id === 'resume' && <><p className="dialog-lead">判断内容，也经营反馈。</p><p>凤凰网 · 凰家评测运营实习<br />大连艺术学院 · 播音与主持艺术</p><div className="dialog-actions"><GlassButton as="a" className="button" href="/assets/resume.pdf" target="_blank" rel="noreferrer">查看完整简历</GlassButton><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div></>}
+      {id === 'contact' && <><p className="dialog-lead">聊聊内容，也聊聊机会。</p><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><div className="dialog-actions"><GlassButton as="a" className="button" href={`mailto:${contact.email}`}>发送邮件</GlassButton></div></>}
     </div>
   </Modal>;
 }
@@ -144,5 +145,5 @@ export function DetailDialog({ entry, onClose, onShot }) {
 export function EvidenceDialog({ entry, onClose }) {
   const [zoom, setZoom] = useState(false);
   const shot = shots[entry.id];
-  return <Modal entry={entry} title={shot.title} onClose={onClose} className="reader-dialog"><div className="reader-toolbar"><p>{shot.note}</p><button className="button glass" aria-pressed={zoom} onClick={() => setZoom(v => !v)}>{zoom ? '适应窗口' : '放大原图'}</button><a className="text-link" href={`/assets/${shot.file}`} target="_blank" rel="noreferrer">打开原图</a></div><div className={`reader-scroll ${zoom ? 'zoomed' : ''}`}><img src={`/assets/${shot.file}`} alt={`${shot.title}完整证据截图`} /></div></Modal>;
+  return <Modal entry={entry} title={shot.title} onClose={onClose} className="reader-dialog"><div className="reader-toolbar"><p>{shot.note}</p><GlassButton as="button" className="button" aria-pressed={zoom} onClick={() => setZoom(v => !v)}>{zoom ? '适应窗口' : '放大原图'}</GlassButton><a className="text-link" href={`/assets/${shot.file}`} target="_blank" rel="noreferrer">打开原图</a></div><div className={`reader-scroll ${zoom ? 'zoomed' : ''}`}><img src={`/assets/${shot.file}`} alt={`${shot.title}完整证据截图`} /></div></Modal>;
 }
