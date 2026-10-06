@@ -1,94 +1,63 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="theme-color" content="#ffffff">
- <meta name="description" content="解宝珅的新媒体运营作品集 Demo：平台判断、内容策划、传播与复盘。">
- <title>解宝珅 · 内容与运营</title>
- <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23f8f6f9'/%3E%3Cpath d='M8 22V10l8 9 8-9v12' fill='none' stroke='%237854a2' stroke-width='2.5'/%3E%3C/svg%3E">
- <link rel="preconnect" href="https://db.onlinewebfonts.com" crossorigin>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/77dcc46d9de45fef0051d12a768f9e5e?family=Kudryashev+Display">
- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap">
- <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/0e6de1ec911a2e267ff136bbdd384a44?family=Helvetica+Neue+Light">
- <link rel="stylesheet" href="styles.css">
- <link rel="stylesheet" href="light.css">
- <link rel="stylesheet" href="editorial.css">
- <link rel="stylesheet" href="intro.css">
- <link rel="stylesheet" href="palette.css">
- <script defer src="glass.js"></script>
- <script defer src="app.js"></script>
- <script defer src="experience.js"></script>
- <script defer src="intro.js"></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="解宝珅的运营作品集。通过凰家评测的内容、平台数据与传播实践，呈现内容判断与跨平台运营能力。">
+<title>解宝珅 · 运营作品集</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23f8f6f9'/%3E%3Cpath d='M8 22V10l8 9 8-9v12' fill='none' stroke='%237954a2' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://db.onlinewebfonts.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/77dcc46d9de45fef0051d12a768f9e5e?family=Kudryashev+Display">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/0e6de1ec911a2e267ff136bbdd384a44?family=Helvetica+Neue+Light">
+<link rel="stylesheet" href="portfolio.css"><script src="glass.js" defer></script><script src="intro.js" defer></script><script src="portfolio.js" defer></script>
 </head>
-<body id="top">
+<body>
 <a class="skip-link" href="#practice">跳到运营实践</a>
-<div class="reading-progress" aria-hidden="true"></div>
-<header class="site-header">
-  <a class="identity" href="#top" aria-label="解宝珅，返回首屏"><span class="identity-word font-grotesk">baoshenxie<small>解宝珅 · 新媒体运营</small></span></a>
-  <nav class="glass navigation" aria-label="主导航"><a href="#practice">运营实践</a><a href="#work">精选项目</a><a href="#about">关于我</a></nav>
-  <span class="nav-dot" aria-hidden="true"></span>
-</header>
+<header class="site-header"><a class="brand" href="#top" aria-label="解宝珅，返回首页">xiebaoshen</a>
+<nav class="navigation glass" aria-label="主导航"><span class="selection" aria-hidden="true"></span><a href="#practice" class="active">运营实践</a><a href="#work">精选作品</a><a href="#about">关于我</a></nav><span class="nav-dot" aria-hidden="true"></span></header>
 <main>
-<section class="hero-scene" aria-labelledby="hero-title">
- <div class="hero shell hero-canvas">
-  <div class="hero-stage hero-backdrop" aria-hidden="true">
-   <video id="hero-video" data-src="assets/hero-flow-60fps.mp4" data-src-mobile="assets/hero-flow-mobile-60fps.mp4" poster="assets/hero-flow-poster.jpg" autoplay loop muted playsinline preload="auto" disablepictureinpicture tabindex="-1"></video>
-   <span class="video-edge edge-top"></span><span class="video-edge edge-bottom"></span><span class="video-edge edge-left"></span><span class="video-edge edge-right"></span>
-  </div>
-  <div class="hero-copy">
-   <p class="eyebrow intro-enter">解宝珅 / 新媒体运营作品集</p>
-   <h1 id="hero-title" class="intro-enter" lang="en"><span class="font-kudryashev">content sense, </span><span class="font-grotesk">growth mindset.</span></h1>
-   <p class="hero-description font-helvetica intro-enter">懂内容，也懂增长。<br>从平台选择、选题策划，到发布、互动与复盘，<br class="desktop-break">用作品呈现我的运营判断。</p>
-   <div class="hero-actions intro-enter"><a class="glass button primary" href="#practice">探索运营实践<span class="button-dot" aria-hidden="true"></span></a><button class="glass icon-button video-toggle" id="video-toggle" aria-label="暂停背景动画" title="暂停背景动画" aria-pressed="false"><svg class="pause-symbol" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><svg class="play-symbol" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></button></div>
-   <p class="hero-affiliation intro-enter">凤凰网 · 凰家评测 / 新媒体运营实习</p>
-  </div>
-  <div class="hero-bottom hero-footer font-helvetica"><span>© 2026 解宝珅</span><a class="hero-scroll" href="#practice" aria-label="向下查看运营实践"><svg class="scroll-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="hero-footer-links"><a href="#work">作品</a><button data-detail="resume">简历</button><button data-detail="contact">联系</button></div></div>
- </div>
+<section class="hero-scene" id="top" aria-labelledby="hero-title">
+<div class="hero-art" aria-hidden="true"><img class="hero-poster" src="assets/hero-flow-loop-poster.jpg" alt=""><video id="hero-video" class="hero-loop-video is-active" data-src="assets/hero-flow-loop-60fps.mp4" data-src-mobile="assets/hero-flow-loop-mobile-60fps.mp4" poster="assets/hero-flow-loop-poster.jpg" autoplay loop muted playsinline preload="auto" disablepictureinpicture></video><div class="video-edge edge-top"></div><div class="video-edge edge-bottom"></div><div class="video-edge edge-left"></div><div class="video-edge edge-right"></div></div>
+<div class="hero-copy"><p class="hero-kicker">运营作品集</p><h1 id="hero-title"><span class="serif">content sense,</span> <span>growth mindset.</span></h1><p class="hero-description">内容判断与跨平台运营。<br>用作品，呈现我的运营判断。</p>
+<div class="hero-actions"><a class="button glass" href="#practice"><span class="button-dot" aria-hidden="true"></span>探索运营实践<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></a></div><p class="hero-affiliation">凤凰网 · 凰家评测</p></div>
+<div class="hero-footer"><span>解宝珅 · 内容与运营</span><a href="#about">认识我 ↗</a></div><span class="hero-waypoint" data-waypoint aria-hidden="true"></span>
 </section>
-<div class="motion-strip" aria-hidden="true"><div><span>CONTENT</span><i>✳</i><span>CONTEXT</span><i>✳</i><span>CONVERSATION</span><i>✳</i><span>REVIEW</span></div></div>
-<section class="practice shell section" id="practice" aria-labelledby="practice-title">
- <div class="chapter-heading reveal"><p class="eyebrow">01 / OPERATING PRACTICE</p><div><h2 id="practice-title">内容有方向，<br><span>运营有依据。</span></h2><p>平台选择、内容表达与发布后的反馈，<br>共同构成我的运营判断。</p></div></div>
- <div class="practice-layout reveal">
-  <div class="practice-note"><span class="mini-label">我的工作 / 凰家评测</span><h3>选题之后，<br>还有发布、互动与复盘。</h3><p>在凰家评测的运营实践中，负责选题、发布、互动与数据复盘；实习期间独立运营微博账号。</p><div class="work-line"><span>选题判断</span><i></i><span>内容发布</span><i></i><span>用户互动</span><i></i><span>数据复盘</span></div><p class="scope-note">跨平台的具体改写与分发案例待补充。</p></div>
-  <div class="account-evidence"><div class="account-top"><span class="mini-label">凰家评测 / 微博</span><span>后台近 30 日</span></div><div class="account-stat"><span>累计阅读量</span><strong>576.9<small>万</small></strong><span class="stat-rule" aria-hidden="true"></span></div><div class="account-stat"><span>视频播放量</span><strong>624.3<small>万</small></strong><span class="stat-rule" aria-hidden="true"></span></div><div class="account-foot"><p>账号整体数据 · 两项指标分别列示<br>完整统计起止待补充</p><button class="glass button small" data-evidence="overview">查看后台证据<span class="expand-icon" aria-hidden="true">＋</span></button></div></div>
- </div>
- <div class="platform-desk reveal">
-  <div class="platform-desk-heading"><div><span class="mini-label">平台判断 / 内容适配</span><h3>在不同平台，观察内容与反馈。</h3></div><span class="scope-note">点击平台或两侧画面切换<br>当前画面可查看原图</span></div>
-  <div class="platform-controls"><div class="platform-tabs glass" role="tablist" aria-label="各平台运营材料"><button role="tab" aria-selected="true" aria-controls="platform-panel" id="platform-weibo" data-platform="weibo">微博</button><button role="tab" aria-selected="false" aria-controls="platform-panel" id="platform-xhs" data-platform="xhs" tabindex="-1">小红书</button><button role="tab" aria-selected="false" aria-controls="platform-panel" id="platform-douyin" data-platform="douyin" tabindex="-1">抖音</button><button role="tab" aria-selected="false" aria-controls="platform-panel" id="platform-channel" data-platform="channel" tabindex="-1">视频号</button><button role="tab" aria-selected="false" aria-controls="platform-panel" id="platform-wechat" data-platform="wechat" tabindex="-1">公众号</button></div><span class="gallery-counter" aria-hidden="true">01 / 05</span></div>
-  <div class="platform-gallery" id="platform-gallery" aria-label="各平台作品展台">
-   <button class="gallery-paper is-selected" data-gallery-platform="weibo" data-evidence="poll" aria-label="查看微博代表作品原图" aria-pressed="true"><span class="gallery-number">01 / WEIBO</span><span class="gallery-image"><img src="assets/S17-poll.png" alt="微博手机系统偏好投票原图"></span><span class="gallery-label"><b>微博</b><small>代表互动内容 / 查看原图 ＋</small></span></button>
-   <button class="gallery-paper" data-gallery-platform="xhs" data-evidence="views" aria-label="选择小红书材料" aria-pressed="false"><span class="gallery-number">02 / XIAOHONGSHU</span><span class="gallery-image"><img src="assets/S11-views.png" alt="小红书周期观看数据截图"></span><span class="gallery-label"><b>小红书</b><small>账号后台 / 查看原图 ＋</small></span></button>
-   <button class="gallery-paper gallery-pending" data-gallery-platform="douyin" aria-label="选择抖音材料" aria-pressed="false"><span class="gallery-number">03 / DOUYIN</span><span class="gallery-image"><span class="pending-platform-name">抖音</span><span class="pending-platform-note">代表视频、封面与发布记录<br>待补充</span></span><span class="gallery-label"><b>抖音</b><small>内容与数据材料待补充</small></span></button>
-   <button class="gallery-paper gallery-pending" data-gallery-platform="channel" aria-label="选择视频号材料" aria-pressed="false"><span class="gallery-number">04 / CHANNELS</span><span class="gallery-image"><span class="pending-platform-name">视频号</span><span class="pending-platform-note">代表内容与平台选择依据<br>待补充</span></span><span class="gallery-label"><b>视频号</b><small>内容与数据材料待补充</small></span></button>
-   <button class="gallery-paper gallery-pending" data-gallery-platform="wechat" aria-label="选择公众号材料" aria-pressed="false"><span class="gallery-number">05 / WECHAT</span><span class="gallery-image"><span class="pending-platform-name">公众号</span><span class="pending-platform-note">代表文章、标题与图文编排<br>待补充</span></span><span class="gallery-label"><b>公众号</b><small>内容与数据材料待补充</small></span></button>
-  </div>
-  <div class="platform-panel" id="platform-panel" role="tabpanel" aria-labelledby="platform-weibo" tabindex="0"><div><span class="mini-label" id="platform-kind">现有材料 / 内容与传播</span><h3 id="platform-title">从互动内容，到话题传播。</h3></div><div><p id="platform-copy">手机系统偏好投票与电视适老化话题，分别提供互动内容和传播结果的证据。</p><p class="scope-note" id="platform-scope">平台选择、标题改写与发布时间的具体判断待补充。</p></div><div class="platform-preview" id="platform-preview" hidden></div></div>
- </div>
+<section class="scene shell" id="practice" aria-labelledby="judgement-title"><span class="scene-rail" data-waypoint aria-hidden="true"></span>
+<div class="scene-intro reveal"><div><span class="scene-label">内容判断</span><h2 id="judgement-title">先理解内容，<br><span>再决定怎么运营。</span></h2></div><p>从选题、发布到互动与复盘，<br>让内容有明确的表达，也有参与的入口。</p></div>
+<div class="judgement-stage reveal"><div class="judgement-copy"><h3>一个具体问题，<br>让用户愿意回应。</h3><p>把手机系统偏好做成一次投票。用用户熟悉的选择，打开讨论。</p><div class="result-pair"><div><strong>5<small>万+</small></strong><span>单条内容阅读</span></div><div><strong>约3000</strong><span>参与投票</span></div></div><button class="button glass" data-case="poll">查看内容实践<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div>
+<div class="content-exhibit"><button class="work-image poll-image" data-shot="poll" aria-label="放大手机系统偏好投票原图"><img src="assets/S17-poll.png" alt="凰家评测微博手机系统偏好投票，包含作品与互动数据" loading="lazy"><span class="image-caption">手机系统偏好投票<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button></div></div>
+<div class="topics-entry reveal"><p>把日常内容，经营成持续的栏目。<br><span>5个原创话题，形成账号自己的表达场景。</span></p><button class="button glass" data-case="topics">查看原创话题<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div>
 </section>
-<section class="work-section section shell" id="work" aria-labelledby="work-title">
- <div class="chapter-heading reveal"><p class="eyebrow">02 / SELECTED PROJECTS</p><div><h2 id="work-title">把判断，<br><span>落到具体内容里。</span></h2><p>议题传播与产品内容策划，<br>分别展开两次项目实践。</p></div></div>
- <article class="project-row hot-row reveal">
-  <div class="project-copy"><span class="project-number">PROJECT 01 / 议题传播</span><p class="mini-label">议题判断 · 传播观察 · 数据证据</p><h3>一条内容，<br>如何进入更大的讨论。</h3><p class="topic-title">#电视应该为老人做减法吗#</p><div class="topic-result"><strong>374<small>万</small></strong><span>话题阅读 / 全部口径</span></div><div class="topic-support"><span><b>5,905</b>互动</span><span><b>15 家</b>发布媒体</span></div><p class="scope-note">话题整体结果 · 截图时间未说明<br>个人分工与传播过程待补充</p><div class="project-actions"><button class="glass button" data-detail="hot">查看传播案例<span class="expand-icon" aria-hidden="true">＋</span></button><button class="quiet-button" data-evidence="topic">原始证据 ＋</button></div></div>
-  <div class="project-art hot-art spread-field"><span class="spread-word" aria-hidden="true">SPREAD.</span><svg class="spread-connections" viewBox="0 0 640 580" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M320 290 C240 240 210 80 70 80"/><path pathLength="1" d="M320 290 C430 220 440 105 570 105"/><path pathLength="1" d="M320 290 C230 350 190 465 65 465"/><path pathLength="1" d="M320 290 C420 365 480 485 575 485"/></svg>
-   <button class="topic-sheet" data-evidence="topic" aria-label="放大电视适老化话题原始证据"><img src="assets/topic-cover.jpg" alt="电视适老化话题原图，全部阅读374万、互动5905、发布媒体15家"><span>话题与数据 / 查看完整原图</span></button>
-   <button class="glass spread-beacon beacon-content" data-evidence="topic"><small>CONTENT</small><span>议题与导语</span></button><button class="glass spread-beacon beacon-users" data-evidence="topic"><small>DISCUSSION</small><span>用户讨论</span></button><button class="glass spread-beacon beacon-media" data-evidence="topic"><small>MEDIA</small><span>媒体参与</span></button><button class="glass spread-beacon beacon-rank" data-evidence="rank"><small>RANKING</small><span>榜单记录</span></button>
-   <p class="spread-caption">证据关系示意 · 不代表实际传播先后</p>
-  </div>
- </article>
- <article class="project-row bambu-row reveal">
-  <div class="project-art bambu-art"><span class="art-meta">BAMBU LAB / 产品传播项目</span><div class="bambu-word">拓竹<span>从产品，走向用户的问题。</span></div><div class="bambu-process"><span>产品</span><i></i><span>用户</span><i></i><span>内容</span></div><div class="art-pending"><span class="play-icon" aria-hidden="true">▷</span><span>产品图片、成品封面与代表视频待补充</span></div></div>
-  <div class="project-copy"><span class="project-number">PROJECT 02 / 产品内容</span><p class="mini-label">内容策划 · 产品理解 · 用户问题</p><h3>让产品特点，<br>成为用户关心的内容。</h3><p>拓竹产品传播项目。围绕产品、用户与内容表达，展开策划判断和执行过程。</p><p class="scope-note">具体产品、个人职责、成品与效果待补充。</p><div class="project-actions"><button class="glass button" data-detail="bambu">查看项目思考<span class="expand-icon" aria-hidden="true">＋</span></button></div><div class="video-position"><span class="play-icon" aria-hidden="true">▷</span><span>代表视频<small>视频封面与原平台链接待补充</small></span></div></div>
- </article>
+<section class="scene shell" id="platforms" aria-labelledby="platforms-title"><span class="scene-rail" data-waypoint aria-hidden="true"></span>
+<div class="scene-intro reveal"><div><span class="scene-label">平台运营</span><h2 id="platforms-title">理解平台，<br><span>看见不同的反馈。</span></h2></div><p>独立运营凰家评测微博；参与抖音、小红书、视频号与公众号的发布和复盘。</p></div>
+<div class="platform-picker glass reveal" role="tablist" aria-label="查看不同平台的运营证据"><span class="selection" aria-hidden="true"></span><button id="tab-weibo" role="tab" data-platform="weibo" aria-selected="true" aria-controls="panel-weibo">微博</button><button id="tab-xhs" role="tab" data-platform="xhs" aria-selected="false" aria-controls="panel-xhs" tabindex="-1">小红书</button></div>
+<div class="platform-stage reveal">
+<div class="platform-panel" id="panel-weibo" role="tabpanel" aria-labelledby="tab-weibo"><div class="platform-copy"><span class="platform-scope">近30日 · 账号整体表现</span><h3>在持续运营中，积累内容影响力。</h3><div class="platform-metrics"><div><strong>570<small>万+</small></strong><span>累计阅读</span></div><div><strong>600<small>万+</small></strong><span>视频播放</span></div></div><p>两种指标分别呈现内容与视频的触达，完整口径保留在后台原图中。</p><button class="button glass" data-shot="overview">查看微博后台<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div><div class="platform-exhibit"><button class="work-image" data-shot="overview" aria-label="放大凰家评测微博后台原图"><img src="assets/S23-overview.png" alt="凰家评测微博近30日账号数据" loading="lazy"><span class="image-caption">微博运营后台<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button></div></div>
+<div class="platform-panel" id="panel-xhs" role="tabpanel" aria-labelledby="tab-xhs" hidden><div class="platform-copy"><span class="platform-scope">7月20日—8月18日 · 含付费投流</span><h3>从观看，继续观察互动与关注。</h3><div class="platform-metrics"><div><strong>30<small>万+</small></strong><span>观看</span></div><div><strong>约400</strong><span>后台净涨粉</span></div></div><p>观看与关注的反馈方向不同，需要结合流量来源和作品表现继续复盘。</p><button class="button glass" data-case="review">查看小红书复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div><div class="platform-exhibit"><button class="work-image" data-shot="views" aria-label="放大小红书观看数据原图"><img src="assets/S11-views.png" alt="小红书周期观看数据与走势" loading="lazy"><span class="image-caption">小红书运营后台<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button></div></div>
+</div>
 </section>
-<section class="evidence-section shell section" id="evidence" aria-labelledby="evidence-section-title">
- <div class="chapter-heading reveal"><p class="eyebrow">03 / CONTINUOUS OPERATIONS</p><div><h2 id="evidence-section-title">一次发布之后，<br><span>继续经营。</span></h2><p>把内容组织成持续表达的栏目，<br>也从数据里寻找下一次调整的线索。</p></div></div>
- <div class="column-strip reveal"><div><span class="mini-label">原创话题 / 栏目建设</span><h3>5 个话题，持续的内容场景。</h3><p>让日常内容拥有可以持续经营的表达方式。</p></div><div class="column-buttons"><button class="glass column-chip" data-detail="column6">小凰鸡聊科技<span>＋</span></button><button class="glass column-chip" data-detail="column5">小凰鸡深夜Deep talk<span>＋</span></button><button class="glass column-chip" data-detail="column7">小凰鸡闲聊站<span>＋</span></button><button class="glass column-chip" data-detail="column4">小凰鸡数码讲堂<span>＋</span></button><button class="glass column-chip pending-chip" data-detail="column0">第 5 个话题 · 名称待补充<span>＋</span></button></div></div>
- <div class="review-row reveal"><div><span class="mini-label">数据观察 / 小红书</span><h3>观看之外，<br>再看互动与关注。</h3><p>同一周期，观看与收藏、关注指标呈现不同方向的变化。这是继续复盘内容与流量来源的线索。</p><p class="scope-note">07-20 至 08-18 · 年份未说明 · 有付费投流<br>实际复盘与后续调整待补充</p><button class="glass button small" data-detail="review">查看数据口径<span class="expand-icon" aria-hidden="true">＋</span></button></div><div class="review-lines"><button data-evidence="views"><span>观看数<small>后台环比 +18%</small></span><strong>30.9<small>万</small></strong><span class="line-tail">查看原图 ＋</span></button><button data-evidence="interactions"><span>收藏数<small>后台环比 −43%</small></span><strong>1,481</strong><span class="line-tail">查看原图 ＋</span></button><button data-evidence="followers"><span>净涨粉<small>后台环比 −25%</small></span><strong>416</strong><span class="line-tail">查看原图 ＋</span></button></div></div>
+<section class="scene shell" id="work" aria-labelledby="spread-title"><span class="scene-rail" data-waypoint aria-hidden="true"></span>
+<div class="scene-intro reveal"><div><span class="scene-label">热搜传播</span><h2 id="spread-title">让一个话题，<br><span>进入更大的讨论。</span></h2></div><p>设计热搜词条，联系 KOL 协同传播，<br>负责话题运营与传播推进。</p></div>
+<div class="spread-stage reveal"><div class="spread-copy"><p class="topic-name">#电视应该为老人做减法吗#</p><div class="lead-metric">370<small>万+</small></div><span class="lead-label">话题阅读</span><div class="spread-facts"><span><strong>约6000</strong>互动</span><span><strong>15家</strong>媒体</span></div><p>话题整体表现，<br>媒体与用户共同参与。</p><button class="button glass" data-case="hot">查看传播案例<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div>
+<div class="spread-field"><svg class="spread-lines" viewBox="0 0 600 540" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M300 270 C220 205 150 90 65 55"/><path pathLength="1" d="M300 270 C400 220 450 105 535 95"/><path pathLength="1" d="M300 270 C220 335 160 420 65 430"/><path pathLength="1" d="M300 270 C400 350 460 445 535 465"/></svg><button class="work-image topic-image" data-shot="topic" aria-label="查看电视适老化话题完整原图"><img src="assets/topic-cover.jpg" alt="电视适老化话题页，包含话题及传播数据" loading="lazy"><span class="image-caption">话题原图 ↗</span></button><button class="spread-node node-content glass" data-shot="topic">议题</button><button class="spread-node node-users glass" data-shot="topic">讨论</button><button class="spread-node node-media glass" data-shot="topic">媒体</button><button class="spread-node node-ranking glass" data-shot="rank">榜单</button></div></div>
+<button class="project-entry reveal" data-case="bambu"><span>产品传播项目</span><strong>拓竹 · 从产品到内容</strong><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
 </section>
-<section class="about shell section" id="about" aria-labelledby="about-title"><div class="reveal"><p class="eyebrow">04 / THE PERSON BEHIND THE CONTENT</p><h2 id="about-title">解宝珅<span>内容与运营。</span></h2><p>关注内容如何被看见，<br>也关注被看见之后发生了什么。</p></div><div class="about-links reveal"><span class="mini-label">凤凰网 · 凰家评测 / 新媒体运营实习</span><div><button class="glass button" data-detail="resume">个人简历<span class="expand-icon" aria-hidden="true">＋</span></button><button class="glass button" data-detail="contact">联系我<span class="expand-icon" aria-hidden="true">＋</span></button></div><span class="scope-note">简历下载与联系方式待补充</span></div></section>
-<footer class="shell footer"><span>解宝珅 / 新媒体运营作品集</span><span>DEMO · 部分项目材料待补充</span><a class="font-credit" href="https://www.onlinewebfonts.com/fonts" target="_blank" rel="noopener noreferrer">Fonts: OnlineWebFonts</a><a href="#top">回到顶部</a></footer>
+<section class="scene shell" id="review" aria-labelledby="review-title"><span class="scene-rail" data-waypoint aria-hidden="true"></span>
+<div class="scene-intro reveal"><div><span class="scene-label">数据复盘</span><h2 id="review-title">看见不同的反馈，<br><span>再调整判断。</span></h2></div><p>不止看内容被看到多少，<br>也观察用户愿意留下什么。</p></div>
+<div class="review-stage reveal"><div class="review-copy"><p>小红书同一周期，观看上升，收藏与净涨粉下降。包含付费投流的结果，需要进一步核对流量来源、内容和用户反馈。</p><button class="button glass" data-case="review">展开复盘思路<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div><div class="review-lines">
+<button data-shot="views"><span class="metric-label">观看<span class="trend">后台环比上升</span></span><strong>30<small>万+</small></strong><svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+<button data-shot="interactions"><span class="metric-label">收藏<span class="trend">后台环比下降</span></span><strong><small>约</small>1500</strong><svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+<button data-shot="followers"><span class="metric-label">净涨粉<span class="trend">后台环比下降</span></span><strong><small>约</small>400</strong><svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button>
+</div></div>
+</section>
+<section class="scene about-scene shell" id="about" aria-labelledby="about-title"><span class="scene-rail" data-waypoint aria-hidden="true"></span><div class="about-stage reveal"><div><span class="scene-label">关于我</span><h2 id="about-title">解宝珅<span>判断内容，也经营反馈。</span></h2></div><div class="about-copy"><p>凤凰网 · 凰家评测运营实习。<br>从选题到发布，从互动到复盘，<br>把对内容的判断，落到持续的运营中。</p><div class="about-actions"><button class="button glass" data-case="resume">查看简历<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button><button class="button glass" data-case="contact">联系我<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button></div></div></div></section>
+<footer class="site-footer shell"><span data-waypoint aria-hidden="true" class="footer-waypoint"></span><span>© 2026 解宝珅</span><a class="font-credit" href="https://www.onlinewebfonts.com/" target="_blank" rel="noopener noreferrer">Fonts by OnlineWebFonts</a><a href="#top">回到开场 ↑</a></footer>
 </main>
-<dialog class="evidence-dialog" id="evidence-dialog" aria-labelledby="evidence-title"><div class="dialog-bar"><div><p class="eyebrow" id="evidence-code">原始证据</p><h2 id="evidence-title">截图原图</h2></div><div class="dialog-actions"><button class="glass button small" id="image-zoom" aria-pressed="false">放大</button><button class="glass icon-button" data-close="evidence-dialog" aria-label="关闭原图">×</button></div></div><p class="evidence-note" id="evidence-note"></p><div class="image-scroll"><img id="evidence-image" alt=""></div></dialog><dialog class="detail-dialog" id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-bar"><div><p class="eyebrow" id="detail-label">项目详情</p><h2 id="detail-title">项目</h2></div><button class="glass icon-button" data-close="detail-dialog" aria-label="关闭详情">×</button></div><div class="detail-body" id="detail-body"></div></dialog></body></html>
+<div class="journey-layer" id="journey-layer" aria-hidden="true"><svg id="journey-svg"><defs><linearGradient id="journey-gradient" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c8876055"/><stop offset=".5" stop-color="#9775b955"/><stop offset="1" stop-color="#c8876055"/></linearGradient></defs><path class="journey-base" id="journey-base"/><path class="journey-ink" id="journey-ink"/></svg><div class="journey-cursor glass" id="journey-cursor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m7 10 5 5 5-5"/></svg></div></div>
+<dialog id="case-dialog" aria-labelledby="case-title"><div class="dialog-chrome dialog-contents"><h2 id="case-title"></h2><button class="icon-button glass" data-dismiss aria-label="关闭详情">×</button></div><div class="dialog-body dialog-contents" id="case-body"></div></dialog>
+<dialog class="reader-dialog" id="reader-dialog" aria-labelledby="reader-title"><div class="dialog-chrome dialog-contents"><h2 id="reader-title"></h2><div class="reader-tools"><button class="button glass" id="reader-zoom" aria-pressed="false">放大</button><button class="icon-button glass" data-dismiss aria-label="关闭原图">×</button></div></div><p class="reader-note dialog-contents" id="reader-note"></p><div class="image-scroll dialog-contents"><img id="reader-image" alt=""></div></dialog>
+</body></html>
+
+
+

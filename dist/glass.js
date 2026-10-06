@@ -24,7 +24,7 @@
       const filter = make('filter', {id, x:0, y:0, width:'100%', height:'100%', filterUnits:'userSpaceOnUse'});
       filter.setAttribute('color-interpolation-filters', 'sRGB');
       const map = make('feImage', {x:0, y:0, preserveAspectRatio:'none', result:'rim'});
-      const lens = make('feDisplacementMap', {in:'SourceGraphic', in2:'rim', scale:24, xChannelSelector:'R', yChannelSelector:'G'});
+      const lens = make('feDisplacementMap', {in:'SourceGraphic', in2:'rim', scale:28, xChannelSelector:'R', yChannelSelector:'G'});
       filter.append(map, lens); defs.append(filter);
       node = {id, filter, map}; nodes.set(el, node);
     }
@@ -43,16 +43,16 @@
       const inside = Math.max(0, Math.min(depth / rim, 1));
       const nx = distance ? qx / distance * Math.sign(dx) : 0;
       const ny = distance ? qy / distance * Math.sign(dy) : 0;
-      const ox = Math.max(-11.5, Math.min(11.5, nx * strength * 8 - dx * inside * .018));
-      const oy = Math.max(-11.5, Math.min(11.5, ny * strength * 8 - dy * inside * .018));
+      const ox = Math.max(-13.5, Math.min(13.5, nx * strength * 9 - dx * inside * .02));
+      const oy = Math.max(-13.5, Math.min(13.5, ny * strength * 9 - dy * inside * .02));
       const i = (y * w + x) * 4;
-      pixels.data[i] = 128 + ox / 24 * 255;
-      pixels.data[i + 1] = 128 + oy / 24 * 255;
+      pixels.data[i] = 128 + ox / 28 * 255;
+      pixels.data[i + 1] = 128 + oy / 28 * 255;
       pixels.data[i + 2] = 128; pixels.data[i + 3] = 255;
     }
     ctx.putImageData(pixels, 0, 0);
     node.map.setAttribute('href', canvas.toDataURL());
-    el.style.setProperty('--glass-optics', 'url("#' + node.id + '") blur(1.2px) saturate(120%)');
+    el.style.setProperty('--glass-optics', 'url("#' + node.id + '") blur(.9px) saturate(120%)');
   }
   const observer = new ResizeObserver(entries => entries.forEach(({target}) => update(target, target.offsetWidth, target.offsetHeight)));
   document.querySelectorAll('.glass').forEach(el => observer.observe(el));
