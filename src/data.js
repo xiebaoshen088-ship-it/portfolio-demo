@@ -14,8 +14,8 @@ export const shots = {
 };
 
 export const projects = [
-  { id: 'hot', category: '议题设计 · 协同传播', title: '让一个议题，成为一次讨论。', subtitle: '电视应该为老人做减法吗？', image: 'topic-cover.jpg', alt: '电视适老化话题的阅读、互动与发布媒体记录', tag: '话题阅读 370万+', tone: 'warm' },
-  { id: 'poll', category: '内容判断 · 用户互动', title: '把用户熟悉的选择，变成参与。', subtitle: '手机系统偏好投票', image: 'S17-poll.png', alt: '凰家评测的手机系统偏好投票作品', tag: '约3000人投票', tone: 'cool' },
+  { id: 'hot', category: '议题设计 · 协同传播', title: '电视适老化话题传播', subtitle: '词条设计、KOL 对接与话题运营', image: 'topic-cover.jpg', alt: '电视适老化话题的阅读、互动与发布媒体记录', tag: '话题阅读 370万+', tone: 'warm' },
+  { id: 'poll', category: '内容判断 · 用户互动', title: '手机系统偏好投票', subtitle: '投票内容与用户讨论', image: 'S17-poll.png', alt: '凰家评测的手机系统偏好投票作品', tag: '约3000人投票', tone: 'cool' },
 ];
 
 export const strengths = [

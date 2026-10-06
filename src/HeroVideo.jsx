@@ -25,8 +25,8 @@ export default function HeroVideo() {
       else if(video.getAttribute('src'))video.play().catch(()=>{});
     }
     const ready=()=>art.classList.add('is-ready');video.addEventListener('loadeddata',ready);
-    const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;reconcile();},{threshold:.04});
-    observer.observe(art.closest('section'));
+    const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting&&entry.intersectionRatio>=.15;reconcile();},{threshold:.15});
+    observer.observe(art.closest('.hero'));
     const modal=new MutationObserver(reconcile);modal.observe(document.body,{attributes:true,attributeFilter:['class']});
     reduced.addEventListener('change',reconcile);document.addEventListener('visibilitychange',reconcile);reconcile();
     return()=>{disposed=true;cancelAnimationFrame(refreshFrame);video.pause();observer.disconnect();modal.disconnect();video.removeEventListener('loadeddata',ready);reduced.removeEventListener('change',reconcile);document.removeEventListener('visibilitychange',reconcile);};

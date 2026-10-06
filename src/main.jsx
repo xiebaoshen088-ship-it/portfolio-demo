@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './styles.css';
 import './liquid-glass.css';
+import './portfolio.css';
 import { applyAppearance } from './glassConfig.js';
 
 applyAppearance();

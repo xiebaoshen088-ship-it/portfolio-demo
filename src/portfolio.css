@@ -1,0 +1,39 @@
+/* Three narrative parts; contact is a compact utility footer. */
+#about,#tech,#douyin,#profile,#contact{scroll-margin-top:115px}
+#about{scroll-margin-top:0}
+.profile{padding-top:110px;padding-bottom:125px}
+.profile .section-heading h2{margin-top:0}
+.profile .experience-grid{grid-template-columns:.85fr 1.45fr}
+.profile .portrait-placeholder{height:440px;max-width:430px}
+.profile .intro-text{margin-top:26px}
+.profile .education{margin-top:12px}
+.profile .about-actions{margin-top:40px}
+.tech-case{border-top:1px solid var(--line)}
+.tech-case .section-heading{margin-bottom:42px}
+.account-context{display:grid;grid-template-columns:1fr 1.3fr;align-items:start;gap:70px;max-width:1320px}
+.account-context h3{font-size:1.25rem;font-weight:400;line-height:1.7}
+.account-context span{display:block;font-family:var(--grotesk);font-size:.875rem;color:var(--muted);margin-top:10px}
+.account-context p{font-size:1.0625rem;line-height:1.9;color:var(--muted);max-width:680px}
+.tech-case .account-evidence{margin-top:46px;padding-top:40px;padding-bottom:25px}
+.case-subheading{font-size:1.5rem;font-weight:400;line-height:1.6;margin:70px 0 30px}
+.additional-projects{margin-top:30px}
+.row-review{background:#eaf0f4;color:#71899c}
+.douyin-case{border-top:1px solid var(--line)}
+.douyin-grid{display:grid;grid-template-columns:1fr 1fr;gap:38px}
+.video-placeholder{height:430px;position:relative;display:flex;align-items:center;justify-content:center;border-radius:28px;border:1px solid var(--line);background:#faf9fb;color:#a9a2af;font-size:.9375rem}
+.video-placeholder-number{position:absolute;top:26px;left:30px;font-family:var(--grotesk);font-size:.875rem}
+.douyin-work h3{font-size:1.35rem;line-height:1.6;font-weight:400;margin:23px 4px 0}
+.site-footer{padding-top:60px;padding-bottom:28px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:0 40px;align-items:center}
+.footer-contact{display:flex;flex-direction:column;gap:14px}
+.site-footer .contact-email{margin:0;font-size:clamp(1.35rem,2vw,2rem)}
+.site-footer .contact-phone{margin:0;color:var(--muted)}
+.site-footer .contact-actions{justify-content:flex-end;margin:0;gap:12px}
+.site-footer .copy-feedback{grid-column:1/-1;text-align:right;margin:12px 0 0}
+.footer-meta{grid-column:1/-1;display:flex;align-items:center;gap:30px;color:var(--muted);font-size:.8125rem;line-height:1.8;margin-top:30px;padding-top:25px;border-top:1px solid var(--line)}
+.footer-meta>a:nth-child(2){margin-left:auto}
+@media(max-width:1100px){.profile .experience-grid{gap:50px;grid-template-columns:1fr 1.3fr}.account-context{gap:36px}.site-footer{grid-template-columns:1fr;gap:28px}.site-footer .contact-actions{justify-content:flex-start}.site-footer .copy-feedback{text-align:left;margin:0}.footer-meta{margin-top:0}.video-placeholder{height:380px}}
+.large-type .profile .experience-grid,.large-type .account-context,.large-type .douyin-grid,.large-type .site-footer{grid-template-columns:1fr}
+.large-type .profile .portrait-placeholder{max-width:none}
+.large-type .site-footer .contact-actions{justify-content:flex-start}
+.large-type .site-footer .copy-feedback{text-align:left}
+.large-type .footer-meta{flex-wrap:wrap}

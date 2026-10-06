@@ -1,6 +1,6 @@
 // Shared material, geometry, light and motion rules. No per-control magic numbers.
 export const GLASS = {
-  optics: { displacement: 24, edgeOffset: 8, rim: 11, maxArea: 250000, renderDpr: 1.5 },
+  optics: { displacement: 12, edgeOffset: 2.5, rim: 7, maxArea: 250000, renderDpr: 1.5 },
   motion: { feedback: 160, switch: 360, open: 420, close: 340, easing: 'cubic-bezier(.2,.82,.22,1)' },
   light: { x: .28, y: .16, strength: .22 },
 };
