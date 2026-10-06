@@ -20,3 +20,19 @@ html[data-material=soft] .glass{border-color:rgb(var(--glass-edge)/.18)}html[dat
 .large-type .studio-panel{position:fixed;top:110px;width:min(850px,calc(100vw - 72px));max-height:calc(100svh - 145px)}.large-type .studio-options{flex-wrap:wrap}.large-type .site-header{position:relative;pointer-events:auto}.large-type .stack-card{width:calc((100% - 40px)/3);height:420px}.large-type .stack-cards{height:465px}
 @media(prefers-reduced-motion:reduce){.glass,.segmented button,.stack-card,.stack-cards{transition:none!important}.glass.is-pressed{transform:none}.studio-panel{animation:none}.glass-slider input:active::-webkit-slider-thumb{transform:none}}
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){.glass,.studio-panel,.detail-dialog,.detail-dialog .dialog-header{background:rgb(var(--panel-rgb));backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-color:var(--muted)}.glass:before,.glass:after{display:none}.scene-lens{background:rgb(var(--panel-rgb))!important}.optic-scene[data-renderer=webgl] .scene-lens{background:rgb(var(--panel-rgb))!important}}
+
+/* One shared glass bar. Expanded on the cover; a smaller floating bar below it. */
+.site-header{top:24px;left:50%;right:auto;width:min(1700px,calc(100% - 112px));margin:0;transform:translateX(-50%);border-radius:99px;padding:8px 24px;gap:24px;pointer-events:auto;transition:width 420ms var(--material-ease),background var(--feedback),box-shadow var(--feedback);background:rgb(var(--glass-rgb)/calc(var(--glass-tint) + .12));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(115%);backdrop-filter:blur(var(--glass-blur)) saturate(115%)}
+.site-header[data-expanded=false]{width:min(1060px,calc(100% - 72px));background:rgb(var(--glass-rgb)/calc(var(--glass-tint) + .23))}
+.site-header nav{flex:1;min-width:0}.site-header .wordmark{flex-shrink:0}.site-header .header-actions{flex-shrink:0}
+.site-header .nav-glass{position:relative;left:auto;transform:none;width:100%;padding:4px;border:0;box-shadow:none;background:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.site-header .nav-glass:before,.site-header .nav-glass:after{display:none}.site-header .nav-glass a{flex:1;text-align:center;padding:11px 14px}
+.site-header.is-pressed,.site-header .nav-glass.is-pressed{transform:none}.site-header.is-pressed{transform:translateX(-50%)}
+.site-header .header-actions .glass{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgb(var(--glass-rgb)/.14)}
+.hero-video{will-change:opacity;transform:translateZ(0)}
+.journey-lens{top:0;transform:translate3d(0,var(--journey-y,0px),0);border:1px solid rgb(var(--glass-edge)/.5);background:rgb(var(--glass-rgb)/.6);box-shadow:inset 0 1px 1px #fff9,0 2px 8px rgb(var(--glass-shadow)/.12)}
+.detail-dialog::backdrop{-webkit-backdrop-filter:none;backdrop-filter:none;animation:backdrop-lite-enter 420ms both}.detail-dialog.is-closing::backdrop{animation:backdrop-lite-exit 340ms both}
+@keyframes backdrop-lite-enter{from{background:#2d193d00}to{background:#2d193d25}}@keyframes backdrop-lite-exit{from{background:#2d193d25}to{background:#2d193d00}}
+.large-type .site-header{top:0;left:auto;transform:none;width:calc(100% - 72px);margin-inline:auto;border-radius:28px;flex-wrap:wrap}.large-type .site-header nav{flex-basis:100%;order:3}.large-type .site-header .nav-glass{flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){.site-header{transition:none}.detail-dialog::backdrop{animation:none}}
+.site-header[data-expanded=false]{background:rgb(var(--glass-rgb)/calc(var(--glass-tint) + .38));-webkit-backdrop-filter:blur(max(5px,var(--glass-blur))) saturate(115%);backdrop-filter:blur(max(5px,var(--glass-blur))) saturate(115%)}

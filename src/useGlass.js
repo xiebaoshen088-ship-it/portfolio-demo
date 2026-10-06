@@ -12,6 +12,7 @@ export default function useGlass() {
     const nodes = new WeakMap(); let serial = 0;
     const make = (tag, attrs) => { const el = document.createElementNS(ns, tag); Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, String(value))); return el; };
     function update(el) {
+      if(el.closest('.site-header,.hero,.scroll-journey')||el.matches('.segment-indicator,.scene-lens')){el.style.removeProperty('--glass-optics');return;}
       const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
       if (w < 2 || h < 2 || w * h > GLASS.optics.maxArea) { el.style.removeProperty('--glass-optics'); return; }
       const radius = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, w / 2, h / 2);
@@ -50,12 +51,17 @@ export default function useGlass() {
     document.querySelectorAll('.glass').forEach(el => observer.observe(el));
     const mutations = new MutationObserver(records => records.forEach(record => { record.addedNodes.forEach(observe); record.removedNodes.forEach(unobserve); }));
     mutations.observe(document.body, { childList: true, subtree: true });
-    let frame=null, pending=null;
+    let frame=null, pending=null,lastLight=0;
     function pointer(e) {
       const el=e.target.closest?.('.glass');
-      if(!el||el.classList.contains('segment-indicator'))return;
-      const r=el.getBoundingClientRect();pending={el,x:Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),y:Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))};
-      if(!frame)frame=requestAnimationFrame(()=>{frame=null;if(pending){pending.el.style.setProperty('--light-x',`${pending.x}%`);pending.el.style.setProperty('--light-y',`${pending.y}%`);}});
+      if(!el||el.classList.contains('segment-indicator')||el.matches('.site-header'))return;
+      pending={el,clientX:e.clientX,clientY:e.clientY};
+      if(!frame)frame=requestAnimationFrame(time=>{
+        frame=null;if(!pending||time-lastLight<25)return;lastLight=time;
+        const {el,clientX,clientY}=pending,r=el.getBoundingClientRect();
+        el.style.setProperty('--light-x',`${Math.max(0,Math.min(100,(clientX-r.left)/r.width*100))}%`);
+        el.style.setProperty('--light-y',`${Math.max(0,Math.min(100,(clientY-r.top)/r.height*100))}%`);
+      });
     }
     const pressed=new Set();
     function press(e){if(e.type==='keydown'&&!['Enter',' '].includes(e.key))return;const el=e.target.closest?.('button.glass,a.glass,.segmented');if(el){el.classList.add('is-pressed');pressed.add(el);}}

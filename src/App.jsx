@@ -41,7 +41,7 @@ export default function App() {
 
   return <>
     <a href="#experience" className="skip-link">跳到个人经历</a>
-    <header className="site-header shell">
+    <header className="site-header shell glass" data-expanded="true">
       <a className="wordmark" href="#top" aria-label="解宝珅，返回首页">xiebaoshen<span className="wordmark-dot" /></a>
       <nav aria-label="主导航"><SegmentedControl navigation className="nav-glass" label="主导航" value={activeSection} onChange={setActiveSection} options={[{value:'experience',label:'经历'},{value:'projects',label:'项目'},{value:'strengths',label:'优势'},{value:'contact',label:'联系'}]} /></nav>
       <div className="header-actions"><button ref={studioTrigger} className="button glass appearance-trigger" aria-expanded={studioOpen} aria-controls="studio-title" onClick={()=>setStudioOpen(v=>!v)}><Icon name="appearance" />外观</button><a className="button glass header-contact" href="#contact"><Icon />联系我</a></div>

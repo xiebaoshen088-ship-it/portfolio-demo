@@ -15,13 +15,14 @@ export default function GlassStudio({ open, onClose, triggerRef, settings, onSet
     if(!visible)return;
     const panel=ref.current, trigger=triggerRef.current;
     const token=++generation.current;
-    const current=getComputedStyle(panel), from={transform:current.transform,opacity:current.opacity,borderRadius:current.borderRadius,backgroundColor:current.backgroundColor,backdropFilter:current.backdropFilter,boxShadow:current.boxShadow};
+    const current=getComputedStyle(panel), from={transform:current.transform,opacity:current.opacity,borderRadius:current.borderRadius,backgroundColor:current.backgroundColor,boxShadow:current.boxShadow};
     animation.current?.cancel();
     panel.style.transform='none';
     const rect=panel.getBoundingClientRect(), source=trigger.getBoundingClientRect();
     const targetStyle=getComputedStyle(panel), sourceStyle=getComputedStyle(trigger);
-    const sourceMaterial={backgroundColor:sourceStyle.backgroundColor,backdropFilter:`blur(${getComputedStyle(document.documentElement).getPropertyValue('--glass-blur')}) saturate(${getComputedStyle(document.documentElement).getPropertyValue('--glass-saturation')})`,boxShadow:sourceStyle.boxShadow};
-    const targetMaterial={backgroundColor:targetStyle.backgroundColor,backdropFilter:targetStyle.backdropFilter,boxShadow:targetStyle.boxShadow};
+    // Keep reading blur constant: interpolating a large blur rasterizes every frame.
+    const sourceMaterial={backgroundColor:sourceStyle.backgroundColor,boxShadow:sourceStyle.boxShadow};
+    const targetMaterial={backgroundColor:targetStyle.backgroundColor,boxShadow:targetStyle.boxShadow};
     const folded=`translate(${source.left-rect.left}px,${source.top-rect.top}px) scale(${source.width/rect.width},${source.height/rect.height})`;
     const start=initialized.current?from:{transform:folded,opacity:0,borderRadius:'30px',...sourceMaterial};
     const end=open?{transform:'translate(0,0) scale(1,1)',opacity:1,borderRadius:'28px',...targetMaterial}:{transform:folded,opacity:0,borderRadius:'30px',...sourceMaterial};

@@ -8,12 +8,11 @@ export default function SegmentedControl({ options, value, onChange, label, clas
   const initialized = useRef(false);
   const lastTarget = useRef('');
   useLayoutEffect(() => {
-    function update() {
+    function update(resizing = false) {
       const selected = ref.current?.querySelector('[aria-checked="true"], [aria-current="location"], [aria-selected="true"]');
       if (!selected) { indicator.current.style.opacity = '0'; lastTarget.current=''; return; }
       const el = indicator.current;
-      const box = selected.getBoundingClientRect(), parent = ref.current.getBoundingClientRect();
-      const next = { left: box.left - parent.left, top: box.top - parent.top, width: box.width, height: box.height };
+      const next = { left: selected.offsetLeft, top: selected.offsetTop, width: selected.offsetWidth, height: selected.offsetHeight };
       const signature=JSON.stringify(next);
       if(lastTarget.current===signature)return;
       lastTarget.current=signature;
@@ -23,13 +22,13 @@ export default function SegmentedControl({ options, value, onChange, label, clas
       el.style.opacity = '1';
       el.style.transform = `translate(${next.left}px,${next.top}px)`;
       el.style.width = `${next.width}px`; el.style.height = `${next.height}px`;
-      if (initialized.current && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
+      if (!resizing && initialized.current && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
         animation.current = el.animate([from, { transform: el.style.transform, width: el.style.width, height: el.style.height }], { duration: GLASS.motion.switch, easing: GLASS.motion.easing });
       }
       initialized.current = true;
     }
-    const resize = new ResizeObserver(update); resize.observe(ref.current);
-    const mutation = new MutationObserver(update); mutation.observe(ref.current, { subtree: true, attributes: true, attributeFilter:['aria-current'] });
+    const resize = new ResizeObserver(()=>update(true)); resize.observe(ref.current);
+    const mutation = new MutationObserver(()=>update()); mutation.observe(ref.current, { subtree: true, attributes: true, attributeFilter:['aria-current'] });
     update();
     return () => { resize.disconnect(); mutation.disconnect(); animation.current?.cancel(); };
   }, [value]);
