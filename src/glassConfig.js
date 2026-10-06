@@ -5,13 +5,16 @@ export const GLASS = {
   light: { x: .28, y: .16, strength: .22 },
 };
 
-export function applyAppearance({ theme, material, transmission }) {
+export const APPEARANCE = Object.freeze({ theme: 'light', material: 'clear', transmission: 100 });
+
+export function applyAppearance({ theme, material, transmission } = APPEARANCE) {
   const root = document.documentElement;
   root.style.setProperty('--feedback',`${GLASS.motion.feedback}ms`);
   root.style.setProperty('--settle',`${GLASS.motion.switch}ms`);
   root.style.setProperty('--material-ease',GLASS.motion.easing);
   root.dataset.theme = theme;
   root.dataset.material = material;
+  root.dataset.transmission = String(transmission);
   const t = transmission / 100;
   root.style.setProperty('--glass-blur', `${material === 'soft' ? 8 + (1 - t) * 10 : .7 + (1 - t) * 3}px`);
   root.style.setProperty('--glass-tint', String(material === 'soft' ? .3 + (1 - t) * .3 : .07 + (1 - t) * .13));

@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import HeroVideo from './HeroVideo.jsx';
 import { contact, projects, strengths } from './data.js';
 import { DetailDialog, EvidenceDialog } from './Dialog.jsx';
 import useGlass from './useGlass.js';
 import ScrollJourney from './ScrollJourney.jsx';
-import GlassStudio from './GlassStudio.jsx';
 import SegmentedControl from './SegmentedControl.jsx';
-import { applyAppearance } from './glassConfig.js';
 
 export function Icon({ name = 'mail', ...props }) {
   const paths = {
@@ -16,7 +14,6 @@ export function Icon({ name = 'mail', ...props }) {
     down: <path d="m6 9 6 6 6-6" />,
     copy: <><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V4H4v12h4" /></>,
     zoom: <><circle cx="10" cy="10" r="6" /><path d="m15 15 5 5M10 7v6M7 10h6" /></>,
-    appearance: <><circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 1 0 16Z" /></>,
   };
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[name] || paths.plus}</svg>;
 }
@@ -26,11 +23,7 @@ export default function App() {
   const [feedback, setFeedback] = useState('');
   const [detail, setDetail] = useState(null);
   const [shot, setShot] = useState(null);
-  const [studioOpen, setStudioOpen] = useState(false);
-  const [settings,setSettings] = useState({theme:'light',material:'clear',transmission:78});
   const [activeSection,setActiveSection] = useState('');
-  const studioTrigger = useRef(null);
-  useEffect(()=>applyAppearance(settings),[settings]);
   useGlass();
   const openDetail = (id, trigger) => setDetail({ kind: 'case', id, trigger, rect: trigger?.getBoundingClientRect() });
   const openShot = (id, trigger) => setShot({ kind: 'shot', id, trigger, rect: trigger?.getBoundingClientRect() });
@@ -44,7 +37,7 @@ export default function App() {
     <header className="site-header shell glass" data-expanded="true">
       <a className="wordmark" href="#top" aria-label="解宝珅，返回首页">xiebaoshen<span className="wordmark-dot" /></a>
       <nav aria-label="主导航"><SegmentedControl navigation className="nav-glass" label="主导航" value={activeSection} onChange={setActiveSection} options={[{value:'experience',label:'经历'},{value:'projects',label:'项目'},{value:'strengths',label:'优势'},{value:'contact',label:'联系'}]} /></nav>
-      <div className="header-actions"><button ref={studioTrigger} className="button glass appearance-trigger" aria-expanded={studioOpen} aria-controls="studio-title" onClick={()=>setStudioOpen(v=>!v)}><Icon name="appearance" />外观</button><a className="button glass header-contact" href="#contact"><Icon />联系我</a></div>
+      <div className="header-actions"><a className="button glass header-contact" href="#contact"><Icon />联系我</a></div>
     </header>
     <main>
       <section className="hero" id="top" aria-labelledby="hero-title">
@@ -112,7 +105,6 @@ export default function App() {
       </section>
     </main>
     <ScrollJourney onActiveChange={setActiveSection} />
-    <GlassStudio open={studioOpen} onClose={()=>setStudioOpen(false)} triggerRef={studioTrigger} settings={settings} onSettings={setSettings} />
     {detail && <DetailDialog key={detail.id} entry={detail} onClose={() => setDetail(null)} onShot={openShot} />}
     {shot && <EvidenceDialog key={shot.id} entry={shot} onClose={() => setShot(null)} />}
   </>;
