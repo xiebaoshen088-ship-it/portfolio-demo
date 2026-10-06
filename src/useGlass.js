@@ -12,7 +12,8 @@ export default function useGlass() {
     const nodes = new WeakMap(); let serial = 0;
     const make = (tag, attrs) => { const el = document.createElementNS(ns, tag); Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, String(value))); return el; };
     function update(el) {
-      if(el.closest('.site-header,.hero,.scroll-journey')||el.matches('.segment-indicator,.scene-lens')){el.style.removeProperty('--glass-optics');return;}
+      const dockLens=el.matches('.dock-lens-material');
+      if((el.closest('.site-header,.hero,.scroll-journey')&&!dockLens)||el.matches('.segment-indicator,.scene-lens')){el.style.removeProperty('--glass-optics');return;}
       const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
       if (w < 2 || h < 2 || w * h > GLASS.optics.maxArea) { el.style.removeProperty('--glass-optics'); return; }
       const radius = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, w / 2, h / 2);
@@ -37,8 +38,10 @@ export default function useGlass() {
         const distance = Math.hypot(qx, qy), depth = radius - distance;
         const strength = distance > 0 && depth > 0 && depth < rim ? Math.sin(Math.PI * depth / rim) : 0;
         const nx = distance ? qx / distance * Math.sign(dx) : 0, ny = distance ? qy / distance * Math.sign(dy) : 0;
-        const ox = nx * strength * GLASS.optics.edgeOffset;
-        const oy = ny * strength * GLASS.optics.edgeOffset;
+        // Only the small Dock lens has mild central magnification. Foreground labels remain DOM.
+        const interior=dockLens?Math.min(1,Math.max(0,depth/rim))*.045:0;
+        const ox = nx * strength * GLASS.optics.edgeOffset-dx*interior;
+        const oy = ny * strength * GLASS.optics.edgeOffset-dy*interior;
         const i = (y * w + x) * 4;
         pixels.data[i] = 128 + ox / GLASS.optics.displacement * 255; pixels.data[i + 1] = 128 + oy / GLASS.optics.displacement * 255; pixels.data[i + 2] = 128; pixels.data[i + 3] = 255;
       }
@@ -54,7 +57,7 @@ export default function useGlass() {
     let frame=null, pending=null,lastLight=0;
     function pointer(e) {
       const el=e.target.closest?.('.glass');
-      if(!el||el.classList.contains('segment-indicator')||el.matches('.site-header'))return;
+      if(!el||el.classList.contains('segment-indicator')||el.matches('.site-header,.dock-control,.dock-lens-material'))return;
       pending={el,clientX:e.clientX,clientY:e.clientY};
       if(!frame)frame=requestAnimationFrame(time=>{
         frame=null;if(!pending||time-lastLight<25)return;lastLight=time;
