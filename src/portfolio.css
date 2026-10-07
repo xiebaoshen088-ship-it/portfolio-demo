@@ -31,7 +31,6 @@
 .tech-case .project-copy{padding-top:22px}
 .tech-case .project-copy h3{font-size:clamp(1.25rem,1.7vw,1.75rem);margin-block:12px 10px}
 .project-visual .project-open.glass-control{position:absolute;right:22px;bottom:22px;width:44px;height:44px}
-.project-cool:has(.bambu-paper) .project-visual{background:linear-gradient(135deg,#e3efe7,#f3f5ef)}
 .tech-case .bambu-paper{top:34px;bottom:30px;left:12%;right:12%;background:#fff}
 .tech-case .bambu-paper img{object-fit:contain;object-position:center}
 .row-poll{background:#e3eaf1;color:#6585a0}
@@ -57,12 +56,12 @@
 .douyin-visual:hover .douyin-play{background:#ffffffe8}
 .douyin-visual .visual-tag{z-index:1;bottom:23px;left:23px}
 .douyin-tags{color:var(--muted);font-size:.9375rem;line-height:1.8;margin:8px 4px 0}
-.bambu-process>div{background:#edf4ef}
-.bambu-detail-image{height:450px;background:#eef4ef}
+.bambu-detail-image{height:450px}
 .bambu-detail-image img{height:100%;width:auto;margin-inline:auto}
 /* Fit regular images; give long screenshots a readable, smaller column. */
 .reader-dialog[open]{display:flex;flex-direction:column;height:92svh;overflow:hidden}
 .reader-dialog .dialog-header,.reader-dialog .reader-toolbar{flex:none}
+.reader-dialog .reader-toolbar{justify-content:flex-end}
 .reader-dialog .reader-scroll{flex:1;min-height:0;height:auto;display:flex;align-items:center;justify-content:center}
 .reader-dialog .reader-scroll:not(.zoomed) img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;flex:none}
 .reader-dialog .reader-scroll.long-image:not(.zoomed){display:block}
