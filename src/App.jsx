@@ -8,6 +8,7 @@ import SectionNavigation from './SectionNavigation.jsx';
 import SegmentedControl from './SegmentedControl.jsx';
 import usePortfolioMotion from './usePortfolioMotion.js';
 import FluidDock from './FluidDock.jsx';
+import { WorkFrame, WorkImageBlur } from './CardEffects.jsx';
 
 export function Icon({ name = 'mail', ...props }) {
   const paths = {
@@ -95,12 +96,15 @@ export default function App() {
         <h3 className="case-subheading">重点项目</h3>
         <div className="project-grid">
           {projects.map((project, i) => <article className={`project-card project-${project.tone}`} key={project.id}>
+            <WorkFrame tone={project.tone}>
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}项目详情`}>
               <span className="visual-number">0{i + 1}</span>
               <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /></div>
+              <WorkImageBlur />
               <span className="visual-tag glass">{project.tag}</span>
               <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
+            </WorkFrame>
             <div className="project-copy"><p className="eyebrow">{project.category}</p><h3>{project.title}</h3><p>{project.subtitle}</p><button className="text-link" onClick={e => openDetail(project.id, e.currentTarget)}>查看项目</button></div>
           </article>)}
         </div>
@@ -113,7 +117,9 @@ export default function App() {
       <section className="douyin-case section shell" id="douyin" aria-labelledby="douyin-title">
         <div className="section-heading"><div><p className="eyebrow">个人抖音</p><h2 id="douyin-title" className="motion-mask"><span className="motion-title">爆款视频策划</span></h2></div><span className="section-index">03 / 03</span></div>
         <div className="douyin-grid">{[1,2].map(i => <article className="douyin-work" key={i}>
+          <WorkFrame tone="video" radius={28}>
           <div className="video-placeholder" aria-label={`代表视频${i}，资料待补充`}><span className="video-placeholder-number">0{i}</span><span>视频资料待补充</span></div>
+          </WorkFrame>
           <h3>代表视频 0{i}</h3>
         </article>)}</div>
       </section>

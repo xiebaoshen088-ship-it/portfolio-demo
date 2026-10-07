@@ -1,0 +1,16 @@
+/* Effects belong to artwork frames, with original screenshots and labels above. */
+.work-glow{min-width:0;display:block;transform:none;box-shadow:none;border-color:rgb(60 45 70 / .045)}
+.work-glow>.border-glow-inner{min-width:0;width:100%;overflow:visible;border-radius:inherit}
+.work-glow>.edge-light{z-index:2;pointer-events:none}
+.work-glow::before,.work-glow::after{pointer-events:none}
+.work-glow .project-visual,.work-glow .video-placeholder{border-radius:calc(var(--border-radius) - 1px)}
+.work-glow .video-placeholder{border:0}
+.project-visual .visual-number,.project-visual .visual-tag,.project-visual .project-open{z-index:3}
+.work-image-blur{border-radius:0 0 23px 23px;pointer-events:none!important}
+.work-image-blur,.work-image-blur *{pointer-events:none!important}
+@supports not (backdrop-filter:blur(1px)){
+  .work-image-blur .gradual-blur-inner>div{background:transparent;opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .work-glow::before,.work-glow::after,.work-glow>.edge-light{transition:none}
+}
