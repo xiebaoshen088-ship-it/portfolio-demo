@@ -141,14 +141,8 @@ export default function usePortfolioMotion(pageRef) {
         .to(cards, { y: 0, scale: 1, duration: 1.4, stagger: MOTION.section.stagger }, .18)
         .to(papers, { clipPath: 'inset(0px 0px 0% round 16px)', duration: MOTION.image.reveal, stagger: .22, ease: MOTION.revealEase }, .35)
         .to(images, { scale: MOTION.image.scale, duration: 1.65, stagger: .22 }, .35);
-      // Only two small screenshot layers are scrubbed; no perpetual rendering loop.
-      images.forEach(image => {
-        const card = image.closest('.project-card');
-        gsap.fromTo(image, { y: -MOTION.image.parallax }, {
-          y: MOTION.image.parallax, ease: 'none',
-          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: MOTION.image.scrub, invalidateOnRefresh: true },
-        });
-      });
+      // Preview movement is owned by each button's hover CSS, with no paired
+      // scroll displacement still settling while the pointer enters a card.
       const rows = query('.additional-projects .project-row');
       gsap.set(rows, { y: 50, clipPath: 'inset(0 100% 0 0)' });
       entrance(root.querySelector('.additional-projects'), rows)

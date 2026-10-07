@@ -26,10 +26,10 @@ export function WorkFrame({ children, tone = 'cool', radius = 24 }) {
   >{children}</BorderGlow>;
 }
 
-export function WorkImageBlur() {
+export function PageBottomBlur() {
   return <GradualBlur
-    className="work-image-blur"
-    target="parent"
+    className="page-bottom-blur"
+    target="page"
     position="bottom"
     height="4.5rem"
     strength={0.9}
@@ -37,7 +37,7 @@ export function WorkImageBlur() {
     curve="bezier"
     exponential
     opacity={0.85}
-    zIndex={1}
+    zIndex={10}
     animated={false}
   />;
 }

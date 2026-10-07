@@ -11,10 +11,11 @@ export const shots = {
   column6: { file: 'S06-column.png', title: '小凰鸡聊科技', note: '话题页累计口径，统计起止和截止未说明。' },
   column5: { file: 'S05-column.png', title: '小凰鸡深夜Deep talk', note: '话题页累计口径，统计起止和截止未说明。' },
   column7: { file: 'S07-column.png', title: '小凰鸡闲聊站', note: '话题页累计口径，统计起止和截止未说明。' },
+  column8: { file: 'column-digital-class.jpg', title: '小凰鸡数码讲堂', note: '话题「全部」口径：阅读77.2万、讨论181、互动593、原创73。截图未说明统计起止与拍摄时间。' },
 };
 
 export const projects = [
-  { id: 'hot', category: '议题设计 · 协同传播', title: '电视适老化话题传播', subtitle: '词条设计、KOL 对接与话题运营', image: 'topic-cover.jpg', alt: '电视适老化话题的阅读、互动与发布媒体记录', tag: '话题阅读 370万+', tone: 'warm' },
+  { id: 'hot', category: '议题设计 · 协同传播', title: '电视适老化话题传播', subtitle: '话题设计、KOL联动与冲榜', image: 'topic-cover.jpg', alt: '电视适老化话题的阅读、互动与发布媒体记录', tag: '话题阅读 370万+', tone: 'warm' },
   { id: 'poll', category: '内容判断 · 用户互动', title: '手机系统偏好投票', subtitle: '投票内容与用户讨论', image: 'S17-poll.png', alt: '凰家评测的手机系统偏好投票作品', tag: '约3000人投票', tone: 'cool' },
 ];
 
@@ -28,4 +29,5 @@ export const columns = [
   { title: '小凰鸡聊科技', metric: '话题阅读 130万+', shot: 'column6' },
   { title: '小凰鸡深夜Deep talk', metric: '话题阅读 36万+', shot: 'column5' },
   { title: '小凰鸡闲聊站', metric: '话题阅读 约100万', shot: 'column7' },
+  { title: '小凰鸡数码讲堂', metric: '话题阅读 77万+', shot: 'column8', imagePosition: 'center 16%' },
 ];

@@ -5,6 +5,7 @@
 .profile .section-heading h2{margin-top:0}
 .profile .experience-grid{grid-template-columns:.85fr 1.45fr}
 .profile .portrait-placeholder{height:440px;max-width:430px}
+.profile-portrait{width:100%;height:100%;object-fit:cover;object-position:center 32%}
 .profile .intro-text{margin-top:26px}
 .profile .education{margin-top:12px}
 .profile-highlights{list-style:none;padding:0;margin:28px 0 0;font-size:1rem;line-height:1.85;color:var(--ink)}
@@ -35,7 +36,7 @@
 .video-placeholder{height:430px;position:relative;display:flex;align-items:center;justify-content:center;border-radius:28px;border:1px solid var(--line);background:#faf9fb;color:#a9a2af;font-size:.9375rem}
 .video-placeholder-number{position:absolute;top:26px;left:30px;font-family:var(--grotesk);font-size:.875rem}
 .douyin-work h3{font-size:1.35rem;line-height:1.6;font-weight:400;margin:23px 4px 0}
-.site-footer{padding-top:60px;padding-bottom:28px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:0 40px;align-items:center}
+.site-footer{padding-top:60px;padding-bottom:100px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:0 40px;align-items:center}
 .footer-contact{display:flex;flex-direction:column;gap:14px}
 .site-footer .contact-email{margin:0;font-size:clamp(1.35rem,2vw,2rem)}
 .site-footer .contact-phone{margin:0;color:var(--muted)}
@@ -43,6 +44,12 @@
 .site-footer .copy-feedback{grid-column:1/-1;text-align:right;margin:12px 0 0}
 .footer-meta{grid-column:1/-1;display:flex;align-items:center;gap:30px;color:var(--muted);font-size:.8125rem;line-height:1.8;margin-top:30px;padding-top:25px;border-top:1px solid var(--line)}
 .footer-meta>a:nth-child(2){margin-left:auto}
+.topic-evidence-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}
+.topic-evidence-card{min-width:0;text-align:left;padding:14px;border:1px solid var(--line);border-radius:20px;background:#f7f6f9}
+.topic-evidence-card img{width:100%;height:170px;object-fit:cover;border-radius:10px}
+.topic-evidence-card h3{font-size:.9375rem;font-weight:400;line-height:1.6;min-height:3em;margin-top:14px}
+.topic-evidence-card p{font-size:.8125rem;line-height:1.7;color:var(--muted);margin-top:6px}
+.large-type .topic-evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(max-width:1100px){.profile .experience-grid{gap:50px;grid-template-columns:1fr 1.3fr}.account-context{gap:36px}.site-footer{grid-template-columns:1fr;gap:28px}.site-footer .contact-actions{justify-content:flex-start}.site-footer .copy-feedback{text-align:left;margin:0}.footer-meta{margin-top:0}.video-placeholder{height:380px}}
 .large-type .profile .experience-grid,.large-type .account-context,.large-type .douyin-grid,.large-type .site-footer{grid-template-columns:1fr}
 .large-type .profile .portrait-placeholder{max-width:none}

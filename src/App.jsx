@@ -8,7 +8,7 @@ import SectionNavigation from './SectionNavigation.jsx';
 import SegmentedControl from './SegmentedControl.jsx';
 import usePortfolioMotion from './usePortfolioMotion.js';
 import FluidDock from './FluidDock.jsx';
-import { WorkFrame, WorkImageBlur } from './CardEffects.jsx';
+import { WorkFrame, PageBottomBlur } from './CardEffects.jsx';
 
 export function Icon({ name = 'mail', ...props }) {
   const paths = {
@@ -60,9 +60,8 @@ export default function App() {
       <div className="profile section shell" id="profile">
         <div className="section-heading"><h2 id="profile-title" className="motion-mask"><span className="motion-title">个人介绍</span></h2><span className="section-index">01 / 03</span></div>
         <div className="experience-grid">
-          <div className="portrait-placeholder" aria-label="个人头像位置，等待补充照片">
-            <span className="portrait-initial">解</span>
-            <div className="portrait-caption glass"><span>解宝珅</span><small>个人照片待补充</small></div>
+          <div className="portrait-placeholder" aria-label="解宝珅个人照片">
+            <img className="profile-portrait" src="/assets/profile-photo.jpg" alt="解宝珅证件照" loading="lazy" decoding="async" />
           </div>
           <div className="experience-copy">
             <p className="intro-name">解宝珅</p>
@@ -100,7 +99,6 @@ export default function App() {
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}项目详情`}>
               <span className="visual-number">0{i + 1}</span>
               <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /></div>
-              <WorkImageBlur />
               <span className="visual-tag glass">{project.tag}</span>
               <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
@@ -109,7 +107,7 @@ export default function App() {
           </article>)}
         </div>
         <div className="additional-projects">
-          <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>5个原创话题 · 小凰鸡系列</strong><small>账号栏目与话题运营</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
+          <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>自主开创4个原创话题·助力账号商业化</strong><small>账号栏目与话题运营</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
           <button className="project-row" onClick={e => openDetail('bambu', e.currentTarget)}><span className="row-mark row-bambu">B</span><span><strong>拓竹 · 产品传播项目</strong><small>查看项目与视频</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
         </div>
       </section>
@@ -130,6 +128,7 @@ export default function App() {
       <p className="copy-feedback" role="status">{feedback}</p>
       <div className="footer-meta"><span>© 2026 解宝珅 · 运营作品集</span><a href="#top">回到首页</a><a className="font-credit" href="https://www.onlinewebfonts.com/" target="_blank" rel="noreferrer">Fonts by OnlineWebFonts</a></div>
     </footer>
+    <PageBottomBlur />
     <SectionNavigation onActiveChange={setActiveSection} />
     {detail && <DetailDialog key={detail.id} entry={detail} onClose={() => setDetail(null)} onShot={openShot} />}
     {shot && <EvidenceDialog key={shot.id} entry={shot} onClose={() => setShot(null)} />}
