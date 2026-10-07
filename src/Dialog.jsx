@@ -123,7 +123,19 @@ export function DetailDialog({ entry, onClose, onShot }) {
         <p className="dialog-lead">让日常内容，沉淀成账号自己的栏目。</p><p>自主开创4个原创话题，以稳定的栏目组织科技内容，形成可复用的品牌合作场景，助力账号商业化。</p>
         <EvidenceStack onShot={onShot} />
       </>}
-      {id === 'bambu' && <><p className="dialog-lead">从产品，走向用户关心的内容。</p><div className="bambu-identity"><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div><p>先通过成品查看项目表达，再结合选题、发布与反馈材料完善这个案例。</p><div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</GlassButton></div><p className="evidence-note">项目截图、策划过程、个人分工和效果证据待补充，当前不添加未核实的成果数据。</p></>}
+      {id === 'bambu' && <>
+        <p className="dialog-lead">把耗材安全问题，转化为可观看的实测内容。</p>
+        <p>围绕3D打印进入家庭后的使用顾虑，以6款主流纯净PLA耗材的颗粒物排放实测为切入点，把产品话题连接到家长关心的安全问题。</p>
+        <Metrics items={[['173万', '视频观看'],['1152', '转发'],['93', '评论'],['1463', '点赞']]} />
+        <div className="case-process bambu-process">
+          <div><span>01</span><h3>从使用场景提出问题</h3><p>用孩子的创造力与想象力引出家庭3D打印场景，再聚焦耗材排放这一具体顾虑，让选题贴近用户的选择。</p></div>
+          <div><span>02</span><h3>把问题落到实验比较</h3><p>通过6款PLA耗材的颗粒物排放实测组织内容，以比较和验证支撑表达，建立清晰的观看主线。</p></div>
+          <div><span>03</span><h3>用封面建立观看入口</h3><p>封面突出「6款」「排放实测」，用耗材实物与检测仪器呈现测试主题，配合正文说明用户为何需要关注。</p></div>
+        </div>
+        <button className="dialog-image bambu-detail-image" onClick={e => onShot('bambu', e.currentTarget)} aria-label="放大拓竹微博作品截图"><img src="/assets/bambu-weibo.png" alt="6款3D打印耗材排放实测作品及传播数据" /></button>
+        <p className="evidence-note">数据来自作品截图。</p>
+        <div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</GlassButton><EvidenceButton id="bambu" onShot={onShot}>作品原图</EvidenceButton></div>
+      </>}
       {id === 'platforms' && <PlatformEvidence onShot={onShot} />}
       {id === 'resume' && <div className="resume-preview"><img src="/assets/resume-page-1.png" alt="解宝珅完整简历，第1页" decoding="async" /><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div>}
       {id === 'contact' && <><p className="dialog-lead">聊聊内容，也聊聊机会。</p><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><div className="dialog-actions"><GlassButton as="a" className="button" href={`mailto:${contact.email}`}>发送邮件</GlassButton></div></>}
@@ -133,6 +145,7 @@ export function DetailDialog({ entry, onClose, onShot }) {
 
 export function EvidenceDialog({ entry, onClose }) {
   const [zoom, setZoom] = useState(false);
+  const [longImage, setLongImage] = useState(false);
   const shot = shots[entry.id];
-  return <Modal entry={entry} title={shot.title} onClose={onClose} className="reader-dialog"><div className="reader-toolbar"><p>{shot.note}</p><GlassButton as="button" className="button" aria-pressed={zoom} onClick={() => setZoom(v => !v)}>{zoom ? '适应窗口' : '放大原图'}</GlassButton><a className="text-link" href={`/assets/${shot.file}`} target="_blank" rel="noreferrer">打开原图</a></div><div className={`reader-scroll ${zoom ? 'zoomed' : ''}`}><img src={`/assets/${shot.file}`} alt={`${shot.title}完整证据截图`} /></div></Modal>;
+  return <Modal entry={entry} title={shot.title} onClose={onClose} className="reader-dialog"><div className="reader-toolbar"><p>{shot.note}</p><GlassButton as="button" className="button" aria-pressed={zoom} onClick={() => setZoom(v => !v)}>{zoom ? '适应窗口' : '放大原图'}</GlassButton><a className="text-link" href={`/assets/${shot.file}`} target="_blank" rel="noreferrer">打开原图</a></div><div className={`reader-scroll${zoom ? ' zoomed' : ''}${longImage ? ' long-image' : ''}`}><img src={`/assets/${shot.file}`} alt={`${shot.title}完整证据截图`} onLoad={e => setLongImage(e.currentTarget.naturalHeight / e.currentTarget.naturalWidth > 3.5)} /></div></Modal>;
 }

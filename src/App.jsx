@@ -1,7 +1,7 @@
 import GlassButton from './GlassButton.jsx';
 import { useRef, useState } from 'react';
 import HeroVideo from './HeroVideo.jsx';
-import { contact, projects } from './data.js';
+import { contact, projects, douyinWorks } from './data.js';
 import { DetailDialog, EvidenceDialog } from './Dialog.jsx';
 import useGlass from './useGlass.js';
 import SectionNavigation from './SectionNavigation.jsx';
@@ -18,6 +18,7 @@ export function Icon({ name = 'mail', ...props }) {
     down: <path d="m6 9 6 6 6-6" />,
     copy: <><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V4H4v12h4" /></>,
     zoom: <><circle cx="10" cy="10" r="6" /><path d="m15 15 5 5M10 7v6M7 10h6" /></>,
+    play: <path d="m8 5 11 7-11 7Z" />,
   };
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[name] || paths.plus}</svg>;
 }
@@ -98,12 +99,12 @@ export default function App() {
             <WorkFrame tone={project.tone}>
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}${project.title.endsWith('项目') ? '详情' : '项目详情'}`}>
               <span className="visual-number">0{i + 1}</span>
-              <div className={`project-paper${project.id === 'bambu' ? ' bambu-paper' : ''}`}>{project.image ? <img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /> : <div className="bambu-cover motion-media"><span className="bambu-cover-symbol">B</span><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div>}</div>
+              <div className={`project-paper${project.id === 'bambu' ? ' bambu-paper' : ''}`}><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /></div>
               <span className="visual-tag glass">{project.tag}</span>
               <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
             </WorkFrame>
-            <div className="project-copy"><p className="eyebrow">{project.category}</p><h3>{project.title}</h3><p>{project.subtitle}</p><button className="text-link" onClick={e => openDetail(project.id, e.currentTarget)}>查看项目</button></div>
+            <div className="project-copy"><p className="eyebrow">{project.category}</p><h3>{project.title}</h3><p>{project.subtitle}</p></div>
           </article>)}
         </div>
         <div className="additional-projects">
@@ -114,11 +115,16 @@ export default function App() {
 
       <section className="douyin-case section shell" id="douyin" aria-labelledby="douyin-title">
         <div className="section-heading"><div><p className="eyebrow">个人抖音</p><h2 id="douyin-title" className="motion-mask"><span className="motion-title">爆款视频策划</span></h2></div><span className="section-index">03 / 03</span></div>
-        <div className="douyin-grid">{[1,2].map(i => <article className="douyin-work" key={i}>
+        <div className="douyin-grid">{douyinWorks.map((work, i) => <article className="douyin-work" key={work.id}>
           <WorkFrame tone="video" radius={28}>
-          <div className="video-placeholder" aria-label={`代表视频${i}，资料待补充`}><span className="video-placeholder-number">0{i}</span><span>视频资料待补充</span></div>
+          <a className="video-placeholder douyin-visual" href={work.href} target="_blank" rel="noreferrer" aria-label={`在抖音观看${work.title}，截图播放量${work.views}`}>
+            <span className="video-placeholder-number">0{i + 1}</span>
+            <span className={`douyin-cover douyin-cover-${work.cover}`}><img src="/assets/douyin-works.png" alt={`${work.title}作品封面`} loading="lazy" decoding="async" /></span>
+            <span className="douyin-play glass"><Icon name="play" /></span>
+            <span className="visual-tag glass">播放 {work.views}</span>
+          </a>
           </WorkFrame>
-          <h3>代表视频 0{i}</h3>
+          <h3>{work.title}</h3><p className="douyin-tags">{work.tags}</p>
         </article>)}</div>
       </section>
     </main>
@@ -126,7 +132,7 @@ export default function App() {
       <div className="footer-contact"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><span className="contact-phone">{contact.phone}</span></div>
       <div className="contact-actions"><GlassButton as="button" className="button" onClick={copyEmail}><Icon name="copy" />{copied ? '已复制邮箱' : '复制邮箱'}</GlassButton><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div>
       <p className="copy-feedback" role="status">{feedback}</p>
-      <div className="footer-meta"><span>© 2026 解宝珅 · 运营作品集</span><a href="#top">回到首页</a><a className="font-credit" href="https://www.onlinewebfonts.com/" target="_blank" rel="noreferrer">Fonts by OnlineWebFonts</a></div>
+      <div className="footer-meta"><span>© 解宝珅 · 运营作品集</span><a href="#top">回到首页</a></div>
     </footer>
     <PageBottomBlur />
     <SectionNavigation onActiveChange={setActiveSection} />

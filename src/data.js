@@ -12,11 +12,17 @@ export const shots = {
   column5: { file: 'S05-column.png', title: '小凰鸡深夜Deep talk', note: '话题页累计口径，统计起止和截止未说明。' },
   column7: { file: 'S07-column.png', title: '小凰鸡闲聊站', note: '话题页累计口径，统计起止和截止未说明。' },
   column8: { file: 'column-digital-class.jpg', title: '小凰鸡数码讲堂', note: '话题「全部」口径：阅读77.2万、讨论181、互动593、原创73。截图未说明统计起止与拍摄时间。' },
+  bambu: { file: 'bambu-weibo.png', title: '拓竹 · 3D打印耗材实测', note: '微博作品截图：173万次观看、1152次转发、93条评论、1463次点赞。' },
 };
 
 export const projects = [
   { id: 'hot', category: '议题设计 · 协同传播', title: '电视适老化话题传播', subtitle: '话题设计、KOL联动与冲榜', image: 'topic-cover.jpg', alt: '电视适老化话题的阅读、互动与发布媒体记录', tag: '话题阅读 370万+', tone: 'warm' },
-  { id: 'bambu', category: '产品传播', title: '拓竹 · 产品传播项目', subtitle: '查看项目与视频', tag: 'BAMBU LAB', tone: 'cool' },
+  { id: 'bambu', category: '产品传播 · 实测内容', title: '拓竹 · 产品传播项目', subtitle: '从家庭使用场景切入，回应3D打印耗材安全问题', image: 'bambu-weibo.png', alt: '凰家评测6款3D打印耗材排放实测微博作品截图', tag: '视频观看 173万', tone: 'cool' },
+];
+
+export const douyinWorks = [
+  { id: 'northeast', title: '振兴东北', tags: '#东北', views: '10.0万', href: 'https://v.douyin.com/bFnyyCFUVfA/', cover: 'left' },
+  { id: 'cameras', title: '影石与大疆 · 运动相机', tags: '#影石 #大疆 #运动相机', views: '39.3万', href: 'https://v.douyin.com/lOTXwR0C2ew/', cover: 'right' },
 ];
 
 export const strengths = [
