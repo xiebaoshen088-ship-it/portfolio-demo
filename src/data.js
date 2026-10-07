@@ -16,7 +16,7 @@ export const shots = {
 
 export const projects = [
   { id: 'hot', category: '议题设计 · 协同传播', title: '电视适老化话题传播', subtitle: '话题设计、KOL联动与冲榜', image: 'topic-cover.jpg', alt: '电视适老化话题的阅读、互动与发布媒体记录', tag: '话题阅读 370万+', tone: 'warm' },
-  { id: 'poll', category: '内容判断 · 用户互动', title: '手机系统偏好投票', subtitle: '投票内容与用户讨论', image: 'S17-poll.png', alt: '凰家评测的手机系统偏好投票作品', tag: '约3000人投票', tone: 'cool' },
+  { id: 'bambu', category: '产品传播', title: '拓竹 · 产品传播项目', subtitle: '查看项目与视频', tag: 'BAMBU LAB', tone: 'cool' },
 ];
 
 export const strengths = [

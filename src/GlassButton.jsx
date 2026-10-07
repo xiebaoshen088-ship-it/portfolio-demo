@@ -41,6 +41,8 @@ export function GlassMaterial({ className = '', radius = 28, variant = 'button' 
     blur?.setAttribute('in', 'dispRed');
     return () => blur?.setAttribute('in', 'output');
   }, [variant]);
+  // Buttons share the dock shell's clear blur and rim; keep the navigation lens separate.
+  if (variant === 'button') return <span className={`glass-control-material dock-shell-material ${className}`} aria-hidden="true" />;
   return <span ref={materialRef} className={`glass-control-material ${className}`} aria-hidden="true">
     <GlassSurface {...optics} width="100%" height="100%" borderRadius={radius} className="portfolio-control-surface" />
   </span>;

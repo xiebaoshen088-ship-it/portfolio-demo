@@ -2,10 +2,10 @@
 .glass.glass-control {
   position: relative;
   background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: 1px solid rgb(var(--glass-shadow) / .09);
-  box-shadow: 0 2px 8px rgb(var(--glass-shadow) / .045);
+  backdrop-filter: blur(2px) saturate(108%) !important;
+  -webkit-backdrop-filter: blur(2px) saturate(108%) !important;
+  border: 1px solid #6e587015;
+  box-shadow: 0 3px 14px #39274708;
   overflow: visible;
 }
 .glass.glass-control::before,.glass.glass-control::after { display: none; }
@@ -16,6 +16,7 @@
   border-radius: inherit;
   pointer-events: none;
 }
+.glass-control-material.dock-shell-material { background: linear-gradient(165deg,#ffffff35,transparent 40%); }
 .glass-control-material .portfolio-control-surface {
   position: absolute;
   inset: 0;
@@ -23,7 +24,7 @@
   color-scheme: light;
   border: 0;
   box-shadow: none;
-  background: transparent;
+  background: linear-gradient(165deg,#ffffff35,transparent 40%);
   pointer-events: none;
 }
 .portfolio-control-surface.glass-surface--svg {
@@ -76,6 +77,8 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
+  .glass.glass-control { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .glass-control-material.dock-shell-material { background: rgb(var(--panel-rgb)); }
   .portfolio-control-surface::after { display: none; }
   .glass.glass-control,.dock-control .dock-lens-material { border-color: var(--muted); }
 }

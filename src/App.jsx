@@ -72,7 +72,7 @@ export default function App() {
               <li>辽宁省大学生主持人大赛三等奖</li>
               <li>戏剧影视与传媒学院分团委组织部副部长</li>
             </ul>
-            <div className="about-actions"><GlassButton as="a" className="button" href="/assets/resume.pdf" target="_blank" rel="noreferrer">查看简历</GlassButton><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
+            <div className="about-actions"><GlassButton className="button" onClick={e => openDetail('resume', e.currentTarget)} aria-haspopup="dialog">查看简历</GlassButton><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
           </div>
         </div>
       </div>
@@ -96,9 +96,9 @@ export default function App() {
         <div className="project-grid">
           {projects.map((project, i) => <article className={`project-card project-${project.tone}`} key={project.id}>
             <WorkFrame tone={project.tone}>
-            <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}项目详情`}>
+            <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}${project.title.endsWith('项目') ? '详情' : '项目详情'}`}>
               <span className="visual-number">0{i + 1}</span>
-              <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /></div>
+              <div className={`project-paper${project.id === 'bambu' ? ' bambu-paper' : ''}`}>{project.image ? <img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /> : <div className="bambu-cover motion-media"><span className="bambu-cover-symbol">B</span><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div>}</div>
               <span className="visual-tag glass">{project.tag}</span>
               <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
@@ -107,8 +107,8 @@ export default function App() {
           </article>)}
         </div>
         <div className="additional-projects">
-          <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>自主开创4个原创话题·助力账号商业化</strong><small>账号栏目与话题运营</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
-          <button className="project-row" onClick={e => openDetail('bambu', e.currentTarget)}><span className="row-mark row-bambu">B</span><span><strong>拓竹 · 产品传播项目</strong><small>查看项目与视频</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
+          <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>4个原创话题</strong><small>账号栏目与话题运营</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
+          <button className="project-row" onClick={e => openDetail('poll', e.currentTarget)}><span className="row-mark row-poll">↗</span><span><strong>手机系统偏好投票</strong><small>投票内容与用户讨论</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
         </div>
       </section>
 

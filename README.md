@@ -5,10 +5,10 @@ React + Vite + GSAP 单页作品集，版心最大 1700px。当前以电脑端�
 ## 三部分结构
 
 1. **个人介绍**：保留英文视频封面，下接姓名、院校、专业与本科学历、两项比赛三等奖、分团委组织部副部长职务、简历与联系方式。封面不设背景介绍按钮。
-2. **科技数码类账号运营 · 凰家评测**：实习分工、账号整体数据、话题传播与互动作品。两张重点项目预览缩至300–400px高；原创话题与拓竹项目通过次级入口展开。删除小红书数据复盘项目入口与详情。
+2. **科技数码类账号运营 · 凰家评测**：实习分工、账号整体数据、话题传播与产品项目。两张重点项目为电视适老化与拓竹，预览300–400px高；4个原创话题与手机系统偏好投票通过次级入口展开。热搜详情首先列示科技榜第8位。
 3. **个人抖音 · 爆款视频策划**：仅展示两条代表视频，不展示个人账号名。视频、截图、数据与分工尚未提供，目前两个位置明确占位，不编写成果。
 
-联系方式收在页脚，保留邮箱、电话、复制邮箱与下载简历，删除发送邮件按钮。删除左侧进度条与封面底部署名。「查看简历」直接在新标签打开完整 PDF，不经过摘要弹窗。
+联系方式收在页脚，保留邮箱、电话、复制邮箱与下载简历，删除发送邮件按钮。删除左侧进度条与封面底部署名。「查看简历」在站内展开由完整PDF直接渲染的单页预览，保留原版排版和PDF下载。
 
 ## 本地运行
 
@@ -33,14 +33,14 @@ npm run preview
 - `src/portfolio.css`：三部分排版；`styles.css` 保留基础排版。
 - `src/liquid-glass.css` 与 `src/glassConfig.js`：材质、边缘位移、光源及动画参数。
 - `src/GlassSurface.jsx` 与 `src/GlassSurface.css`：React Bits JS-CSS 注册表的完整原始组件，未改写源码；注册表没有额外依赖。
-- `src/GlassButton.jsx` 与 `src/glass-buttons.css`：按钮与导航选中块统一清透参数，输出单次真实背景位移 `dispRed`，避免原 RGB 重组的灰黑填充。
+- `src/GlassButton.jsx` 与 `src/glass-buttons.css`：按钮复用导航长条的2px背景模糊、细边缘与浅色高光，消除按钮内的位移纹理；导航选中透镜保留GlassSurface。
 - `src/FluidGlass.jsx`、`src/FluidDock.jsx`、`src/FluidGlass.css`：React Bits FluidGlass 的条形导航适配。原始完整源码保存在 `references/FluidGlass.original.jsx`；三个官方模型保存在 `public/assets/3d/`，实际页面只加载 `bar.glb`。
 - `src/SectionNavigation.jsx`：无可见进度条；缓存章节位置，滚动更新导航选中状态及首页长条的展开与收拢。
 - `src/usePortfolioMotion.js`：完整开场、模块标题遮罩进场、卡片 stagger、图片 reveal 和局部视差；GSAP matchMedia 自动回收动画与 ScrollTrigger。
 - `src/motionConfig.js` 与 `src/motion.css`：统一管理节奏、位移、错峰和遮罩结构。
 - `src/GradualBlur.jsx`、`src/BorderGlow.jsx` 与各自 CSS：用户提供的 React Bits JS-CSS 完整组件，原提示词保存在 `references/`；依提示词安装 `mathjs`，组件当前使用原生 Math，没有把数学库额外导入页面。
 - `src/CardEffects.jsx` 与 `src/card-effects.css`：浏览窗口底部固定渐进模糊；两张项目图和两个视频方块各自独立的指针边缘辉光。参数集中在适配层，保留浅色底、清晰前景标签与原生点击目标。
-- `src/HeroVideo.jsx`：固定使用离线平滑后的 60fps 素材，不再凭短时间 rAF 采样自动切换120fps。桌面视频采用 H.264 Main、单参考帧、无B帧与1秒关键帧间隔，保留约20秒的慢速循环。离开封面、打开详情、页面隐藏或减少动态效果时暂停。实际播放帧率仍受硬件与浏览器影响。
+- `src/HeroVideo.jsx`：使用最早上线视频版本7e9d426的原始动画素材，桌面、轻量版和海报均逐字节恢复，保持原生循环与1倍速。离开封面、打开详情、页面隐藏或减少动态效果时暂停。
 - `src/SegmentedControl.jsx`：导航与平台切换的连续移动选中块；悬停预览、按住拖动、松开选择、取消复位及键盘操作。
 - `src/Dialog.jsx`：项目从点击位置展开并收回；截图可放大；Escape 关闭并返回焦点。
 - `src/EvidenceStack.jsx`：四个原创话题直接并排展示，点击卡片放大原图，无展开/收起按钮。
@@ -51,7 +51,7 @@ npm run preview
 
 固定浅色、清透、100% 透光参数，无外观按钮、滑块或模式切换。按钮使用细窄边缘和轻微投影，移除厚白亮边、多层内阴影、悬停鼓起与标签放大。按下仅轻微等比缩小；切换选中块持续平移，保持安静。
 
-页脚、项目加号、简历和截图弹窗的按钮，以及导航与平台切换的选中块，沿用 [React Bits GlassSurface](https://reactbits.dev/components/glass-surface) 的 [JS-CSS 注册表源码](https://reactbits.dev/r/GlassSurface-JS-CSS.json)。新增条形导航采用 [React Bits FluidGlass](https://reactbits.dev/components/fluid-glass)，安装 `three`、`@react-three/fiber`、`@react-three/drei`、`maath`，已更新依赖与锁文件。
+导航与平台切换的选中块沿用 [React Bits GlassSurface](https://reactbits.dev/components/glass-surface) 的 [JS-CSS 注册表源码](https://reactbits.dev/r/GlassSurface-JS-CSS.json)。页脚、项目加号、简历与截图弹窗按钮使用和导航外壳相同的清透材质。条形导航采用 [React Bits FluidGlass](https://reactbits.dev/components/fluid-glass)，安装 `three`、`@react-three/fiber`、`@react-three/drei`、`maath`，已更新依赖与锁文件。
 
 Chromium/Edge 中，按钮通过 SVG 单通道背景位移与 `backdrop-filter` 处理背后内容；文字、图标和点击目标保持清晰。实际背景底色 `backgroundOpacity=0`，不增加灰黑蒙层或多层内阴影。「联系我」与导航选中块使用相同中性材质。
 
