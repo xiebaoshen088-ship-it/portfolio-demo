@@ -6,19 +6,12 @@ export default function HeroVideo() {
   useEffect(()=>{
     const art=artRef.current,video=videoRef.current,reduced=matchMedia('(prefers-reduced-motion: reduce)');
     const compact=matchMedia('(max-width:760px)').matches||navigator.connection?.saveData;
-    let visible=true,disposed=false,refreshFrame=null;
-    // Match decoder work to the display; 60Hz displays do not benefit from decoding 120fps.
-    const timings=[];
-    function chooseSource(time){
-      timings.push(time);
-      if(timings.length<18){refreshFrame=requestAnimationFrame(chooseSource);return;}
-      const gaps=timings.slice(1).map((t,i)=>t-timings[i]).sort((a,b)=>a-b);
-      if(disposed)return;
-      const highRefresh=gaps[Math.floor(gaps.length/2)]<11;
-      video.src=compact?'/assets/hero-flow-loop-mobile-60fps.mp4':`/assets/hero-flow-loop-${highRefresh?'120':'60'}fps.mp4`;
-      video.dataset.targetFps=compact||!highRefresh?'60':'120';reconcile();
-    }
-    refreshFrame=requestAnimationFrame(chooseSource);
+    let visible=true,disposed=false;
+    // A short rAF sample is not a reliable display/decoder capability test.
+    // Stable native 60fps avoids switching to a more expensive 120fps decoder.
+    video.src=compact?'/assets/hero-flow-loop-mobile-60fps.mp4':'/assets/hero-flow-loop-60fps.mp4';
+    video.dataset.targetFps='60';
+    video.playbackRate=1;
     function reconcile(){
       art.classList.toggle('is-reduced',reduced.matches);
       if(disposed||reduced.matches||!visible||document.hidden||document.body.classList.contains('dialog-open'))video.pause();
@@ -29,7 +22,7 @@ export default function HeroVideo() {
     observer.observe(art.closest('.hero'));
     const modal=new MutationObserver(reconcile);modal.observe(document.body,{attributes:true,attributeFilter:['class']});
     reduced.addEventListener('change',reconcile);document.addEventListener('visibilitychange',reconcile);reconcile();
-    return()=>{disposed=true;cancelAnimationFrame(refreshFrame);video.pause();observer.disconnect();modal.disconnect();video.removeEventListener('loadeddata',ready);reduced.removeEventListener('change',reconcile);document.removeEventListener('visibilitychange',reconcile);};
+    return()=>{disposed=true;video.pause();observer.disconnect();modal.disconnect();video.removeEventListener('loadeddata',ready);reduced.removeEventListener('change',reconcile);document.removeEventListener('visibilitychange',reconcile);};
   },[]);
   return <div className="hero-art" ref={artRef} aria-hidden="true">
     <img className="hero-poster" src="/assets/hero-flow-loop-poster.jpg" alt="" />

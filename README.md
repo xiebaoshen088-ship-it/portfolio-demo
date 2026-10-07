@@ -5,10 +5,10 @@ React + Vite + GSAP 单页作品集，版心最大 1700px。当前以电脑端�
 ## 三部分结构
 
 1. **个人介绍**：保留英文视频封面，下接姓名、院校、专业与本科学历、两项比赛三等奖、分团委组织部副部长职务、简历与联系方式。封面不设背景介绍按钮。
-2. **科技数码类账号运营 · 凰家评测**：实习分工、账号整体数据、话题传播与互动作品。原创话题、拓竹项目和小红书复盘通过次级入口展开。
+2. **科技数码类账号运营 · 凰家评测**：实习分工、账号整体数据、话题传播与互动作品。两张重点项目预览缩至300–400px高；原创话题与拓竹项目通过次级入口展开。删除小红书数据复盘项目入口与详情。
 3. **个人抖音 · 爆款视频策划**：仅展示两条代表视频，不展示个人账号名。视频、截图、数据与分工尚未提供，目前两个位置明确占位，不编写成果。
 
-联系方式收在页脚，保留邮箱、电话、复制邮箱与下载简历，删除发送邮件按钮。删除左侧进度条与封面底部署名。
+联系方式收在页脚，保留邮箱、电话、复制邮箱与下载简历，删除发送邮件按钮。删除左侧进度条与封面底部署名。「查看简历」直接在新标签打开完整 PDF，不经过摘要弹窗。
 
 ## 本地运行
 
@@ -33,11 +33,12 @@ npm run preview
 - `src/portfolio.css`：三部分排版；`styles.css` 保留基础排版。
 - `src/liquid-glass.css` 与 `src/glassConfig.js`：材质、边缘位移、光源及动画参数。
 - `src/GlassSurface.jsx` 与 `src/GlassSurface.css`：React Bits JS-CSS 注册表的完整原始组件，未改写源码；注册表没有额外依赖。
-- `src/GlassButton.jsx` 与 `src/glass-buttons.css`：按钮材质适配与清透样式。普通按钮使用提供的 `displace=15`、`distortionScale=-150`、RGB 偏移 `5/15/25`、`brightness=60`、`opacity=0.8`、`mixBlendMode=screen`；尺寸跟随实际按钮。导航选中块单独使用 `NAVIGATION_GLASS`。
+- `src/GlassButton.jsx` 与 `src/glass-buttons.css`：按钮与导航选中块统一清透参数，输出单次真实背景位移 `dispRed`，避免原 RGB 重组的灰黑填充。
+- `src/FluidGlass.jsx`、`src/FluidDock.jsx`、`src/FluidGlass.css`：React Bits FluidGlass 的条形导航适配。原始完整源码保存在 `references/FluidGlass.original.jsx`；三个官方模型保存在 `public/assets/3d/`，实际页面只加载 `bar.glb`。
 - `src/SectionNavigation.jsx`：无可见进度条；缓存章节位置，滚动更新导航选中状态及首页长条的展开与收拢。
 - `src/usePortfolioMotion.js`：完整开场、模块标题遮罩进场、卡片 stagger、图片 reveal 和局部视差；GSAP matchMedia 自动回收动画与 ScrollTrigger。
 - `src/motionConfig.js` 与 `src/motion.css`：统一管理节奏、位移、错峰和遮罩结构。
-- `src/HeroVideo.jsx`：单视频解码，根据刷新节奏选择离线补帧的 60/120fps 文件。循环衔接已写入素材；离开封面、打开详情、页面隐藏或减少动态效果时暂停。实际播放帧率受硬件与浏览器影响。
+- `src/HeroVideo.jsx`：固定使用离线平滑后的 60fps 素材，不再凭短时间 rAF 采样自动切换120fps。桌面视频采用 H.264 Main、单参考帧、无B帧与1秒关键帧间隔，保留约20秒的慢速循环。离开封面、打开详情、页面隐藏或减少动态效果时暂停。实际播放帧率仍受硬件与浏览器影响。
 - `src/SegmentedControl.jsx`：导航与平台切换的连续移动选中块；悬停预览、按住拖动、松开选择、取消复位及键盘操作。
 - `src/Dialog.jsx`：项目从点击位置展开并收回；截图可放大；Escape 关闭并返回焦点。
 - `src/EvidenceStack.jsx`：原创话题截图堆叠、展开与收起。
@@ -48,15 +49,19 @@ npm run preview
 
 固定浅色、清透、100% 透光参数，无外观按钮、滑块或模式切换。按钮使用细窄边缘和轻微投影，移除厚白亮边、多层内阴影、悬停鼓起与标签放大。按下仅轻微等比缩小；切换选中块持续平移，保持安静。
 
-首页、页脚、项目加号、简历和截图弹窗的液态按钮，以及导航与平台切换的选中块，使用 [React Bits GlassSurface](https://reactbits.dev/components/glass-surface)。组件来源是 [JS-CSS 官方注册表](https://reactbits.dev/r/GlassSurface-JS-CSS.json)。安装命令已尝试，shadcn 工具在当前运行环境中因自身 `ajv` 依赖错误退出，因此直接安装注册表的两份准确源码；项目依赖和锁文件无需变动。
+页脚、项目加号、简历和截图弹窗的按钮，以及导航与平台切换的选中块，沿用 [React Bits GlassSurface](https://reactbits.dev/components/glass-surface) 的 [JS-CSS 注册表源码](https://reactbits.dev/r/GlassSurface-JS-CSS.json)。新增条形导航采用 [React Bits FluidGlass](https://reactbits.dev/components/fluid-glass)，安装 `three`、`@react-three/fiber`、`@react-three/drei`、`maath`，已更新依赖与锁文件。
 
-Chromium/Edge 中通过 SVG 位移、分色重组与 `backdrop-filter` 处理真实背后内容；移动控件时不复制背景图片，保持浏览器实时背景采样。文字、图标和原生点击目标在独立清晰层，未施加模糊或扭曲。`opacity=0.8` 是位移图内部参数，不是给按钮叠加80%的白色蒙层；实际背景底色 `backgroundOpacity=0`，保留固定浅色、清透和100%透光设置。单独覆盖组件默认的多层内阴影，避免厚重质感。
+Chromium/Edge 中，按钮通过 SVG 单通道背景位移与 `backdrop-filter` 处理背后内容；文字、图标和点击目标保持清晰。实际背景底色 `backgroundOpacity=0`，不增加灰黑蒙层或多层内阴影。「联系我」与导航选中块使用相同中性材质。
 
-Safari/Firefox 按组件能力检测使用 CSS 近似，只保留透光、柔和模糊、细边和轻微投影；不把它描述为真实折射。大面积导航外壳和阅读区域继续使用原有稳定材质。已迁移的按钮排除旧 SVG 折射，避免重复处理。此效果为屏幕背景位移，不是完整物理光线追踪。
+FluidGlass 保留原组件的 GLB、FBO、场景 portal 与 `MeshTransmissionMaterial`：直接复用正在播放的同一个 HTML 视频，按照视频和导航的实际视口坐标、object-fit 裁剪及四周渐隐创建共享背景输入；没有第二个视频解码器。该受控视频输入确实经过 WebGL 透射与折射。白色环境只负责镜面照明，不充当背景输入。
+
+任意 HTML 文字及正文不能可靠进入这个共享场景，因此正文下的导航以 CSS 实时背景模糊和清透边缘为近似，WebGL 只提供安静的体积边缘；不声称完整DOM物理折射。按钮的 SVG 位移也是屏幕效果，不是光线追踪。Safari/Firefox 或 WebGL不可用时保留稳定CSS材质和全部HTML导航功能。
+
+WebGL 延迟到标题开场之后加载。画布仅覆盖约60px高的导航，DPR为1，背景缓冲区最多1536px宽、材质2次采样。视频呈现及操作、滚动和短暂展开期间按需刷新，静止正文不持续执行渲染循环。原生链接、键盘、焦点和页面滚动均保留，未引入示例的独立滚动场景或无关图片。
 
 导航与平台切换选中块使用中性位移图、更轻的位移和0.6px模糊。实测发现原三通道分色重组在共享导航背景上产生灰底；材质适配层改为输出原组件的单次背景位移结果 `dispRed`，保留原背景RGB与透明度。原始组件文件保持不变。文字仍为清晰的深色，选中态由透明透镜细边表达，不再用灰黑底。
 
-阅读详情保留必要底色。`prefers-reduced-motion` 关闭动效；高对比与减少透明度设置优先保障可读性。旧 `GlassStudio.jsx` 和 `OpticalScene.jsx` 未导入运行页面，不产生 WebGL 开销。
+阅读详情保留必要底色。`prefers-reduced-motion` 关闭动效与WebGL层；高对比与减少透明度设置优先保障可读性。旧 `GlassStudio.jsx` 和 `OpticalScene.jsx` 未导入运行页面。
 
 数据采用概数，截图保留后台原值；不同平台、统计周期、账号整体、话题结果与个人分工分别说明。热搜案例中个人负责词条设计、KOL 对接与运营，未参与视频制作。
 

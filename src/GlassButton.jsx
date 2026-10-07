@@ -3,16 +3,17 @@ import GlassSurface from './GlassSurface.jsx';
 
 // Keep the supplied registry source untouched; tune portfolio controls here.
 export const BUTTON_GLASS = Object.freeze({
-  displace: 15,
-  distortionScale: -150,
-  redOffset: 5,
-  greenOffset: 15,
-  blueOffset: 25,
-  brightness: 60,
-  opacity: 0.8,
+  displace: 0.6,
+  distortionScale: -50,
+  redOffset: 0,
+  greenOffset: 1,
+  blueOffset: 2,
+  brightness: 50,
+  opacity: 1,
+  blur: 3,
   mixBlendMode: 'screen',
   backgroundOpacity: 0,
-  saturation: 1.15,
+  saturation: 1.05,
 });
 
 // The 40px navigation lens needs a neutral center and a much smaller blur kernel.
@@ -34,7 +35,6 @@ export function GlassMaterial({ className = '', radius = 28, variant = 'button' 
   const materialRef = useRef(null);
   const optics = variant === 'navigation' ? NAVIGATION_GLASS : BUTTON_GLASS;
   useLayoutEffect(() => {
-    if (variant !== 'navigation') return;
     // Use the component's real backdrop displacement without splitting RGB.
     // This preserves background color/alpha and keeps upstream files untouched.
     const blur = materialRef.current?.querySelector('feGaussianBlur');

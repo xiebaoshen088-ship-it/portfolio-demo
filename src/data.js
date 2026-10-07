@@ -22,7 +22,6 @@ export const strengths = [
   { index: '01', title: '内容判断', copy: '理解用户关心的问题，把选题转化为清晰、可参与的内容。', detail: 'poll', evidence: '手机系统偏好投票' },
   { index: '02', title: '平台运营', copy: '独立运营微博，参与多平台内容发布、互动与数据观察。', detail: 'platforms', evidence: '微博与小红书后台' },
   { index: '03', title: '传播协同', copy: '设计热搜词条，联系 KOL 协同传播，推进话题运营。', detail: 'hot', evidence: '电视适老化话题' },
-  { index: '04', title: '数据复盘', copy: '分开观察观看、收藏与关注，用数据继续追问内容表现。', detail: 'review', evidence: '小红书数据复盘' },
 ];
 
 export const columns = [

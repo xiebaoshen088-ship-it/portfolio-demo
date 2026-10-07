@@ -1,0 +1,10 @@
+/* One small optical canvas behind crisp DOM links; no full-page WebGL loop. */
+.site-header .fluid-dock{position:absolute!important;inset:0;z-index:0!important;border-radius:inherit;overflow:hidden;pointer-events:none}
+.fluid-dock canvas{display:block;pointer-events:none}
+.site-header>.wordmark,.site-header>nav,.site-header>.header-actions{position:relative;z-index:1}
+.site-header.glass{background:transparent;box-shadow:0 3px 14px #39274708;border:1px solid #6e587015;backdrop-filter:blur(2px) saturate(108%);-webkit-backdrop-filter:blur(2px) saturate(108%)}
+.site-header.glass::before{box-shadow:none;background:linear-gradient(165deg,#ffffff35,transparent 40%);border-radius:inherit}
+.site-header.glass::after{display:none}
+.site-header[data-expanded=false]{background:transparent}
+.site-header .nav-glass a:hover{background:transparent}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){.site-header.glass{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--muted)}.fluid-dock{display:none}}

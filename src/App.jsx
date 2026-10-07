@@ -7,6 +7,7 @@ import useGlass from './useGlass.js';
 import SectionNavigation from './SectionNavigation.jsx';
 import SegmentedControl from './SegmentedControl.jsx';
 import usePortfolioMotion from './usePortfolioMotion.js';
+import FluidDock from './FluidDock.jsx';
 
 export function Icon({ name = 'mail', ...props }) {
   const paths = {
@@ -39,6 +40,7 @@ export default function App() {
   return <div className="portfolio-page" ref={pageRef}>
     <a href="#profile" className="skip-link">跳到个人介绍</a>
     <header className="site-header shell glass" data-expanded="true">
+      <FluidDock />
       <a className="wordmark" href="#top" aria-label="解宝珅，返回首页">xiebaoshen<span className="wordmark-dot" /></a>
       <nav aria-label="主导航"><SegmentedControl navigation className="nav-glass" label="主导航" value={activeSection} onChange={setActiveSection} options={[{value:'about',label:'个人介绍'},{value:'tech',label:'凰家评测'},{value:'douyin',label:'个人抖音'}]} /></nav>
       <div className="header-actions"><GlassButton as="a" className="button header-contact" href="#contact"><Icon />联系我</GlassButton></div>
@@ -50,7 +52,7 @@ export default function App() {
         <div className="hero-content shell">
           <p className="eyebrow hero-eyebrow motion-mask"><span className="opening-label">运营作品集</span></p>
           <h1 id="hero-title"><span className="serif motion-mask"><span className="hero-title-line motion-title">content sense,</span></span><span className="motion-mask"><span className="hero-title-line motion-title">growth mindset.</span></span></h1>
-          <p className="hero-description motion-mask"><span className="opening-description">内容判断与跨平台运营</span></p>
+          <p className="hero-description motion-mask"><span className="opening-description">内容、增长与跨平台运营</span></p>
         </div>
       </div>
 
@@ -70,7 +72,7 @@ export default function App() {
               <li>辽宁省大学生主持人大赛三等奖</li>
               <li>戏剧影视与传媒学院分团委组织部副部长</li>
             </ul>
-            <div className="about-actions"><GlassButton as="button" className="button" onClick={e => openDetail('resume', e.currentTarget)}>查看简历</GlassButton><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
+            <div className="about-actions"><GlassButton as="a" className="button" href="/assets/resume.pdf" target="_blank" rel="noreferrer">查看简历</GlassButton><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
           </div>
         </div>
       </div>
@@ -90,12 +92,12 @@ export default function App() {
           <div className="account-stat"><div className="motion-mask metric-mask"><strong>570<span>万+</span></strong></div><p>账号累计阅读</p></div>
           <div className="account-stat"><div className="motion-mask metric-mask"><strong>600<span>万+</span></strong></div><p>账号视频播放</p></div>
         </div>
-        <h3 className="case-subheading">突出项目</h3>
+        <h3 className="case-subheading">重点项目</h3>
         <div className="project-grid">
           {projects.map((project, i) => <article className={`project-card project-${project.tone}`} key={project.id}>
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}项目详情`}>
               <span className="visual-number">0{i + 1}</span>
-              <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} loading="lazy" /></div>
+              <div className="project-paper"><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /></div>
               <span className="visual-tag glass">{project.tag}</span>
               <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
@@ -105,7 +107,6 @@ export default function App() {
         <div className="additional-projects">
           <button className="project-row" onClick={e => openDetail('topics', e.currentTarget)}><span className="row-mark">#</span><span><strong>5个原创话题 · 小凰鸡系列</strong><small>账号栏目与话题运营</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
           <button className="project-row" onClick={e => openDetail('bambu', e.currentTarget)}><span className="row-mark row-bambu">B</span><span><strong>拓竹 · 产品传播项目</strong><small>查看项目与视频</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
-          <button className="project-row" onClick={e => openDetail('review', e.currentTarget)}><span className="row-mark row-review">↗</span><span><strong>小红书 · 数据复盘</strong><small>观看、互动与关注表现</small></span><GlassButton as="span" className="row-control"><Icon name="plus" /></GlassButton></button>
         </div>
       </section>
 

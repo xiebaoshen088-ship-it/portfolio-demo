@@ -104,7 +104,7 @@ function PlatformEvidence({ onShot }) {
 }
 
 export function DetailDialog({ entry, onClose, onShot }) {
-  const titles = { hot: '热搜传播 · 电视适老化', poll: '内容判断 · 手机系统偏好投票', topics: '持续内容 · 原创话题', bambu: '产品传播 · 拓竹', platforms: '平台运营 · 凰家评测', review: '数据复盘 · 小红书', resume: '解宝珅 · 个人简历', contact: '联系解宝珅' };
+  const titles = { hot: '热搜传播 · 电视适老化', poll: '内容判断 · 手机系统偏好投票', topics: '持续内容 · 原创话题', bambu: '产品传播 · 拓竹', platforms: '平台运营 · 凰家评测', contact: '联系解宝珅' };
   const id = entry.id;
   return <Modal entry={entry} title={titles[id]} onClose={onClose}>
     <div className="dialog-body">
@@ -130,13 +130,6 @@ export function DetailDialog({ entry, onClose, onShot }) {
       </>}
       {id === 'bambu' && <><p className="dialog-lead">从产品，走向用户关心的内容。</p><div className="bambu-identity"><strong>BAMBU LAB</strong><span>拓竹 · 产品传播项目</span></div><p>先通过成品查看项目表达，再结合选题、发布与反馈材料完善这个案例。</p><div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</GlassButton></div><p className="evidence-note">项目截图、策划过程、个人分工和效果证据待补充，当前不添加未核实的成果数据。</p></>}
       {id === 'platforms' && <PlatformEvidence onShot={onShot} />}
-      {id === 'review' && <>
-        <p className="dialog-lead">观看上升之后，继续看互动与关注。</p><p>同一统计周期，观看增长，收藏与净涨粉下降。不同指标提示了不同的问题，需要进一步核对内容表现与流量来源。</p>
-        <Metrics items={[[ '30万+', '观看量'],['约1500', '收藏'],['约400', '净涨粉']]} />
-        <div className="review-table"><div><span>观看量</span><strong>+18%</strong><span>后台环比</span></div><div><span>收藏</span><strong>−43%</strong><span>后台环比</span></div><div><span>净涨粉</span><strong>−25%</strong><span>后台环比</span></div></div>
-        <p className="evidence-note">7月20日—8月18日，年份未说明，包含付费投流。环比直接引用后台，上一周期基数未显示；不能据此认定某项策略导致变化。后台关注口径存在差异，原图保留。</p><div className="dialog-actions"><EvidenceButton id="views" onShot={onShot}>观看记录</EvidenceButton><EvidenceButton id="interactions" onShot={onShot}>互动记录</EvidenceButton><EvidenceButton id="followers" onShot={onShot}>关注记录</EvidenceButton></div>
-      </>}
-      {id === 'resume' && <><p className="dialog-lead">判断内容，也经营反馈。</p><p>凤凰网 · 凰家评测运营实习<br />大连艺术学院 · 播音与主持艺术</p><div className="dialog-actions"><GlassButton as="a" className="button" href="/assets/resume.pdf" target="_blank" rel="noreferrer">查看完整简历</GlassButton><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div></>}
       {id === 'contact' && <><p className="dialog-lead">聊聊内容，也聊聊机会。</p><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><div className="dialog-actions"><GlassButton as="a" className="button" href={`mailto:${contact.email}`}>发送邮件</GlassButton></div></>}
     </div>
   </Modal>;

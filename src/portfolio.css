@@ -22,7 +22,14 @@
 .tech-case .account-evidence{margin-top:46px;padding-top:40px;padding-bottom:25px}
 .case-subheading{font-size:1.5rem;font-weight:400;line-height:1.6;margin:70px 0 30px}
 .additional-projects{margin-top:30px}
-.row-review{background:#eaf0f4;color:#71899c}
+.tech-case .project-grid{gap:34px;max-width:1360px}
+.tech-case .project-visual{height:clamp(300px,28vw,400px);border-radius:24px}
+.tech-case .project-paper{top:40px;bottom:-95px;left:19%;right:19%}
+.tech-case .visual-number{top:22px;left:26px}
+.tech-case .visual-tag{bottom:22px;left:24px;font-size:.8125rem;padding:10px 16px}
+.tech-case .project-copy{padding-top:22px}
+.tech-case .project-copy h3{font-size:clamp(1.25rem,1.7vw,1.75rem);margin-block:12px 10px}
+.project-visual .project-open.glass-control{position:absolute;right:22px;bottom:22px;width:44px;height:44px}
 .douyin-case{border-top:1px solid var(--line)}
 .douyin-grid{display:grid;grid-template-columns:1fr 1fr;gap:38px}
 .video-placeholder{height:430px;position:relative;display:flex;align-items:center;justify-content:center;border-radius:28px;border:1px solid var(--line);background:#faf9fb;color:#a9a2af;font-size:.9375rem}
