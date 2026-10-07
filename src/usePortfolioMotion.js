@@ -39,9 +39,8 @@ export default function usePortfolioMotion(pageRef) {
       const titleLines = query('.hero-title-line');
       const eyebrow = root.querySelector('.opening-label');
       const description = root.querySelector('.opening-description');
-      const action = root.querySelector('.hero-action-mask');
       const navContent = query('.site-header .wordmark, .site-header nav, .site-header .header-actions');
-      const openingElements = [art, header, ...navContent, ...titleLines, eyebrow, description, action];
+      const openingElements = [art, header, ...navContent, ...titleLines, eyebrow, description];
       // Prime every stagger target together; delayed children must never flash unmasked.
       gsap.set(art, { '--opening-cut': '46%', clipPath: 'inset(var(--opening-cut) 0)', scale: 1.12 });
       gsap.set(header, { '--nav-cut': '49%', clipPath: 'inset(0 var(--nav-cut) round 999px)' });
@@ -49,7 +48,6 @@ export default function usePortfolioMotion(pageRef) {
       gsap.set(titleLines, { yPercent: 125, xPercent: 3, scaleX: .92, scaleY: .64, rotation: 1.8 });
       gsap.set(eyebrow, { yPercent: 130 });
       gsap.set(description, { yPercent: 140 });
-      gsap.set(action, { clipPath: 'inset(100% 0 0% 0)' });
       const opening = gsap.timeline({
         id: 'portfolio-opening',
         paused: true,
@@ -69,7 +67,6 @@ export default function usePortfolioMotion(pageRef) {
         .to(titleLines, { yPercent: 0, xPercent: 0, scaleX: 1, scaleY: 1, rotation: 0, duration: MOTION.opening.title, stagger: MOTION.opening.stagger }, .34)
         .to(eyebrow, { yPercent: 0, duration: 1 }, .55)
         .to(description, { yPercent: 0, duration: 1.15 }, 1.28)
-        .to(action, { clipPath: 'inset(0% 0 0% 0)', duration: 1.1, ease: MOTION.revealEase }, 1.78)
         .call(() => {}, [], MOTION.opening.finish);
       // A direct case link opens where the reader asked; wheel/keyboard can skip the opening.
       const atCover = scrollY < 80 && (!location.hash || ['#top', '#about'].includes(location.hash));
@@ -104,7 +101,7 @@ export default function usePortfolioMotion(pageRef) {
       }
       const account = root.querySelector('.account-evidence');
       const values = query('.account-stat strong');
-      const accountLabels = query('.account-label, .account-stat p, .metric-note');
+      const accountLabels = query('.account-label, .account-stat p');
       gsap.set(values, { yPercent: 120, scaleY: .6 });
       gsap.set(accountLabels, { y: 35, clipPath: 'inset(100% 0 0 0)' });
       entrance(account, [...values, ...accountLabels])

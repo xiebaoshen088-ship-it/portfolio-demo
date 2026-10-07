@@ -51,7 +51,6 @@ export default function App() {
           <p className="eyebrow hero-eyebrow motion-mask"><span className="opening-label">运营作品集</span></p>
           <h1 id="hero-title"><span className="serif motion-mask"><span className="hero-title-line motion-title">content sense,</span></span><span className="motion-mask"><span className="hero-title-line motion-title">growth mindset.</span></span></h1>
           <p className="hero-description motion-mask"><span className="opening-description">内容判断与跨平台运营</span></p>
-          <div className="hero-action-mask"><GlassButton as="a" className="button hero-cta" href="#profile">了解个人背景<Icon name="down" /></GlassButton></div>
         </div>
       </div>
 
@@ -65,7 +64,12 @@ export default function App() {
           <div className="experience-copy">
             <p className="intro-name">解宝珅</p>
             <p className="intro-text">大连艺术学院</p>
-            <div className="education"><span>播音与主持艺术 · 本科在读</span></div>
+            <div className="education"><span>播音与主持艺术 · 本科</span></div>
+            <ul className="profile-highlights" aria-label="个人荣誉与校园职务">
+              <li>国际大学生配音大赛三等奖</li>
+              <li>辽宁省大学生主持人大赛三等奖</li>
+              <li>戏剧影视与传媒学院分团委组织部副部长</li>
+            </ul>
             <div className="about-actions"><GlassButton as="button" className="button" onClick={e => openDetail('resume', e.currentTarget)}>查看简历</GlassButton><a className="text-link" href={`mailto:${contact.email}`}>{contact.email}</a></div>
           </div>
         </div>
@@ -74,14 +78,19 @@ export default function App() {
 
       <section className="tech-case section shell" id="tech" aria-labelledby="tech-title">
         <div className="section-heading"><div><p className="eyebrow">科技数码类账号运营</p><h2 id="tech-title" className="motion-mask"><span className="motion-title">凰家评测</span></h2></div><span className="section-index">02 / 03</span></div>
-        <div className="account-context"><div><h3>凤凰网 · 新媒体运营实习</h3><span>2026.06 — 2026.09</span></div><p>独立运营微博，参与抖音、小红书、视频号与微信公众号内容发布、互动和数据复盘。</p></div>
+        <div className="account-context">
+          <div><h3>凤凰网 · 全网矩阵账号运营</h3><span>2026.06 — 2026.09</span></div>
+          <div className="account-description">
+            <p>独立运营微博账号，持续跟进科技数码新品、厂商动态与行业热点，根据不同平台特征完成选题判断、内容包装与分发。提升账号在科技数码领域的内容响应速度与传播效率。</p>
+            <p>协同运营抖音、小红书、快手、B站等平台，对数据进行持续的跟进和复盘。</p>
+          </div>
+        </div>
         <div className="account-evidence">
-          <div className="account-label"><h3>账号运营数据</h3><span>微博 · 近30日</span><button className="text-link" onClick={e => openDetail('platforms', e.currentTarget)}>查看后台截图</button></div>
+          <div className="account-label"><h3><img className="platform-logo" src="/assets/weibo.svg" alt="微博标识" />账号运营数据</h3><span>微博 · 近30日</span><button className="text-link" onClick={e => openDetail('platforms', e.currentTarget)}>查看后台截图</button></div>
           <div className="account-stat"><div className="motion-mask metric-mask"><strong>570<span>万+</span></strong></div><p>账号累计阅读</p></div>
           <div className="account-stat"><div className="motion-mask metric-mask"><strong>600<span>万+</span></strong></div><p>账号视频播放</p></div>
-          <p className="metric-note">账号整体数据，完整统计起止未说明。</p>
         </div>
-        <h3 className="case-subheading">内容与传播实践</h3>
+        <h3 className="case-subheading">突出项目</h3>
         <div className="project-grid">
           {projects.map((project, i) => <article className={`project-card project-${project.tone}`} key={project.id}>
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}项目详情`}>
@@ -110,7 +119,7 @@ export default function App() {
     </main>
     <footer className="site-footer shell" id="contact" aria-label="联系方式">
       <div className="footer-contact"><a className="contact-email" href={`mailto:${contact.email}`}>{contact.email}</a><span className="contact-phone">{contact.phone}</span></div>
-      <div className="contact-actions"><GlassButton as="a" className="button" href={`mailto:${contact.email}`}><Icon />发送邮件</GlassButton><GlassButton as="button" className="button" onClick={copyEmail}><Icon name="copy" />{copied ? '已复制邮箱' : '复制邮箱'}</GlassButton><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div>
+      <div className="contact-actions"><GlassButton as="button" className="button" onClick={copyEmail}><Icon name="copy" />{copied ? '已复制邮箱' : '复制邮箱'}</GlassButton><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div>
       <p className="copy-feedback" role="status">{feedback}</p>
       <div className="footer-meta"><span>© 2026 解宝珅 · 运营作品集</span><a href="#top">回到首页</a><a className="font-credit" href="https://www.onlinewebfonts.com/" target="_blank" rel="noreferrer">Fonts by OnlineWebFonts</a></div>
     </footer>

@@ -97,7 +97,7 @@ export default function SegmentedControl({ options, value, onChange, label, clas
     ref.current.querySelectorAll('button,a')[next]?.focus();
   }
   return <div className={`segmented glass dock-control ${className}`} ref={ref} role={navigation ? undefined : tabs ? 'tablist' : 'radiogroup'} aria-label={label} onPointerMove={pointerMove} onPointerDown={pointerDown} onPointerUp={e=>finishPointer(e)} onPointerCancel={e=>finishPointer(e,true)} onLostPointerCapture={e=>finishPointer(e,true)} onPointerLeave={()=>{if(!dragRef.current)setPreview(null);}}>
-    <span className="segment-indicator" ref={indicator} aria-hidden="true"><GlassMaterial className="dock-lens-material" /></span>
+    <span className="segment-indicator" ref={indicator} aria-hidden="true"><GlassMaterial variant="navigation" className="dock-lens-material" /></span>
     {options.map((option, i) => navigation
       ? <a key={option.value} data-value={option.value} data-preview={preview===option.value?'true':undefined} href={`#${option.value}`} aria-current={value === option.value ? 'location' : undefined} onClick={() => onChange?.(option.value)} onKeyDown={e=>keyDown(e,i)}><span className="dock-label">{option.label}</span></a>
       : <button key={option.value} data-value={option.value} data-preview={preview===option.value?'true':undefined} role={tabs ? 'tab' : 'radio'} id={tabs ? `tab-${option.value}` : undefined} aria-controls={tabs ? 'platform-panel' : undefined} aria-selected={tabs ? value === option.value : undefined} aria-checked={tabs ? undefined : value === option.value} tabIndex={value === option.value ? 0 : -1} onClick={() => onChange(option.value)} onKeyDown={e=>keyDown(e,i)}><span className="dock-label">{option.label}</span></button>)}

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useLayoutEffect, useRef } from 'react';
 import GlassSurface from './GlassSurface.jsx';
 
 // Keep the supplied registry source untouched; tune portfolio controls here.
@@ -15,9 +15,34 @@ export const BUTTON_GLASS = Object.freeze({
   saturation: 1.15,
 });
 
-export function GlassMaterial({ className = '', radius = 28 }) {
-  return <span className={`glass-control-material ${className}`} aria-hidden="true">
-    <GlassSurface {...BUTTON_GLASS} width="100%" height="100%" borderRadius={radius} className="portfolio-control-surface" />
+// The 40px navigation lens needs a neutral center and a much smaller blur kernel.
+// RGB separation made the shared navigation backdrop smoky gray in Chromium.
+export const NAVIGATION_GLASS = Object.freeze({
+  ...BUTTON_GLASS,
+  displace: 0.6,
+  distortionScale: -50,
+  redOffset: 0,
+  greenOffset: 1,
+  blueOffset: 2,
+  brightness: 50,
+  opacity: 1,
+  blur: 3,
+  saturation: 1.05,
+});
+
+export function GlassMaterial({ className = '', radius = 28, variant = 'button' }) {
+  const materialRef = useRef(null);
+  const optics = variant === 'navigation' ? NAVIGATION_GLASS : BUTTON_GLASS;
+  useLayoutEffect(() => {
+    if (variant !== 'navigation') return;
+    // Use the component's real backdrop displacement without splitting RGB.
+    // This preserves background color/alpha and keeps upstream files untouched.
+    const blur = materialRef.current?.querySelector('feGaussianBlur');
+    blur?.setAttribute('in', 'dispRed');
+    return () => blur?.setAttribute('in', 'output');
+  }, [variant]);
+  return <span ref={materialRef} className={`glass-control-material ${className}`} aria-hidden="true">
+    <GlassSurface {...optics} width="100%" height="100%" borderRadius={radius} className="portfolio-control-surface" />
   </span>;
 }
 
