@@ -1,27 +1,15 @@
 import GlassButton from './GlassButton.jsx';
-import { useRef, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
+import Icon from './Icon.jsx';
 import HeroVideo from './HeroVideo.jsx';
 import { contact, projects, douyinWorks } from './data.js';
-import { DetailDialog, EvidenceDialog } from './Dialog.jsx';
 import useGlass from './useGlass.js';
 import SectionNavigation from './SectionNavigation.jsx';
 import SegmentedControl from './SegmentedControl.jsx';
 import usePortfolioMotion from './usePortfolioMotion.js';
 import FluidDock from './FluidDock.jsx';
 import { WorkFrame, PageBottomBlur } from './CardEffects.jsx';
-
-export function Icon({ name = 'mail', ...props }) {
-  const paths = {
-    mail: <><rect x="3" y="5" width="18" height="14" rx="3" /><path d="m3 7 9 6 9-6" /></>,
-    plus: <path d="M12 5v14M5 12h14" />,
-    close: <path d="m6 6 12 12M18 6 6 18" />,
-    down: <path d="m6 9 6 6 6-6" />,
-    copy: <><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V4H4v12h4" /></>,
-    zoom: <><circle cx="10" cy="10" r="6" /><path d="m15 15 5 5M10 7v6M7 10h6" /></>,
-    play: <path d="m8 5 11 7-11 7Z" />,
-  };
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[name] || paths.plus}</svg>;
-}
+const DialogHost = lazy(() => import('./DialogHost.jsx'));
 
 export default function App() {
   const pageRef = useRef(null);
@@ -62,7 +50,7 @@ export default function App() {
         <div className="section-heading"><h2 id="profile-title" className="motion-mask"><span className="motion-title">个人介绍</span></h2><span className="section-index">01 / 03</span></div>
         <div className="experience-grid">
           <div className="portrait-placeholder" aria-label="解宝珅个人照片">
-            <img className="profile-portrait" src="/assets/profile-photo.jpg" alt="解宝珅证件照" loading="lazy" decoding="async" />
+            <img className="profile-portrait" src="/assets/profile-photo-960.webp" srcSet="/assets/profile-photo-480.webp 480w, /assets/profile-photo-960.webp 960w" sizes="(max-width:760px) calc(100vw - 48px), (min-width:1400px) 430px, 35vw" width="960" height="960" alt="解宝珅证件照" loading="lazy" decoding="async" />
           </div>
           <div className="experience-copy">
             <p className="intro-name">解宝珅</p>
@@ -99,7 +87,7 @@ export default function App() {
             <WorkFrame tone={project.tone}>
             <button className="project-visual" onClick={e => openDetail(project.id, e.currentTarget)} aria-label={`查看${project.title}${project.title.endsWith('项目') ? '详情' : '项目详情'}`}>
               <span className="visual-number">0{i + 1}</span>
-              <div className={`project-paper${project.id === 'bambu' ? ' bambu-paper' : ''}`}><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} decoding="async" /></div>
+              <div className={`project-paper${project.id === 'bambu' ? ' bambu-paper' : ''}`}><img className="motion-media" src={`/assets/${project.image}`} alt={project.alt} width={project.id === 'bambu' ? 805 : 720} height={project.id === 'bambu' ? 646 : 950} loading="lazy" decoding="async" /></div>
               <span className="visual-tag glass">{project.tag}</span>
               <GlassButton as="span" className="project-open"><Icon name="plus" /></GlassButton>
             </button>
@@ -119,7 +107,7 @@ export default function App() {
           <WorkFrame tone="video" radius={28}>
           <a className="video-placeholder douyin-visual" href={work.href} target="_blank" rel="noreferrer" aria-label={`在抖音观看${work.workTitle}，截图播放量${work.views}`}>
             <span className="video-placeholder-number">0{i + 1}</span>
-            <span className={`douyin-cover douyin-cover-${work.cover}`}><img src="/assets/douyin-works.png" alt={`${work.workTitle}作品封面`} loading="lazy" decoding="async" /></span>
+            <span className={`douyin-cover douyin-cover-${work.cover}`}><img src="/assets/douyin-works.webp" width="546" height="385" alt={`${work.workTitle}作品封面`} loading="lazy" decoding="async" /></span>
             <span className="douyin-play glass"><Icon name="play" /></span>
             <span className="visual-tag glass">播放 {work.views}</span>
           </a>
@@ -136,7 +124,8 @@ export default function App() {
     </footer>
     <PageBottomBlur />
     <SectionNavigation onActiveChange={setActiveSection} />
-    {detail && <DetailDialog key={detail.id} entry={detail} onClose={() => setDetail(null)} onShot={openShot} />}
-    {shot && <EvidenceDialog key={shot.id} entry={shot} onClose={() => setShot(null)} />}
+    {(detail || shot) && <Suspense fallback={<p className="dialog-loading" role="status">正在打开详情…</p>}>
+      <DialogHost detail={detail} shot={shot} onCloseDetail={() => setDetail(null)} onCloseShot={() => setShot(null)} onShot={openShot} />
+    </Suspense>}
   </div>;
 }

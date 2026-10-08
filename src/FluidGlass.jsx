@@ -27,23 +27,29 @@ function makeEdges() {
 }
 
 function makeStudioLight() {
-  // A neutral white reflection environment prevents unlit Fresnel edges from
-  // appearing black. This lights the glass; it is never the backdrop input.
-  const face = document.createElement('canvas'); face.width = face.height = 4;
-  const context = face.getContext('2d'); context.fillStyle = '#ffffff'; context.fillRect(0, 0, 4, 4);
-  const texture = new THREE.CubeTexture(Array(6).fill(face));
-  texture.colorSpace = THREE.SRGBColorSpace; texture.needsUpdate = true;
+  // Every direction of the existing studio light is white. A constant CubeUV
+  // atlas gives the same neutral reflection without generating PMREM mip levels
+  // and compiling their extra blur shaders on the first frame.
+  const width = 3 * 16 * 7, height = 4 * 16;
+  const texture = new THREE.DataTexture(new Uint8Array(width * height * 4).fill(255), width, height);
+  texture.mapping = THREE.CubeUVReflectionMapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = texture.magFilter = THREE.LinearFilter;
+  texture.generateMipmaps = false; texture.needsUpdate = true;
   return texture;
 }
 
 function BarMaterial({ barProps }) {
   const { nodes } = useGLTF(MODEL);
-  const { size, invalidate, gl, camera } = useThree();
+  const { size, invalidate, gl, camera, scene: outputScene } = useThree();
   const width = Math.min(1536, Math.ceil(size.width)), height = Math.ceil(size.height);
   const buffer = useFBO(width, height, { samples: 0, depthBuffer: false, stencilBuffer: false, type: THREE.UnsignedByteType });
   const [scene] = useState(() => { const s = new THREE.Scene(); s.background = new THREE.Color('#ffffff'); return s; });
   const bar = useRef(), material = useRef(), videoPlane = useRef(), edgesPlane = useRef();
-  const pump = useRef({ until: 0, frame: null });
+  const pump = useRef({ until: 0, frame: null, lastDraw: -Infinity });
+  const backdrop = useRef(null), pressed = useRef(false);
+  const clearColor = useMemo(() => new THREE.Color(), []);
+  const compiled = useRef(false);
   const host = useRef(null), video = useRef(null), texture = useRef(null), videoFrame = useRef(null);
   const edges = useMemo(makeEdges, []);
   const studioLight = useMemo(makeStudioLight, []);
@@ -54,33 +60,85 @@ function BarMaterial({ barProps }) {
     host.current = gl.domElement.closest('.site-header');
     video.current = document.querySelector('.hero-video');
     const v = video.current, header = host.current;
+    if (!v || !header) return;
     texture.current = new THREE.VideoTexture(v); texture.current.colorSpace = THREE.SRGBColorSpace;
     texture.current.minFilter = THREE.LinearFilter; texture.current.magFilter = THREE.LinearFilter; texture.current.generateMipmaps = false;
     videoPlane.current.material.map = texture.current; videoPlane.current.material.needsUpdate = true;
-    const wake = (duration = 520) => {
-      if (document.hidden || document.body.classList.contains('dialog-open')) return;
+    let layoutFrame = null, scrollFrame = null;
+    const art = v.closest('.hero-art');
+    const active = () => !document.hidden && !document.body.classList.contains('dialog-open');
+    // The video remains 60 fps. Its small decorative glass reflection is capped
+    // at 30 fps and never keeps a rendering tail alive during ordinary scrolling.
+    const draw = (force = false) => {
+      if (!active() || (!force && performance.now() - pump.current.lastDraw < 1000 / 30)) return;
+      pump.current.lastDraw = performance.now(); invalidate();
+    };
+    const updateBackground = () => {
+      const data = backdrop.current;
+      if (!data) return false;
+      const { header: r, video: b } = data;
+      data.top = b.top - scrollY;
+      data.hero = data.top + b.height > r.top && data.top < r.bottom && b.left + b.width > r.left && b.left < r.right && v.readyState >= 2 && !v.paused;
+      const background = data.hero ? 'hero' : 'css';
+      const changed = header.dataset.fluidBackground !== background;
+      if (changed) { header.dataset.fluidBackground = background; draw(true); }
+      return data.hero;
+    };
+    const measure = () => {
+      layoutFrame = null;
+      const r = header.getBoundingClientRect(), b = v.getBoundingClientRect();
+      backdrop.current = { header: r, video: { top: b.top + scrollY, left: b.left, width: b.width, height: b.height } };
+      updateBackground(); draw(true);
+    };
+    const scheduleMeasure = () => { if (layoutFrame === null) layoutFrame = requestAnimationFrame(measure); };
+    const stopPump = () => { cancelAnimationFrame(pump.current.frame); pump.current.frame = null; };
+    const wake = (duration = 280) => {
+      if (!active()) return;
+      pressed.current = !!header.querySelector('[data-lens-pressed="true"],.is-pressed');
       pump.current.until = Math.max(pump.current.until, performance.now() + duration);
       if (pump.current.frame !== null) return;
-      const tick = () => { invalidate(); pump.current.frame = performance.now() < pump.current.until ? requestAnimationFrame(tick) : null; };
+      const tick = () => {
+        if (!active()) { stopPump(); return; }
+        draw(); pump.current.frame = performance.now() < pump.current.until ? requestAnimationFrame(tick) : null;
+      };
       pump.current.frame = requestAnimationFrame(tick);
     };
-    const onInteraction = () => wake();
-    const onScroll = () => wake(480);
-    const onVideoFrame = () => {
-      if (!document.hidden && !document.body.classList.contains('dialog-open') && !v.paused && header.dataset.fluidBackground === 'hero') invalidate();
-      videoFrame.current = v.requestVideoFrameCallback(onVideoFrame);
+    const onPress = () => wake();
+    const onScroll = () => {
+      if (scrollFrame !== null) return;
+      scrollFrame = requestAnimationFrame(() => { scrollFrame = null; if (updateBackground()) draw(); });
     };
-    videoFrame.current = v.requestVideoFrameCallback(onVideoFrame);
-    const resize = new ResizeObserver(onInteraction); resize.observe(header);
-    const changes = new MutationObserver(onInteraction); changes.observe(header, { subtree: true, attributes: true, attributeFilter: ['data-expanded', 'aria-current', 'data-preview', 'data-lens-pressed'] });
-    window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onInteraction);
-    ['pointermove', 'pointerdown', 'pointerup', 'pointerleave', 'keydown', 'focusin'].forEach(event => header.addEventListener(event, onInteraction, { passive: true }));
-    const visibility = () => { if (document.hidden) { cancelAnimationFrame(pump.current.frame); pump.current.frame = null; } else wake(); };
-    document.addEventListener('visibilitychange', visibility); wake(650);
+    const requestVideoFrame = callback => v.requestVideoFrameCallback ? v.requestVideoFrameCallback(callback) : setTimeout(callback, 1000 / 30);
+    const cancelVideoFrame = () => {
+      if (videoFrame.current !== null) { if (v.cancelVideoFrameCallback) v.cancelVideoFrameCallback(videoFrame.current); else clearTimeout(videoFrame.current); videoFrame.current = null; }
+    };
+    const onVideoFrame = () => {
+      videoFrame.current = null;
+      if (!active() || v.paused) return;
+      if (updateBackground()) draw();
+      videoFrame.current = requestVideoFrame(onVideoFrame);
+    };
+    const reconcile = () => {
+      if (!active()) { stopPump(); cancelVideoFrame(); return; }
+      updateBackground(); draw(true);
+      if (!v.paused && videoFrame.current === null) videoFrame.current = requestVideoFrame(onVideoFrame);
+      if (v.paused) cancelVideoFrame();
+    };
+    const resize = new ResizeObserver(scheduleMeasure); resize.observe(header); resize.observe(art);
+    // Short hero entrance transforms change its screen geometry; cache it again
+    // only while those styles change, rather than reading both rectangles per frame.
+    const artChanges = new MutationObserver(scheduleMeasure); artChanges.observe(art, { attributes: true, attributeFilter: ['style'] });
+    const presses = new MutationObserver(onPress); presses.observe(header, { subtree: true, attributes: true, attributeFilter: ['data-lens-pressed', 'class'] });
+    const modal = new MutationObserver(reconcile); modal.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', scheduleMeasure);
+    document.addEventListener('visibilitychange', reconcile);
+    v.addEventListener('play', reconcile); v.addEventListener('pause', reconcile); v.addEventListener('loadeddata', scheduleMeasure);
+    measure(); reconcile(); wake();
     return () => {
-      cancelAnimationFrame(pump.current.frame); v.cancelVideoFrameCallback(videoFrame.current); resize.disconnect(); changes.disconnect();
-      window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onInteraction); document.removeEventListener('visibilitychange', visibility);
-      ['pointermove', 'pointerdown', 'pointerup', 'pointerleave', 'keydown', 'focusin'].forEach(event => header.removeEventListener(event, onInteraction));
+      stopPump(); cancelVideoFrame(); cancelAnimationFrame(layoutFrame); cancelAnimationFrame(scrollFrame);
+      resize.disconnect(); artChanges.disconnect(); presses.disconnect(); modal.disconnect();
+      window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', scheduleMeasure); document.removeEventListener('visibilitychange', reconcile);
+      v.removeEventListener('play', reconcile); v.removeEventListener('pause', reconcile); v.removeEventListener('loadeddata', scheduleMeasure);
       delete header.dataset.fluidReady; delete header.dataset.fluidBackground; texture.current.dispose(); edges.dispose(); studioLight.dispose();
     };
   }, [gl, invalidate, edges, studioLight]);
@@ -99,32 +157,44 @@ function BarMaterial({ barProps }) {
     return () => { mat.onBeforeCompile = upstream; };
   }, []);
 
+  useEffect(() => {
+    let active = true;
+    compiled.current = false;
+    // Leave the existing CSS glass visible while GPU programs compile. Taking
+    // over the render loop prevents the first draw from synchronously waiting
+    // for a large transmission shader. Unsupported drivers keep the CSS layer.
+    if (!gl.extensions.has('KHR_parallel_shader_compile')) return;
+    Promise.all([gl.compileAsync(scene, camera), gl.compileAsync(outputScene, camera)])
+      .then(() => { if (active) { compiled.current = true; invalidate(); } })
+      .catch(() => { /* The native navigation and CSS material remain available. */ });
+    return () => { active = false; compiled.current = false; };
+  }, [gl, camera, scene, outputScene, invalidate]);
+
   useFrame((state, delta) => {
     const header = host.current, v = video.current;
-    if (!header || !v || !texture.current) return;
-    const r = header.getBoundingClientRect(), b = v.getBoundingClientRect();
-    const intersects = b.bottom > r.top && b.top < r.bottom && b.right > r.left && b.left < r.right && v.readyState >= 2 && !v.paused;
-    const background = intersects ? 'hero' : 'css';
-    if (header.dataset.fluidBackground !== background) header.dataset.fluidBackground = background;
+    if (!header || !v || !texture.current || !compiled.current) return;
+    const data = backdrop.current;
+    if (!data || document.hidden || document.body.classList.contains('dialog-open')) return;
+    const r = data.header, b = data.video, intersects = data.hero;
     videoPlane.current.visible = edgesPlane.current.visible = intersects;
     if (intersects) {
       const cover = Math.max(b.width / v.videoWidth, b.height / v.videoHeight);
       const tx = texture.current; tx.repeat.set(b.width / (v.videoWidth * cover), b.height / (v.videoHeight * cover)); tx.offset.set((1 - tx.repeat.x) / 2, (1 - tx.repeat.y) / 2);
       [videoPlane.current, edgesPlane.current].forEach(plane => {
         plane.position.x = b.left + b.width / 2 - (r.left + r.width / 2);
-        plane.position.y = r.top + r.height / 2 - (b.top + b.height / 2);
+        plane.position.y = r.top + r.height / 2 - (data.top + b.height / 2);
         plane.scale.set(b.width, b.height, 1);
       });
     }
     // Orthographic pixel coordinates keep sampling tied to the actual viewport.
     bar.current.scale.set((size.width - 2) / dimensions.x, 5 / dimensions.y, (size.height - 2) / dimensions.z);
-    const pressed = header.querySelector('[data-lens-pressed="true"],.is-pressed');
-    easing.damp(material.current, 'thickness', (barProps.thickness ?? BAR.thickness) * (pressed ? .86 : 1), .12, Math.min(delta, .035));
-    const target = gl.getRenderTarget(), clear = gl.getClearColor(new THREE.Color()), alpha = gl.getClearAlpha();
+    easing.damp(material.current, 'thickness', (barProps.thickness ?? BAR.thickness) * (pressed.current ? .86 : 1), .12, Math.min(delta, .035));
+    const target = gl.getRenderTarget(), clear = gl.getClearColor(clearColor), alpha = gl.getClearAlpha();
     gl.setRenderTarget(buffer); gl.setClearColor('#ffffff', 1); gl.clear(); gl.render(scene, camera);
     gl.setRenderTarget(target); gl.setClearColor(clear, alpha);
+    gl.render(outputScene, camera);
     if (header.dataset.fluidReady !== 'true') header.dataset.fluidReady = 'true';
-  });
+  }, 1);
 
   return <>
     {createPortal(<><mesh ref={videoPlane}><planeGeometry args={[1, 1]} /><meshBasicMaterial toneMapped={false} /></mesh><mesh ref={edgesPlane} position={[0, 0, 1]}><planeGeometry args={[1, 1]} /><meshBasicMaterial map={edges} transparent toneMapped={false} depthWrite={false} /></mesh></>, scene)}

@@ -70,7 +70,7 @@ export default function OpticalScene({ theme, material, transmission, background
     const image=new Image(),overview=new Image();
     const loaded=()=>{if(!canceled)setRevision(v=>v+1);};
     image.onload=loaded;overview.onload=loaded;
-    image.src='/assets/hero-flow-loop-poster.jpg';overview.src='/assets/S23-overview.png';
+    image.src='/assets/hero-flow-loop-poster.jpg';overview.src='/assets/S23-overview.webp';
     imageRef.current=image;overviewRef.current=overview;
     return()=>{canceled=true;image.onload=null;overview.onload=null;};
   },[]);

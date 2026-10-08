@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import SegmentedControl from './SegmentedControl.jsx';
 import OpticalScene from './OpticalScene.jsx';
 import { GLASS } from './glassConfig.js';
-import { Icon } from './App.jsx';
+import Icon from './Icon.jsx';
 
 export default function GlassStudio({ open, onClose, triggerRef, settings, onSettings }) {
   const ref=useRef(null), animation=useRef(null), generation=useRef(0), initialized=useRef(false);

@@ -165,20 +165,22 @@ export default function usePortfolioMotion(pageRef) {
       // between entering and resetting prevents flicker near a scroll boundary.
       // All timelines are populated before their triggers are attached.
       entries.forEach(entry => {
-        const targets = () => [...new Set(entry.timeline.getChildren(false, true, false).flatMap(tween => tween.targets()))];
+        // Timeline targets are fixed; cache them once for replay and keyboard focus.
+        const targets = [...new Set(entry.timeline.getChildren(false, true, false).flatMap(tween => tween.targets()))];
+        entry.targets = targets;
         const show = self => {
           if (!entry.armed || !self.isActive) return;
           const threshold = Number(entry.start.match(/(\d+)%/)?.[1] || 100) / 100;
           if (self.direction > 0 && self.scroll() < self.start + innerHeight * (1 - threshold)) return;
           entry.armed = false;
           const focus = document.activeElement;
-          if (focus?.matches(':focus-visible') && targets().some(el => el === focus || el.contains?.(focus))) entry.timeline.progress(1).pause();
+          if (focus?.matches(':focus-visible') && targets.some(el => el === focus || el.contains?.(focus))) entry.timeline.progress(1).pause();
           else entry.timeline.restart();
         };
         const reset = () => {
           entry.armed = true;
           entry.timeline.pause(0, true);
-          settle(targets());
+          settle(targets);
         };
         ScrollTrigger.create({
           trigger: entry.trigger, start: 'top bottom', endTrigger: entry.endTrigger, end: 'bottom top',
@@ -192,8 +194,8 @@ export default function usePortfolioMotion(pageRef) {
       function onFocus(event) {
         if (!event.target.matches(':focus-visible')) return;
         finishOpening();
-        entries.forEach(({ trigger, timeline }) => {
-          const containsFocus = trigger.contains(event.target) || timeline.getChildren(false, true, false).some(tween => tween.targets().some(el => el === event.target || el.contains?.(event.target)));
+        entries.forEach(({ trigger, timeline, targets }) => {
+          const containsFocus = trigger.contains(event.target) || targets.some(el => el === event.target || el.contains?.(event.target));
           if (containsFocus) timeline.progress(1);
         });
       }

@@ -13,3 +13,5 @@
 .project-paper .motion-media{transform-origin:center center}
 .motion-promoted{will-change:transform,clip-path}
 @media(prefers-reduced-motion:reduce){.motion-promoted{will-change:auto}.motion-title,.opening-label,.opening-description,.motion-media{transform:none!important;clip-path:none!important}}
+
+.dialog-loading{position:fixed;z-index:1000;inset:auto 0 36px;width:max-content;margin:auto;padding:12px 20px;border-radius:99px;background:#fcfbfd;box-shadow:0 4px 20px #39214920;color:#756b7e;font-size:.9rem}
