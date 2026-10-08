@@ -117,7 +117,7 @@ export function DetailDialog({ entry, onClose, onShot }) {
       {id === 'poll' && <>
         <p className="dialog-lead">一个具体问题，让用户愿意回应。</p><p>围绕手机系统偏好，用投票提供明确的参与入口。内容的阅读、用户作出选择和点赞，分别构成不同的反馈。</p>
         <Metrics items={[[ '5万+', '单条内容阅读'],['2500+', '参与投票'],['2500+', '点赞']]} />
-        <button className="dialog-image poll-detail-image" onClick={e => onShot('poll', e.currentTarget)} aria-label="放大投票作品"><img src="/assets/S17-poll.png" alt="手机系统偏好投票完整作品" /></button>
+        <button className="dialog-image poll-detail-image" onClick={e => onShot('poll', e.currentTarget)} aria-label="放大投票作品"><img src={shots.poll.src} alt="手机系统偏好投票完整作品" /></button>
       </>}
       {id === 'topics' && <>
         <p className="dialog-lead">让日常内容，沉淀成账号自己的栏目。</p><p>自主开创4个原创话题，以稳定的栏目组织科技内容，形成可复用的品牌合作场景，助力账号商业化。</p>
@@ -133,7 +133,7 @@ export function DetailDialog({ entry, onClose, onShot }) {
           <div><span>03</span><h3>用封面建立观看入口</h3><p>封面突出「6款」「排放实测」，用耗材实物与检测仪器呈现测试主题，配合正文说明用户为何需要关注。</p></div>
         </div>
         <button className="dialog-image bambu-detail-image" onClick={e => onShot('bambu', e.currentTarget)} aria-label="放大拓竹微博作品截图"><img src="/assets/bambu-weibo.png" alt="6款3D打印耗材排放实测作品及传播数据" /></button>
-        <div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</GlassButton><EvidenceButton id="bambu" onShot={onShot}>作品原图</EvidenceButton></div>
+        <div className="dialog-actions"><GlassButton as="a" className="button" href="https://weibo.com/2707058873/RbYpCAFJm" target="_blank" rel="noreferrer">观看项目视频</GlassButton></div>
       </>}
       {id === 'platforms' && <PlatformEvidence onShot={onShot} />}
       {id === 'resume' && <div className="resume-preview"><img src="/assets/resume-page-1.png" alt="解宝珅完整简历，第1页" decoding="async" /><GlassButton as="a" className="button" href="/assets/resume.pdf" download="解宝珅简历.pdf">下载简历</GlassButton></div>}
@@ -146,5 +146,5 @@ export function EvidenceDialog({ entry, onClose }) {
   const [zoom, setZoom] = useState(false);
   const [longImage, setLongImage] = useState(false);
   const shot = shots[entry.id];
-  return <Modal entry={entry} title={shot.title} onClose={onClose} className="reader-dialog"><div className="reader-toolbar">{shot.note && <p>{shot.note}</p>}<GlassButton as="button" className="button" aria-pressed={zoom} onClick={() => setZoom(v => !v)}>{zoom ? '适应窗口' : '放大原图'}</GlassButton><a className="text-link" href={`/assets/${shot.file}`} target="_blank" rel="noreferrer">打开原图</a></div><div className={`reader-scroll${zoom ? ' zoomed' : ''}${longImage ? ' long-image' : ''}`}><img src={`/assets/${shot.file}`} alt={`${shot.title}完整证据截图`} onLoad={e => setLongImage(e.currentTarget.naturalHeight / e.currentTarget.naturalWidth > 3.5)} /></div></Modal>;
+  return <Modal entry={entry} title={shot.title} onClose={onClose} className="reader-dialog"><div className="reader-toolbar">{shot.note && <p>{shot.note}</p>}<GlassButton as="button" className="button" aria-pressed={zoom} onClick={() => setZoom(v => !v)}>{zoom ? '适应窗口' : '放大原图'}</GlassButton><a className="text-link" href={`/assets/${shot.file}`} target="_blank" rel="noreferrer">打开原图</a></div><div className={`reader-scroll${zoom ? ' zoomed' : ''}${longImage ? ' long-image' : ''}`}><img src={shot.src || `/assets/${shot.file}`} alt={`${shot.title}完整证据截图`} onLoad={e => setLongImage(e.currentTarget.naturalHeight / e.currentTarget.naturalWidth > 3.5)} /></div></Modal>;
 }

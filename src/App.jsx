@@ -117,14 +117,14 @@ export default function App() {
         <div className="section-heading"><div><p className="eyebrow">个人抖音</p><h2 id="douyin-title" className="motion-mask"><span className="motion-title">爆款视频策划</span></h2></div><span className="section-index">03 / 03</span></div>
         <div className="douyin-grid">{douyinWorks.map((work, i) => <article className="douyin-work" key={work.id}>
           <WorkFrame tone="video" radius={28}>
-          <a className="video-placeholder douyin-visual" href={work.href} target="_blank" rel="noreferrer" aria-label={`在抖音观看${work.title}，截图播放量${work.views}`}>
+          <a className="video-placeholder douyin-visual" href={work.href} target="_blank" rel="noreferrer" aria-label={`在抖音观看${work.workTitle}，截图播放量${work.views}`}>
             <span className="video-placeholder-number">0{i + 1}</span>
-            <span className={`douyin-cover douyin-cover-${work.cover}`}><img src="/assets/douyin-works.png" alt={`${work.title}作品封面`} loading="lazy" decoding="async" /></span>
+            <span className={`douyin-cover douyin-cover-${work.cover}`}><img src="/assets/douyin-works.png" alt={`${work.workTitle}作品封面`} loading="lazy" decoding="async" /></span>
             <span className="douyin-play glass"><Icon name="play" /></span>
             <span className="visual-tag glass">播放 {work.views}</span>
           </a>
           </WorkFrame>
-          <h3>{work.title}</h3><p className="douyin-tags">{work.tags}</p>
+          <h3>{work.title}</h3><p className="douyin-tags">{work.description}</p>
         </article>)}</div>
       </section>
     </main>
